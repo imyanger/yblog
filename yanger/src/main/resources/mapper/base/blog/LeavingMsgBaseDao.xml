@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- =======     通过com.yanger.generator包代码工具自动生成       ======= -->
+<!-- =======   本配置文件中定义的节点可在自定义配置文件中直接使     ======= -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<mapper namespace="com.yanger.blog.dao.LeavingMsgDao">
+
+	<!-- 通用查询结果对象-->
+	<resultMap id="BaseResultMap" type="com.yanger.blog.po.LeavingMsg">
+		 <id column="msg_id" property="msgId"/> 
+		 <result column="type" property="type"/> 
+		 <result column="user_id" property="userId"/> 
+		 <result column="user_nick_name" property="userNickName"/> 
+		 <result column="user_img_path" property="userImgPath"/> 
+		 <result column="article_id" property="articleId"/> 
+		 <result column="art_img_path" property="artImgPath"/> 
+		 <result column="article_title" property="articleTitle"/> 
+		 <result column="content" property="content"/> 
+		 <result column="upper_id" property="upperId"/> 
+		 <result column="msg_order" property="msgOrder"/> 
+		 <result column="status" property="status"/> 
+		 <result column="insert_time" property="insertTime"/> 
+		 <result column="update_time" property="updateTime"/> 
+	</resultMap>
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 msg_id, type, user_id, user_nick_name, user_img_path,
+		 article_id, art_img_path, article_title, content, upper_id,
+		 msg_order, status, insert_time, update_time
+	</sql>
+
+	<!-- 按对象查询记录的WHERE部分 -->
+	<sql id="Base_Select_By_Entity_Where">
+		<if test="msgId != null" >
+			and msg_id = #{msgId}
+		</if>
+		<if test="type != null" >
+			and type = #{type}
+		</if>
+		<if test="userId != null" >
+			and user_id = #{userId}
+		</if>
+		<if test="userNickName != null" >
+			and user_nick_name = #{userNickName}
+		</if>
+		<if test="userImgPath != null" >
+			and user_img_path = #{userImgPath}
+		</if>
+		<if test="articleId != null" >
+			and article_id = #{articleId}
+		</if>
+		<if test="artImgPath != null" >
+			and art_img_path = #{artImgPath}
+		</if>
+		<if test="articleTitle != null" >
+			and article_title = #{articleTitle}
+		</if>
+		<if test="content != null" >
+			and content = #{content}
+		</if>
+		<if test="upperId != null" >
+			and upper_id = #{upperId}
+		</if>
+		<if test="msgOrder != null" >
+			and msg_order = #{msgOrder}
+		</if>
+		<if test="status != null" >
+			and status = #{status}
+		</if>
+		<if test="insertTime != null" >
+			and insert_time = #{insertTime}
+		</if>
+		<if test="updateTime != null" >
+			and update_time = #{updateTime}
+		</if>
+	</sql>
+
+	<!-- 按对象查询记录的SQL部分 -->
+	<sql id="Base_Select_By_Entity">
+		select
+			<include refid="Base_Column_List" />
+		from leaving_msg
+		<where>
+			<include refid="Base_Select_By_Entity_Where" />
+		</where>
+	</sql>
+
+	<!-- 按主键查询一条记录 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map">
+		select
+			<include refid="Base_Column_List" />
+		from leaving_msg
+		where msg_id = #{param1}
+	</select>
+
+	<!-- 按主键List查询多条记录 -->
+	<select id="selectByPrimaryKeys" resultMap="BaseResultMap" parameterType="map">
+		select
+			<include refid="Base_Column_List" />
+		from leaving_msg
+		where msg_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+	<!-- 按对象查询一页记录（多条记录） -->
+	<select id="selectPage" resultMap="BaseResultMap" parameterType="com.yanger.blog.po.LeavingMsg">
+		<include refid="Base_Select_By_Entity" />
+	</select>
+
+	<!-- 按主键删除一条记录 -->
+	<delete id="deleteByPrimaryKey" parameterType="map">
+		delete from leaving_msg
+		where msg_id = #{param1}
+	</delete>
+
+	<!-- 按主键List删除多条记录 -->
+	<delete id="deleteByPrimaryKeys" parameterType="map">
+		delete from leaving_msg
+		where msg_id in 
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 完整插入一条记录-->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="msg_id" parameterType="com.yanger.blog.po.LeavingMsg">
+		insert into leaving_msg (msg_id, type, user_id, user_nick_name, user_img_path, 
+			article_id, art_img_path, article_title, content, upper_id, 
+			msg_order, status, insert_time, update_time)
+		values(#{msgId}, #{type}, #{userId}, #{userNickName}, #{userImgPath}, 
+			#{articleId}, #{artImgPath}, #{articleTitle}, #{content}, #{upperId}, 
+			#{msgOrder}, #{status}, #{insertTime}, #{updateTime})
+	</insert>
+
+	<!-- 插入一条记录(为空的字段不操作) -->
+	<insert id="insertSelective" useGeneratedKeys="true" keyProperty="msg_id" parameterType="com.yanger.blog.po.LeavingMsg">
+		insert into leaving_msg
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="msgId != null" >
+				msg_id,
+			</if>
+			<if test="type != null" >
+				type,
+			</if>
+			<if test="userId != null" >
+				user_id,
+			</if>
+			<if test="userNickName != null" >
+				user_nick_name,
+			</if>
+			<if test="userImgPath != null" >
+				user_img_path,
+			</if>
+			<if test="articleId != null" >
+				article_id,
+			</if>
+			<if test="artImgPath != null" >
+				art_img_path,
+			</if>
+			<if test="articleTitle != null" >
+				article_title,
+			</if>
+			<if test="content != null" >
+				content,
+			</if>
+			<if test="upperId != null" >
+				upper_id,
+			</if>
+			<if test="msgOrder != null" >
+				msg_order,
+			</if>
+			<if test="status != null" >
+				status,
+			</if>
+			<if test="insertTime != null" >
+				insert_time,
+			</if>
+			<if test="updateTime != null" >
+				update_time,
+			</if>
+		</trim>
+		values <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="msgId != null" >
+				#{msgId},
+			</if>
+			<if test="type != null" >
+				#{type},
+			</if>
+			<if test="userId != null" >
+				#{userId},
+			</if>
+			<if test="userNickName != null" >
+				#{userNickName},
+			</if>
+			<if test="userImgPath != null" >
+				#{userImgPath},
+			</if>
+			<if test="articleId != null" >
+				#{articleId},
+			</if>
+			<if test="artImgPath != null" >
+				#{artImgPath},
+			</if>
+			<if test="articleTitle != null" >
+				#{articleTitle},
+			</if>
+			<if test="content != null" >
+				#{content},
+			</if>
+			<if test="upperId != null" >
+				#{upperId},
+			</if>
+			<if test="msgOrder != null" >
+				#{msgOrder},
+			</if>
+			<if test="status != null" >
+				#{status},
+			</if>
+			<if test="insertTime != null" >
+				#{insertTime},
+			</if>
+			<if test="updateTime != null" >
+				#{updateTime},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 更新一条记录(为空的字段不操作) -->
+	<update id="updateSelectiveByPrimaryKey" useGeneratedKeys="true" keyProperty="msg_id" parameterType="com.yanger.blog.po.LeavingMsg">
+		update leaving_msg
+		<set>
+			<if test="type != null" >
+				type=#{type},
+			</if>
+			<if test="userId != null" >
+				user_id=#{userId},
+			</if>
+			<if test="userNickName != null" >
+				user_nick_name=#{userNickName},
+			</if>
+			<if test="userImgPath != null" >
+				user_img_path=#{userImgPath},
+			</if>
+			<if test="articleId != null" >
+				article_id=#{articleId},
+			</if>
+			<if test="artImgPath != null" >
+				art_img_path=#{artImgPath},
+			</if>
+			<if test="articleTitle != null" >
+				article_title=#{articleTitle},
+			</if>
+			<if test="content != null" >
+				content=#{content},
+			</if>
+			<if test="upperId != null" >
+				upper_id=#{upperId},
+			</if>
+			<if test="msgOrder != null" >
+				msg_order=#{msgOrder},
+			</if>
+			<if test="status != null" >
+				status=#{status},
+			</if>
+			<if test="insertTime != null" >
+				insert_time=#{insertTime},
+			</if>
+			<if test="updateTime != null" >
+				update_time=#{updateTime},
+			</if>
+		</set>
+		where msg_id = #{msgId}
+	</update>
+
+	<!-- 完整更新一条记录 -->
+	<update id="updateByPrimaryKey" useGeneratedKeys="true" keyProperty="msg_id" parameterType="com.yanger.blog.po.LeavingMsg">
+		update leaving_msg
+		set type=#{type},
+			user_id=#{userId},
+			user_nick_name=#{userNickName},
+			user_img_path=#{userImgPath},
+			article_id=#{articleId},
+			art_img_path=#{artImgPath},
+			article_title=#{articleTitle},
+			content=#{content},
+			upper_id=#{upperId},
+			msg_order=#{msgOrder},
+			status=#{status},
+			insert_time=#{insertTime},
+			update_time=#{updateTime}
+		where msg_id = #{msgId}
+	</update>
+
+</mapper>

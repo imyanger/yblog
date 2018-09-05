@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- =======     通过com.yanger.generator包代码工具自动生成       ======= -->
+<!-- =======   本配置文件中定义的节点可在自定义配置文件中直接使     ======= -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<mapper namespace="com.yanger.blog.dao.ArticleDao">
+
+	<!-- 通用查询结果对象-->
+	<resultMap id="BaseResultMap" type="com.yanger.blog.po.Article">
+		 <id column="article_id" property="articleId"/> 
+		 <result column="module" property="module"/> 
+		 <result column="type" property="type"/> 
+		 <result column="classify" property="classify"/> 
+		 <result column="title" property="title"/> 
+		 <result column="author" property="author"/> 
+		 <result column="rux_words" property="ruxWords"/> 
+		 <result column="summary" property="summary"/> 
+		 <result column="content" property="content"/> 
+		 <result column="art_img_path" property="artImgPath"/> 
+		 <result column="likes" property="likes"/> 
+		 <result column="views" property="views"/> 
+		 <result column="commons" property="commons"/> 
+		 <result column="user_id" property="userId"/> 
+		 <result column="status" property="status"/> 
+		 <result column="insert_time" property="insertTime"/> 
+		 <result column="update_time" property="updateTime"/> 
+	</resultMap>
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 article_id, module, type, classify, title,
+		 author, rux_words, summary, content, art_img_path,
+		 likes, views, commons, user_id, status,
+		 insert_time, update_time
+	</sql>
+
+	<!-- 按对象查询记录的WHERE部分 -->
+	<sql id="Base_Select_By_Entity_Where">
+		<if test="articleId != null" >
+			and article_id = #{articleId}
+		</if>
+		<if test="module != null" >
+			and module = #{module}
+		</if>
+		<if test="type != null" >
+			and type = #{type}
+		</if>
+		<if test="classify != null" >
+			and classify = #{classify}
+		</if>
+		<if test="title != null" >
+			and title = #{title}
+		</if>
+		<if test="author != null" >
+			and author = #{author}
+		</if>
+		<if test="ruxWords != null" >
+			and rux_words = #{ruxWords}
+		</if>
+		<if test="summary != null" >
+			and summary = #{summary}
+		</if>
+		<if test="content != null" >
+			and content = #{content}
+		</if>
+		<if test="artImgPath != null" >
+			and art_img_path = #{artImgPath}
+		</if>
+		<if test="likes != null" >
+			and likes = #{likes}
+		</if>
+		<if test="views != null" >
+			and views = #{views}
+		</if>
+		<if test="commons != null" >
+			and commons = #{commons}
+		</if>
+		<if test="userId != null" >
+			and user_id = #{userId}
+		</if>
+		<if test="status != null" >
+			and status = #{status}
+		</if>
+		<if test="insertTime != null" >
+			and insert_time = #{insertTime}
+		</if>
+		<if test="updateTime != null" >
+			and update_time = #{updateTime}
+		</if>
+	</sql>
+
+	<!-- 按对象查询记录的SQL部分 -->
+	<sql id="Base_Select_By_Entity">
+		select
+			<include refid="Base_Column_List" />
+		from article
+		<where>
+			<include refid="Base_Select_By_Entity_Where" />
+		</where>
+	</sql>
+
+	<!-- 按主键查询一条记录 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map">
+		select
+			<include refid="Base_Column_List" />
+		from article
+		where article_id = #{param1}
+	</select>
+
+	<!-- 按主键List查询多条记录 -->
+	<select id="selectByPrimaryKeys" resultMap="BaseResultMap" parameterType="map">
+		select
+			<include refid="Base_Column_List" />
+		from article
+		where article_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+	<!-- 按对象查询一页记录（多条记录） -->
+	<select id="selectPage" resultMap="BaseResultMap" parameterType="com.yanger.blog.po.Article">
+		<include refid="Base_Select_By_Entity" />
+	</select>
+
+	<!-- 按主键删除一条记录 -->
+	<delete id="deleteByPrimaryKey" parameterType="map">
+		delete from article
+		where article_id = #{param1}
+	</delete>
+
+	<!-- 按主键List删除多条记录 -->
+	<delete id="deleteByPrimaryKeys" parameterType="map">
+		delete from article
+		where article_id in 
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 完整插入一条记录-->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="article_id" parameterType="com.yanger.blog.po.Article">
+		insert into article (article_id, module, type, classify, title, 
+			author, rux_words, summary, content, art_img_path, 
+			likes, views, commons, user_id, status, 
+			insert_time, update_time)
+		values(#{articleId}, #{module}, #{type}, #{classify}, #{title}, 
+			#{author}, #{ruxWords}, #{summary}, #{content}, #{artImgPath}, 
+			#{likes}, #{views}, #{commons}, #{userId}, #{status}, 
+			#{insertTime}, #{updateTime})
+	</insert>
+
+	<!-- 插入一条记录(为空的字段不操作) -->
+	<insert id="insertSelective" useGeneratedKeys="true" keyProperty="article_id" parameterType="com.yanger.blog.po.Article">
+		insert into article
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="articleId != null" >
+				article_id,
+			</if>
+			<if test="module != null" >
+				module,
+			</if>
+			<if test="type != null" >
+				type,
+			</if>
+			<if test="classify != null" >
+				classify,
+			</if>
+			<if test="title != null" >
+				title,
+			</if>
+			<if test="author != null" >
+				author,
+			</if>
+			<if test="ruxWords != null" >
+				rux_words,
+			</if>
+			<if test="summary != null" >
+				summary,
+			</if>
+			<if test="content != null" >
+				content,
+			</if>
+			<if test="artImgPath != null" >
+				art_img_path,
+			</if>
+			<if test="likes != null" >
+				likes,
+			</if>
+			<if test="views != null" >
+				views,
+			</if>
+			<if test="commons != null" >
+				commons,
+			</if>
+			<if test="userId != null" >
+				user_id,
+			</if>
+			<if test="status != null" >
+				status,
+			</if>
+			<if test="insertTime != null" >
+				insert_time,
+			</if>
+			<if test="updateTime != null" >
+				update_time,
+			</if>
+		</trim>
+		values <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="articleId != null" >
+				#{articleId},
+			</if>
+			<if test="module != null" >
+				#{module},
+			</if>
+			<if test="type != null" >
+				#{type},
+			</if>
+			<if test="classify != null" >
+				#{classify},
+			</if>
+			<if test="title != null" >
+				#{title},
+			</if>
+			<if test="author != null" >
+				#{author},
+			</if>
+			<if test="ruxWords != null" >
+				#{ruxWords},
+			</if>
+			<if test="summary != null" >
+				#{summary},
+			</if>
+			<if test="content != null" >
+				#{content},
+			</if>
+			<if test="artImgPath != null" >
+				#{artImgPath},
+			</if>
+			<if test="likes != null" >
+				#{likes},
+			</if>
+			<if test="views != null" >
+				#{views},
+			</if>
+			<if test="commons != null" >
+				#{commons},
+			</if>
+			<if test="userId != null" >
+				#{userId},
+			</if>
+			<if test="status != null" >
+				#{status},
+			</if>
+			<if test="insertTime != null" >
+				#{insertTime},
+			</if>
+			<if test="updateTime != null" >
+				#{updateTime},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 更新一条记录(为空的字段不操作) -->
+	<update id="updateSelectiveByPrimaryKey" useGeneratedKeys="true" keyProperty="article_id" parameterType="com.yanger.blog.po.Article">
+		update article
+		<set>
+			<if test="module != null" >
+				module=#{module},
+			</if>
+			<if test="type != null" >
+				type=#{type},
+			</if>
+			<if test="classify != null" >
+				classify=#{classify},
+			</if>
+			<if test="title != null" >
+				title=#{title},
+			</if>
+			<if test="author != null" >
+				author=#{author},
+			</if>
+			<if test="ruxWords != null" >
+				rux_words=#{ruxWords},
+			</if>
+			<if test="summary != null" >
+				summary=#{summary},
+			</if>
+			<if test="content != null" >
+				content=#{content},
+			</if>
+			<if test="artImgPath != null" >
+				art_img_path=#{artImgPath},
+			</if>
+			<if test="likes != null" >
+				likes=#{likes},
+			</if>
+			<if test="views != null" >
+				views=#{views},
+			</if>
+			<if test="commons != null" >
+				commons=#{commons},
+			</if>
+			<if test="userId != null" >
+				user_id=#{userId},
+			</if>
+			<if test="status != null" >
+				status=#{status},
+			</if>
+			<if test="insertTime != null" >
+				insert_time=#{insertTime},
+			</if>
+			<if test="updateTime != null" >
+				update_time=#{updateTime},
+			</if>
+		</set>
+		where article_id = #{articleId}
+	</update>
+
+	<!-- 完整更新一条记录 -->
+	<update id="updateByPrimaryKey" useGeneratedKeys="true" keyProperty="article_id" parameterType="com.yanger.blog.po.Article">
+		update article
+		set module=#{module},
+			type=#{type},
+			classify=#{classify},
+			title=#{title},
+			author=#{author},
+			rux_words=#{ruxWords},
+			summary=#{summary},
+			content=#{content},
+			art_img_path=#{artImgPath},
+			likes=#{likes},
+			views=#{views},
+			commons=#{commons},
+			user_id=#{userId},
+			status=#{status},
+			insert_time=#{insertTime},
+			update_time=#{updateTime}
+		where article_id = #{articleId}
+	</update>
+
+</mapper>

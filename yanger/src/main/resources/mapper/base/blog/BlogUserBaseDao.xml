@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- =======     通过com.yanger.generator包代码工具自动生成       ======= -->
+<!-- =======   本配置文件中定义的节点可在自定义配置文件中直接使     ======= -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<mapper namespace="com.yanger.blog.dao.BlogUserDao">
+
+	<!-- 通用查询结果对象-->
+	<resultMap id="BaseResultMap" type="com.yanger.blog.po.BlogUser">
+		 <id column="user_id" property="userId"/> 
+		 <result column="user_code" property="userCode"/> 
+		 <result column="password" property="password"/> 
+		 <result column="user_nick_name" property="userNickName"/> 
+		 <result column="gender" property="gender"/> 
+		 <result column="user_img_path" property="userImgPath"/> 
+		 <result column="summary" property="summary"/> 
+		 <result column="age" property="age"/> 
+		 <result column="phone_number" property="phoneNumber"/> 
+		 <result column="moblie" property="moblie"/> 
+		 <result column="email" property="email"/> 
+		 <result column="address" property="address"/> 
+		 <result column="graduate_school" property="graduateSchool"/> 
+		 <result column="education" property="education"/> 
+		 <result column="birtd" property="birtd"/> 
+		 <result column="user_real_name" property="userRealName"/> 
+		 <result column="status" property="status"/> 
+		 <result column="insert_time" property="insertTime"/> 
+		 <result column="update_time" property="updateTime"/> 
+	</resultMap>
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 user_id, user_code, password, user_nick_name, gender,
+		 user_img_path, summary, age, phone_number, moblie,
+		 email, address, graduate_school, education, birtd,
+		 user_real_name, status, insert_time, update_time
+	</sql>
+
+	<!-- 按对象查询记录的WHERE部分 -->
+	<sql id="Base_Select_By_Entity_Where">
+		<if test="userId != null" >
+			and user_id = #{userId}
+		</if>
+		<if test="userCode != null" >
+			and user_code = #{userCode}
+		</if>
+		<if test="password != null" >
+			and password = #{password}
+		</if>
+		<if test="userNickName != null" >
+			and user_nick_name = #{userNickName}
+		</if>
+		<if test="gender != null" >
+			and gender = #{gender}
+		</if>
+		<if test="userImgPath != null" >
+			and user_img_path = #{userImgPath}
+		</if>
+		<if test="summary != null" >
+			and summary = #{summary}
+		</if>
+		<if test="age != null" >
+			and age = #{age}
+		</if>
+		<if test="phoneNumber != null" >
+			and phone_number = #{phoneNumber}
+		</if>
+		<if test="moblie != null" >
+			and moblie = #{moblie}
+		</if>
+		<if test="email != null" >
+			and email = #{email}
+		</if>
+		<if test="address != null" >
+			and address = #{address}
+		</if>
+		<if test="graduateSchool != null" >
+			and graduate_school = #{graduateSchool}
+		</if>
+		<if test="education != null" >
+			and education = #{education}
+		</if>
+		<if test="birtd != null" >
+			and birtd = #{birtd}
+		</if>
+		<if test="userRealName != null" >
+			and user_real_name = #{userRealName}
+		</if>
+		<if test="status != null" >
+			and status = #{status}
+		</if>
+		<if test="insertTime != null" >
+			and insert_time = #{insertTime}
+		</if>
+		<if test="updateTime != null" >
+			and update_time = #{updateTime}
+		</if>
+	</sql>
+
+	<!-- 按对象查询记录的SQL部分 -->
+	<sql id="Base_Select_By_Entity">
+		select
+			<include refid="Base_Column_List" />
+		from blog_user
+		<where>
+			<include refid="Base_Select_By_Entity_Where" />
+		</where>
+	</sql>
+
+	<!-- 按主键查询一条记录 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map">
+		select
+			<include refid="Base_Column_List" />
+		from blog_user
+		where user_id = #{param1}
+	</select>
+
+	<!-- 按主键List查询多条记录 -->
+	<select id="selectByPrimaryKeys" resultMap="BaseResultMap" parameterType="map">
+		select
+			<include refid="Base_Column_List" />
+		from blog_user
+		where user_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+	<!-- 按对象查询一页记录（多条记录） -->
+	<select id="selectPage" resultMap="BaseResultMap" parameterType="com.yanger.blog.po.BlogUser">
+		<include refid="Base_Select_By_Entity" />
+	</select>
+
+	<!-- 按主键删除一条记录 -->
+	<delete id="deleteByPrimaryKey" parameterType="map">
+		delete from blog_user
+		where user_id = #{param1}
+	</delete>
+
+	<!-- 按主键List删除多条记录 -->
+	<delete id="deleteByPrimaryKeys" parameterType="map">
+		delete from blog_user
+		where user_id in 
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 完整插入一条记录-->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="user_id" parameterType="com.yanger.blog.po.BlogUser">
+		insert into blog_user (user_id, user_code, password, user_nick_name, gender, 
+			user_img_path, summary, age, phone_number, moblie, 
+			email, address, graduate_school, education, birtd, 
+			user_real_name, status, insert_time, update_time)
+		values(#{userId}, #{userCode}, #{password}, #{userNickName}, #{gender}, 
+			#{userImgPath}, #{summary}, #{age}, #{phoneNumber}, #{moblie}, 
+			#{email}, #{address}, #{graduateSchool}, #{education}, #{birtd}, 
+			#{userRealName}, #{status}, #{insertTime}, #{updateTime})
+	</insert>
+
+	<!-- 插入一条记录(为空的字段不操作) -->
+	<insert id="insertSelective" useGeneratedKeys="true" keyProperty="user_id" parameterType="com.yanger.blog.po.BlogUser">
+		insert into blog_user
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="userId != null" >
+				user_id,
+			</if>
+			<if test="userCode != null" >
+				user_code,
+			</if>
+			<if test="password != null" >
+				password,
+			</if>
+			<if test="userNickName != null" >
+				user_nick_name,
+			</if>
+			<if test="gender != null" >
+				gender,
+			</if>
+			<if test="userImgPath != null" >
+				user_img_path,
+			</if>
+			<if test="summary != null" >
+				summary,
+			</if>
+			<if test="age != null" >
+				age,
+			</if>
+			<if test="phoneNumber != null" >
+				phone_number,
+			</if>
+			<if test="moblie != null" >
+				moblie,
+			</if>
+			<if test="email != null" >
+				email,
+			</if>
+			<if test="address != null" >
+				address,
+			</if>
+			<if test="graduateSchool != null" >
+				graduate_school,
+			</if>
+			<if test="education != null" >
+				education,
+			</if>
+			<if test="birtd != null" >
+				birtd,
+			</if>
+			<if test="userRealName != null" >
+				user_real_name,
+			</if>
+			<if test="status != null" >
+				status,
+			</if>
+			<if test="insertTime != null" >
+				insert_time,
+			</if>
+			<if test="updateTime != null" >
+				update_time,
+			</if>
+		</trim>
+		values <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="userId != null" >
+				#{userId},
+			</if>
+			<if test="userCode != null" >
+				#{userCode},
+			</if>
+			<if test="password != null" >
+				#{password},
+			</if>
+			<if test="userNickName != null" >
+				#{userNickName},
+			</if>
+			<if test="gender != null" >
+				#{gender},
+			</if>
+			<if test="userImgPath != null" >
+				#{userImgPath},
+			</if>
+			<if test="summary != null" >
+				#{summary},
+			</if>
+			<if test="age != null" >
+				#{age},
+			</if>
+			<if test="phoneNumber != null" >
+				#{phoneNumber},
+			</if>
+			<if test="moblie != null" >
+				#{moblie},
+			</if>
+			<if test="email != null" >
+				#{email},
+			</if>
+			<if test="address != null" >
+				#{address},
+			</if>
+			<if test="graduateSchool != null" >
+				#{graduateSchool},
+			</if>
+			<if test="education != null" >
+				#{education},
+			</if>
+			<if test="birtd != null" >
+				#{birtd},
+			</if>
+			<if test="userRealName != null" >
+				#{userRealName},
+			</if>
+			<if test="status != null" >
+				#{status},
+			</if>
+			<if test="insertTime != null" >
+				#{insertTime},
+			</if>
+			<if test="updateTime != null" >
+				#{updateTime},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 更新一条记录(为空的字段不操作) -->
+	<update id="updateSelectiveByPrimaryKey" useGeneratedKeys="true" keyProperty="user_id" parameterType="com.yanger.blog.po.BlogUser">
+		update blog_user
+		<set>
+			<if test="userCode != null" >
+				user_code=#{userCode},
+			</if>
+			<if test="password != null" >
+				password=#{password},
+			</if>
+			<if test="userNickName != null" >
+				user_nick_name=#{userNickName},
+			</if>
+			<if test="gender != null" >
+				gender=#{gender},
+			</if>
+			<if test="userImgPath != null" >
+				user_img_path=#{userImgPath},
+			</if>
+			<if test="summary != null" >
+				summary=#{summary},
+			</if>
+			<if test="age != null" >
+				age=#{age},
+			</if>
+			<if test="phoneNumber != null" >
+				phone_number=#{phoneNumber},
+			</if>
+			<if test="moblie != null" >
+				moblie=#{moblie},
+			</if>
+			<if test="email != null" >
+				email=#{email},
+			</if>
+			<if test="address != null" >
+				address=#{address},
+			</if>
+			<if test="graduateSchool != null" >
+				graduate_school=#{graduateSchool},
+			</if>
+			<if test="education != null" >
+				education=#{education},
+			</if>
+			<if test="birtd != null" >
+				birtd=#{birtd},
+			</if>
+			<if test="userRealName != null" >
+				user_real_name=#{userRealName},
+			</if>
+			<if test="status != null" >
+				status=#{status},
+			</if>
+			<if test="insertTime != null" >
+				insert_time=#{insertTime},
+			</if>
+			<if test="updateTime != null" >
+				update_time=#{updateTime},
+			</if>
+		</set>
+		where user_id = #{userId}
+	</update>
+
+	<!-- 完整更新一条记录 -->
+	<update id="updateByPrimaryKey" useGeneratedKeys="true" keyProperty="user_id" parameterType="com.yanger.blog.po.BlogUser">
+		update blog_user
+		set user_code=#{userCode},
+			password=#{password},
+			user_nick_name=#{userNickName},
+			gender=#{gender},
+			user_img_path=#{userImgPath},
+			summary=#{summary},
+			age=#{age},
+			phone_number=#{phoneNumber},
+			moblie=#{moblie},
+			email=#{email},
+			address=#{address},
+			graduate_school=#{graduateSchool},
+			education=#{education},
+			birtd=#{birtd},
+			user_real_name=#{userRealName},
+			status=#{status},
+			insert_time=#{insertTime},
+			update_time=#{updateTime}
+		where user_id = #{userId}
+	</update>
+
+</mapper>
