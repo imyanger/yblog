@@ -1,16 +1,7 @@
 # manage-system #
-基于Vue.js 2.x系列 + Element UI 的后台管理系统解决方案。[线上地址](http://blog.gdfengshuo.com/example/work/)
-
-[English document](https://github.com/lin-xin/manage-system/blob/master/README_EN.md)
-
-[更新日志](https://github.com/lin-xin/vue-manage-system/releases)
-
-## 捐赠
-![微信扫一扫](http://blog.gdfengshuo.com/images/weixin.jpg)
+基于Vue.js 2.x系列 + Element UI 的后台管理系统解决方案。
 
 ## 前言 ##
-之前在公司用了Vue + Element组件库做了个后台管理系统，基本很多组件可以直接引用组件库的，但是也有一些需求无法满足。像图片裁剪上传、富文本编辑器、图表等这些在后台管理系统中很常见的功能，就需要引用其他的组件才能完成。从寻找组件，到使用组件的过程中，遇到了很多问题，也积累了宝贵的经验。所以我就把开发这个后台管理系统的经验，总结成这个后台管理系统解决方案。
-
 该方案作为一套多功能的后台框架模板，适用于绝大部分的后台管理系统（Web Management System）开发。基于vue.js,使用vue-cli脚手架快速生成项目目录，引用Element UI组件库，方便开发快速简洁好看的组件。分离颜色样式，支持手动切换主题色，而且很方便使用自定义主题色。
 
 ## 功能 ##
@@ -172,31 +163,3 @@ vue.js封装sChart.js的图表组件。访问地址：[vue-schart](https://githu
 	npm un vue-quill-editor -S
 
 完成。
-
-### 二、如何切换主题色呢？ ###
-
-第一步：打开 src/main.js 文件，找到引入 element 样式的地方，换成浅绿色主题。
-
-```javascript
-import 'element-ui/lib/theme-default/index.css';    // 默认主题
-// import '../static/css/theme-green/index.css';       // 浅绿色主题
-```
-
-第二步：打开 src/App.vue 文件，找到 style 标签引入样式的地方，切换成浅绿色主题。
-
-```javascript
-@import "../static/css/main.css";
-@import "../static/css/color-dark.css";     /*深色主题*/
-/*@import "../static/css/theme-green/color-green.css";   !*浅绿色主题*!*/
-```
-
-第三步：打开 src/components/common/Sidebar.vue 文件，找到 el-menu 标签，把 background-color/text-color/active-text-color 属性去掉即可。
-
-## 项目截图 ##
-### 默认皮肤 ###
-
-![Image text](https://github.com/lin-xin/manage-system/raw/master/screenshots/wms1.png)
-
-### 浅绿色皮肤 ###
-
-![Image text](https://github.com/lin-xin/manage-system/raw/master/screenshots/wms2.png)
