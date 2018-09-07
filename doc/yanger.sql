@@ -39,7 +39,7 @@ CREATE TABLE `article`(
 
 
 DROP TABLE IF EXISTS `blog_user`;
-CREATE TABLE `user`(  
+CREATE TABLE `blog_user`(  
   `user_id` INT NOT NULL AUTO_INCREMENT COMMENT '用户id',
   `user_code` VARCHAR(20) COMMENT '用户账号',
   `password` VARCHAR(20) COMMENT '用户密码',
@@ -100,9 +100,9 @@ DROP TABLE IF EXISTS `outer_link`;
 CREATE TABLE `outer_link`(  
   `link_id` INT NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `type` VARCHAR(50) COMMENT '所属类型',
-  `describe` VARCHAR(100) COMMENT '描述',
+  `depict` VARCHAR(100) COMMENT '描述',
   `link` VARCHAR(100) COMMENT '链接',
-  `order` INT COMMENT '顺序',
+  `sequence` INT COMMENT '顺序',
   `status` CHAR(1) COMMENT '数据状态',
   `insert_time` DATETIME COMMENT '创建时间',
   `update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -115,7 +115,7 @@ CREATE TABLE `contacts`(
   `contact_id` INT NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `type` VARCHAR(50) COMMENT '类型',
   `name` VARCHAR(50) COMMENT '组名',
-  `describe` VARCHAR(200) COMMENT '描述',
+  `depict` VARCHAR(200) COMMENT '描述',
   `words` VARCHAR(20) COMMENT '口令',
   `user_id` INT COMMENT '成员id',
   `user_nick_name` VARCHAR(60) COMMENT '成员昵称',
@@ -139,7 +139,7 @@ CREATE TABLE `upload_file`(
   `file_name` VARCHAR(60) COMMENT '图片名',
   `suffix` VARCHAR(10) COMMENT '图片后缀',
   `img_path` VARCHAR(100) COMMENT '图片路径',
-  `order` INT COMMENT '顺序',
+  `sequence` INT COMMENT '顺序',
   `user_id` INT COMMENT '创建人id',
   `user_nick_name` VARCHAR(60) COMMENT '用户昵称',
   `user_img_path` VARCHAR(100) COMMENT '用户头像图片路径',

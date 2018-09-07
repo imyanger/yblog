@@ -116,6 +116,19 @@
 		</dependency>
 		<!-- lombok插件 -->
 		
+		<!-- swagger2API文档支持 -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.7.0</version>
+		</dependency>
+		<!-- swagger2API文档支持 -->
+		
 		<!-- 测试相关 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
