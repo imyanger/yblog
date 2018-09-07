@@ -15,7 +15,7 @@
 - [x] swagger2API文档支持
 - [x] shiro权限
 
-## 后端主要依赖 ##
+## 前端主要依赖 ##
 - [x] Element UI
 - [x] vue.js
 - [x] ueditor富文本
