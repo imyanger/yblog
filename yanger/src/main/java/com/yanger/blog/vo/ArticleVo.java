@@ -3,6 +3,8 @@ package com.yanger.blog.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.yanger.mybatis.annotations.Column;
+
 import lombok.Data;
 
 /**
@@ -19,6 +21,9 @@ public class ArticleVo implements Serializable {
 	/** 对应字段：article_id,备注：主键id */
 	private Integer articleId;
 
+	/** 对应字段：module,备注：模块 */
+	private String module;
+	
 	/** 对应字段：type,备注：所属类型 */
 	private String type;
 
@@ -63,6 +68,5 @@ public class ArticleVo implements Serializable {
 
 	/** 对应字段：update_time,备注：更新时间 */
 	private Date updateTime;
-
 
 }

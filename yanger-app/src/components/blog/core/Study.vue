@@ -3,20 +3,20 @@
 		<div id="content_left">
 			<div id="article">
 				<h2 class="title-h2">路漫漫其修远兮&nbsp;&nbsp;&nbsp;吾将上下而求索</h2>
-				<div class="content_study_note" v-for="(study, index) in studyData.data.studys" :key="study.index">
+				<div class="content_study_note" v-for="(study, index) in studyData.studyPage.data" :key="study.index">
 					<div class="note_left">
 						<img alt="" src="static/img/img.jpg">
 					</div>
 					<div class="note_right">
 						<h4><a href="" title="文章标题">{{study.title}}</a><span>分类：{{study.classify}}</span></h4>
 						<p class="note_c">{{study.summary}}</p>
-						<autor :createDate='study.createDate' :likes='study.likes' :commons='study.commons' :views='study.views'></autor>
+						<autor :createDate='study.updateTime' :likes='study.likes' :commons='study.commons' :views='study.views'></autor>
 					</div>
 				</div>
 				<!-- 分页组件 -->
 				<el-pagination @current-change="handleCurrentChange" @prev-click="handlePrevClick"
-					@next-click="handleNextClick" :current-page.sync="studyData.page.currentPage" :page-size="studyData.page.size" 
-					layout="total,jumper, prev, pager, next" :total="studyData.page.total">
+					@next-click="handleNextClick" :current-page.sync="studyData.studyPage.pageNo" :page-size="studyData.studyPage.pageSize" 
+					layout="total,jumper, prev, pager, next" :total="studyData.studyPage.totalCount">
 				</el-pagination>
 			</div>
 		</div>
@@ -24,42 +24,23 @@
 			<!-- 网站登录模块 -->
 			<div id="search">
 				<el-row>
-					<el-input placeholder="请输入内容以搜索" prefix-icon="el-icon-search" v-model="studyData.queryValue"></el-input>
-					<i class="el-icon-search"></i>
+					<el-input placeholder="请输入内容以搜索" prefix-icon="el-icon-search" v-model="queryValue"></el-input>
+					<i class="el-icon-search" @click="queryArticle"></i>
 				</el-row>
 			</div>
 			<div id="note_clazz">
-				<h3>文章分类 </h3>
+				<h3>文章分类</h3>
 				<el-tabs tab-position="left">
-					<el-tab-pane label="java">
-						<ul>
-							<li>源码解析（3）</li>
-							<li>JVM分析</li>
-						</ul>
-					</el-tab-pane>
-					<el-tab-pane label="web前端">
-						<ul>
-							<li>vue</li>
-							<li>html</li>
-						</ul>
-					</el-tab-pane>
-					<el-tab-pane label="数据库">
-						<ul>
-							<li>mysql</li>
-							<li>分布式数据库</li>
-						</ul>
-					</el-tab-pane>
-					<el-tab-pane label="其他">
-						<ul>
-							<li>linux</li>
-							<li>阿里云部署</li>
+					<el-tab-pane :label="kind.type" v-for="kind in studyData.kinds" :key="kind.index">
+						<ul v-for="child in kind.children" :key="child.index">
+							<li>{{child.classify}}（{{child.sum}}）</li>
 						</ul>
 					</el-tab-pane>
 				</el-tabs>
 			</div>
 			<div  id="note_hot">
 				<h3>热门文章 </h3>
-				<ul  v-for="(hot, index) in studyData.data.hots" :key="hot.index">
+				<ul  v-for="(hot, index) in studyData.hots" :key="hot.index">
 					<li>
 						<a href="" :title="hot.id" target="_blank">{{hot.title}}</a>
 					</li>
@@ -75,94 +56,23 @@
 		data() {
 			return {
 				studyData: {
-					data: {
-						studys: [
-							{
-								createDate: "1028-09-09",
-								title: "2二十大二恶大的撒",
-								classify: 'java',
-								summary:
-									"魔力数据dsds的四大四大阿魔力数据dsds的四大四大魔力数据dsds的四大四大魔力数据dsds的四大四大魔力数据dsds的四大四大达阿斯顿撒旦撒旦阿达",
-								likes: 18,
-								commons: 299,
-								views: 333
-							},
-							{
-								createDate: "1028-09-09",
-								title: "恶风大大的撒",
-								classify: 'java',
-								summary: "魔力数据斯顿撒旦撒旦阿达",
-								likes: 18,
-								commons: 299,
-								views: 333
-							},
-							{
-								createDate: "1028-09-09",
-								title: "十大大的撒",
-								summary:
-								"魔力数据dsds的四大四大阿魔力数据dsds的四大四大魔力数据sds的四大四大阿魔力数据ds\
-											s的四大四大魔力数据dsds的sds的四大四大阿魔力数据dsds的四大四大魔力数据dsds的sds的四大四\
-											数据dsds的四大四大魔力数数据dsds的四大四大魔力数数据dsds的四大四大魔力数大阿魔力数据dsds的四大四大魔力数据dsds\
-											的dsds的四大四大魔力数据dsds的四大四大魔力数据dsds的四大四大达阿斯顿数据dsds的四大四大魔力数数据dsds的四大四大魔力数数据dsds的四大四大魔力数撒旦撒旦阿达",
-								likes: 18,
-								commons: 299,
-								views: 333
-							},
-							{
-								createDate: "1028-09-09",
-								title: "十大大的撒",
-								summary:
-								"魔力数据dsds的四大四大阿魔力数据dsds的四大四大魔力数据sds的四大四大阿魔力数据ds\
-											s的四大四大魔力数据dsds的sds的四大四大阿魔力数据dsds的四大四大魔力数据dsds的sds的四大四\
-											数据dsds的四大四大魔力数数据dsds的四大四大魔力数数据dsds的四大四大魔力数大阿魔力数据dsds的四大四大魔力数据dsds\
-											的dsds的四大四大魔力数据dsds的四大四大魔力数据dsds的四大四大达阿斯顿数据dsds的四大四大魔力数数据dsds的四大四大魔力数数据dsds的四大四大魔力数撒旦撒旦阿达",
-								likes: 18,
-								commons: 299,
-								views: 333
-							},
-							{
-								createDate: "1028-09-09",
-								title: "十大大的撒",
-								summary:
-								"魔力数据dsds的四大四大阿魔力数据dsds的四大四大魔力数据sds的四大四大阿魔力数据ds\
-											s的四大四大魔力数据dsds的sds的四大四大阿魔力数据dsds的四大四大魔力数据dsds的sds的四大四\
-											数据dsds的四大四大魔力数数据dsds的四大四大魔力数数据dsds的四大四大魔力数大阿魔力数据dsds的四大四大魔力数据dsds\
-											的dsds的四大四大魔力数据dsds的四大四大魔力数据dsds的四大四大达阿斯顿数据dsds的四大四大魔力数数据dsds的四大四大魔力数数据dsds的四大四大魔力数撒旦撒旦阿达",
-								likes: 18,
-								commons: 299,
-								views: 333
-							}
-						],
-						hots: [
-							{
-								id: 1,
-								title: '山东省地方'
-							},
-							{
-								id: 1,
-								title: '多的是矫情的人'
-							},
-							{
-								id: 1,
-								title: '一个人的夜我的心应该放在哪里'
-							},{
-								id: 1,
-								title: '礼物不需要太贵'
-							},{
-								id: 1,
-								title: '胜多负少都很开放'
-							}
-						]
-					},
-					page: {
-						currentPage: 1,
-						size: 5,
-						total: 20
-					},
-					queryValue: ''
-				}
+					studyPage: {
+					}
+				},
+				queryValue: ''
 			};
 		},
+		created() {
+            //上下文的改变
+            let _this = this;
+            this.$get("/blog/studyInit")
+            .then(function (response) {
+                _this.studyData = response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
 		methods: {
 			handleCurrentChange(val) {
 				console.log(`当前页: ${val}`);
@@ -172,6 +82,9 @@
 			},
 			handleNextClick(val) {
 				console.log("下一页: ${val}");
+			},
+			queryArticle() {
+				alert(this.queryValue)
 			}
 		},
 		components: {
