@@ -29,5 +29,5 @@
 
 ## 前后端具体说明 ##
 
-	[后端具体说明](https://github.com/imyanger/yblog/tree/master/yanger)
-	[前端具体说明](https://github.com/imyanger/yblog/tree/master/yanger-app)
+[后端具体说明](https://github.com/imyanger/yblog/blob/master/yanger/README.md)
+[前端具体说明](https://github.com/imyanger/yblog/blob/master/yanger-app/README.md)
