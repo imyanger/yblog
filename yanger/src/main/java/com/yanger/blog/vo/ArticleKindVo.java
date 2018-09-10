@@ -8,17 +8,20 @@ import lombok.Data;
 
 /**
  *
- * 表article_kinds的VO对象,通过com.yanger.generator包代码工具自动生成<br/>
- * 对应表名：article_kinds
+ * 表article_kind的VO对象,通过com.yanger.generator包代码工具自动生成<br/>
+ * 对应表名：article_kind
  *
  */
 @Data
-public class ArticleKindsVo implements Serializable {
+public class ArticleKindVo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	/** 对应字段：art_kinds_id,备注：主键id */
 	private Integer artKindsId;
+
+	/** 对应字段：module,备注：模块 */
+	private String module;
 
 	/** 对应字段：type,备注：所属类型 */
 	private String type;
@@ -39,6 +42,6 @@ public class ArticleKindsVo implements Serializable {
 	private Date updateTime;
 
 	/** 子级文章分类 */
-	private List<ArticleKindsVo> children;
-	
+	private List<ArticleKindVo> children;
+
 }

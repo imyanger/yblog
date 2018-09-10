@@ -63,9 +63,10 @@ CREATE TABLE `blog_user`(
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `article_kinds`;
+DROP TABLE IF EXISTS `article_kind`;
 CREATE TABLE `article_kinds`(  
   `art_kinds_id` INT NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `module` VARCHAR(50) COMMENT '模块',
   `type` VARCHAR(50) COMMENT '所属类型',
   `classify` VARCHAR(50) COMMENT '分类（具体）',
   `sum` INT COMMENT '文章数量',

@@ -1,72 +1,75 @@
 package com.yanger.common.config;
- 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
- 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yanger.common.util.RedisMagger;
+
 /**
- * Created by chenqixuan on 17/10/25.
- * 集成RedisTemplate
+ * redis 配置类
+ * @author YangHao
+ *
  */
 @Configuration
-@EnableAutoConfiguration
+@EnableCaching
 public class RedisConfig {
- 
-	private static final Logger logger = LoggerFactory.getLogger(RedisConfig.class);
- 
-    //获取springboot配置文件的值 (get的时候获取)
-    @Value("${spring.redis.hostName}")
-    private String host;
- 
-    @Value("${spring.redis.password}")
-    private String password;
- 
- 
-    /**
-     * @Bean 和 @ConfigurationProperties
-     * 该功能在官方文档是没有提到的，我们可以把@ConfigurationProperties和@Bean和在一起使用。
-     * 举个例子，我们需要用@Bean配置一个Config对象，Config对象有a，b，c成员变量需要配置，
-     * 那么我们只要在yml或properties中定义了a=1,b=2,c=3，
-     * 然后通过@ConfigurationProperties就能把值注入进Config对象中
-     * @return
-     */
-    @Bean
-    @ConfigurationProperties(prefix = "spring.redis.pool")
-    public JedisPoolConfig getRedisConfig() {
-        JedisPoolConfig config = new JedisPoolConfig();
-        return config;
+	
+	@Value("${spring.redis.host}")
+	private String redisHost;
+
+	@Value("${spring.redis.port}")
+	private int redisPort;
+
+	/*@Bean
+	public JedisConnectionFactory jedisConnectionFactory() {
+		JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
+		jedisConnectionFactory.setHostName(redisHost);
+		jedisConnectionFactory.setPort(redisPort);
+		return jedisConnectionFactory;
+	}*/
+  
+    // 以下两种redisTemplate自由根据场景选择
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	@Bean
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(connectionFactory);
+
+        //使用Jackson2JsonRedisSerializer来序列化和反序列化redis的value值（默认使用JDK的序列化方式）
+        Jackson2JsonRedisSerializer serializer = new Jackson2JsonRedisSerializer(Object.class);
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        serializer.setObjectMapper(mapper);
+
+        redisTemplate.setValueSerializer(serializer);
+        //使用StringRedisSerializer来序列化和反序列化redis的key值
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.afterPropertiesSet();
+        return redisTemplate;
     }
- 
+    
     @Bean
-    @ConfigurationProperties(prefix = "spring.redis")
-    public JedisConnectionFactory getConnectionFactory() {
-        JedisConnectionFactory factory = new JedisConnectionFactory();
-        factory.setUsePool(true);
-        JedisPoolConfig config = getRedisConfig();
-        factory.setPoolConfig(config);
-        logger.info("JedisConnectionFactory bean init success.");
-        return factory;
+    public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory factory) {
+        StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
+        stringRedisTemplate.setConnectionFactory(factory);
+        return stringRedisTemplate;
     }
- 
- 
+    
     @Bean
-    public RedisTemplate<?, ?> getRedisTemplate() {
-        JedisConnectionFactory factory = getConnectionFactory();
-        logger.info(this.host+","+factory.getHostName()+","+factory.getDatabase());
-        logger.info(this.password+","+factory.getPassword());
-        logger.info(factory.getPoolConfig().getMaxIdle());
-//        factory.setHostName(this.host);
-//        factory.setPassword(this.password);
-        RedisTemplate<?, ?> template = new StringRedisTemplate(getConnectionFactory());
-        return template;
+    public RedisMagger redisMagger(RedisTemplate<String, Object> redisTemplate) {
+        return new RedisMagger(redisTemplate);
     }
+    
 }

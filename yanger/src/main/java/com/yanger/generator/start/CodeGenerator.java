@@ -13,8 +13,7 @@ public class CodeGenerator {
 	public static void main(String[] args) {
 		List<GenParam> paramList = new ArrayList<GenParam>();
 		//模块包名  -- 扫描的表名
-		paramList.add(new GenParam("blog", new String[] { "article", "article_kinds", "contacts", 
-				"leaving_msg", "operate_log", "outer_link", "upload_file", "blog_user" }));
+		paramList.add(new GenParam("blog", new String[] {"article_kind"}));
 		GenConfig gc = new GenConfig();
 		gc.setBasePackage("com.yanger");
 		// 设置要忽略的表名前缀，默认空

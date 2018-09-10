@@ -20,6 +20,6 @@ public class StudyDataVo implements Serializable {
 	List<ArticleVo> hots = new ArrayList<>(0);
 	
 	//文章分类
-	List<ArticleKindsVo> kinds;
+	List<ArticleKindVo> kinds;
 	
 }

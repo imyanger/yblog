@@ -3,14 +3,14 @@
 <!-- ============================================================== -->
 <!-- ================可直接使用Base配置文件中定义的节点！================ -->
 <!-- ============================================================== -->
-<mapper namespace="com.yanger.blog.dao.ArticleKindsDao">
+<mapper namespace="com.yanger.blog.dao.ArticleKindDao">
   <!-- 请在下方添加自定义配置-->
 
 	<!-- 查询所有文章分类数据 -->
-	<select id="findAll" resultMap="BaseResultMap" >
+	<select id="findAll" resultMap="BaseResultMap" parameterType="String">
 		select
 			<include refid="Base_Column_List" />
-		from article_kinds where status = '1'
+		from article_kind where status = '1' and module = #{_parameter}
 	</select>
 
 </mapper>

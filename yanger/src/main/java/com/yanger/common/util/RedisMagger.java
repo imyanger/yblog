@@ -20,15 +20,19 @@ import org.springframework.util.CollectionUtils;
 * @author 杨号  
 * @date 2018年9月10日
  */
-public class RedisUtil {
- 
+public class RedisMagger {
  
 	@Autowired
 	private RedisTemplate<String, Object> redisTemplate;
 	
+	public RedisMagger(RedisTemplate<String, Object> redisTemplate) {
+		this.redisTemplate = redisTemplate;
+	}
+	
 	public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
 		this.redisTemplate = redisTemplate;
 	}
+	
 	//=============================common============================
 	/**
 	 * 指定缓存失效时间

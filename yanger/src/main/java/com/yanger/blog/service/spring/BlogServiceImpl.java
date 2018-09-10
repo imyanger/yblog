@@ -10,15 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yanger.blog.dao.ArticleDao;
-import com.yanger.blog.dao.ArticleKindsDao;
+import com.yanger.blog.dao.ArticleKindDao;
 import com.yanger.blog.dao.LeavingMsgDao;
 import com.yanger.blog.dao.OuterLinkDao;
 import com.yanger.blog.po.Article;
-import com.yanger.blog.po.ArticleKinds;
+import com.yanger.blog.po.ArticleKind;
 import com.yanger.blog.po.LeavingMsg;
 import com.yanger.blog.po.OuterLink;
 import com.yanger.blog.service.facade.BlogService;
-import com.yanger.blog.vo.ArticleKindsVo;
+import com.yanger.blog.vo.ArticleKindVo;
 import com.yanger.blog.vo.ArticleVo;
 import com.yanger.blog.vo.HomeDataVo;
 import com.yanger.blog.vo.LeavingMsgVo;
@@ -44,7 +44,7 @@ public class BlogServiceImpl implements BlogService{
 	private OuterLinkDao outerLinkDao;
 	
 	@Autowired
-	private ArticleKindsDao articleKindsDao;
+	private ArticleKindDao articleKindDao;
 	
 	/**
 	 * <p>Description: 获取博客首页数据</p>  
@@ -158,7 +158,7 @@ public class BlogServiceImpl implements BlogService{
 		List<ArticleVo> hots = this.findArticles(PageParam.NO_PAGE, 10, ConstantUtils.ARTICLE_MODULE_STUDY, "likes");
 		studyDataVo.setHots(hots);
 		//获取文章分类
-		List<ArticleKindsVo> kinds = this.findArticleKinds();
+		List<ArticleKindVo> kinds = this.findArticleKinds();
 		studyDataVo.setKinds(kinds);
 		return studyDataVo;
 	}
@@ -190,24 +190,24 @@ public class BlogServiceImpl implements BlogService{
 	 * @param type
 	 * @return
 	 */
-	private List<ArticleKindsVo> findArticleKinds() throws Exception {
+	private List<ArticleKindVo> findArticleKinds() throws Exception {
 		//重组新的层级分类
-		List<ArticleKindsVo> kinds = new ArrayList<>();
-		List<ArticleKinds> ArticleKindsList = articleKindsDao.findAll();
-		Map<String, ArticleKindsVo> map = new HashedMap<>(0);
+		List<ArticleKindVo> kinds = new ArrayList<>();
+		List<ArticleKind> ArticleKindsList = articleKindDao.findAll(ConstantUtils.ARTICLE_MODULE_STUDY);
+		Map<String, ArticleKindVo> map = new HashedMap<>(0);
 		//按层级组织
-		for (ArticleKinds articleKinds : ArticleKindsList) {
-			ArticleKindsVo articleKindsVo = new ArticleKindsVo();
+		for (ArticleKind articleKinds : ArticleKindsList) {
+			ArticleKindVo articleKindsVo = new ArticleKindVo();
 			BeanUtils.copyProperties(articleKindsVo, articleKinds);
-			ArticleKindsVo outer = null;
-			List<ArticleKindsVo> inners = null;
+			ArticleKindVo outer = null;
+			List<ArticleKindVo> inners = null;
 			//文章的type大类型
 			String type = articleKinds.getType();
 			if(map.containsKey(type)) {
 				outer = map.get(type);
 				inners = outer.getChildren();
 			}else {
-				outer = new ArticleKindsVo();
+				outer = new ArticleKindVo();
 				BeanUtils.copyProperties(outer, articleKinds);
 				inners = new ArrayList<>();
 				//新创建的对象放入集合中

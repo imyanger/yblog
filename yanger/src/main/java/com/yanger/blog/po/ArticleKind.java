@@ -9,19 +9,23 @@ import lombok.Data;
 
 /**
  *
- * 表article_kinds的PO对象，通过com.yanger.generator包代码工具自动生成<br/>
- * 对应表名：article_kinds
+ * 表article_kind的PO对象，通过com.yanger.generator包代码工具自动生成<br/>
+ * 对应表名：article_kind
  *
  */
 @Data
-@Table(name="article_kinds")
-public class ArticleKinds implements Serializable {
+@Table(name="article_kind")
+public class ArticleKind implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	/** 对应字段：art_kinds_id,备注：主键id */
 	@Column(name="art_kinds_id",description="主键id")
 	private Integer artKindsId;
+
+	/** 对应字段：module,备注：模块 */
+	@Column(name="module",description="模块")
+	private String module;
 
 	/** 对应字段：type,备注：所属类型 */
 	@Column(name="type",description="所属类型")
