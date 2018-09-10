@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yanger.blog.service.facade.BlogService;
 import com.yanger.blog.vo.HomeDataVo;
 import com.yanger.blog.vo.StudyDataVo;
+import com.yanger.common.util.RedisCache;
 import com.yanger.common.vo.ApiResponse;
 
 import io.swagger.annotations.Api;
@@ -20,6 +21,17 @@ public class BlogApi {
 	
 	@Autowired
 	private BlogService blogService;
+	
+	@GetMapping("t")
+	public void t(){
+		RedisCache<String, String> redisCache = new RedisCache<String, String>();
+		if(redisCache.hasKey("aaa")){
+			String v = redisCache.get("aaa");
+			System.out.println(v);
+		}else {
+			redisCache.put("aaa", "redis測試");
+		}
+	}
 	
 	/**
 	 * <p>Description: 博客首页数据初始化 </p>  
