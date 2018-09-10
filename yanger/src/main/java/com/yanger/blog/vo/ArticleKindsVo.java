@@ -2,6 +2,7 @@ package com.yanger.blog.vo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -37,5 +38,7 @@ public class ArticleKindsVo implements Serializable {
 	/** 对应字段：update_time,备注：更新时间 */
 	private Date updateTime;
 
-
+	/** 子级文章分类 */
+	private List<ArticleKindsVo> children;
+	
 }

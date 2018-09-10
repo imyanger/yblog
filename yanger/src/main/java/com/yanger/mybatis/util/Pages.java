@@ -30,16 +30,26 @@ public class Pages {
 			Beans.copy().from(fromList.get(i)).to(to);
 			toList.add(to);
 		}
-		int pageNo = pageParam.getPage();
-		int pageSize = pageParam.getLimit();
-		int totalCount = pageParam.getTotalCount();
+		int pageNo = 0;
+		int pageSize = 0;
+		int totalCount = 0;
+		
 		if (pageParam.isContainsTotalCount()) {
+			pageNo = pageParam.getPage();
+			pageSize = pageParam.getLimit();
+			totalCount = pageParam.getTotalCount();
+		} else {
 			Paginator paginator = fromList.getPaginator();
 			if (paginator != null) {
 				pageNo = paginator.getPage();
 				pageSize = paginator.getLimit();
 				totalCount = paginator.getTotalCount();
 			}
+		}
+		
+		//当前页数量不能大于总数
+		if(pageSize > totalCount){
+			pageSize = totalCount;
 		}
 
 		return new ResultPage<>(pageNo, pageSize, totalCount, toList);

@@ -6,5 +6,11 @@
 <mapper namespace="com.yanger.blog.dao.ArticleKindsDao">
   <!-- 请在下方添加自定义配置-->
 
+	<!-- 查询所有文章分类数据 -->
+	<select id="findAll" resultMap="BaseResultMap" >
+		select
+			<include refid="Base_Column_List" />
+		from article_kinds where status = '1'
+	</select>
 
 </mapper>

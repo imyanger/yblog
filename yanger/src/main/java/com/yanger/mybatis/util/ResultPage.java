@@ -8,7 +8,7 @@ public class ResultPage<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private long pageNo;
-	private long perPage;
+	private long pageSize;
 	private long totalCount;
 	private List<T> data;
 
@@ -16,8 +16,8 @@ public class ResultPage<T> implements Serializable {
 		this.pageNo = pageNo;
 	}
 
-	public void setPerPage(long perPage) {
-		this.perPage = perPage;
+	public void setPageSize(long pageSize) {
+		this.pageSize = pageSize;
 	}
 
 	public void setTotalCount(long totalCount) {
@@ -43,7 +43,7 @@ public class ResultPage<T> implements Serializable {
 		if (getPageNo() != other.getPageNo()) {
 			return false;
 		}
-		if (getPerPage() != other.getPerPage()) {
+		if (getPageSize() != other.getPageSize()) {
 			return false;
 		}
 		if (getTotalCount() != other.getTotalCount()) {
@@ -62,7 +62,7 @@ public class ResultPage<T> implements Serializable {
 		int result = 1;
 		long $pageNo = getPageNo();
 		result = result * 59 + (int) ($pageNo >>> 32 ^ $pageNo);
-		long $perPage = getPerPage();
+		long $perPage = getPageSize();
 		result = result * 59 + (int) ($perPage >>> 32 ^ $perPage);
 		long $totalCount = getTotalCount();
 		result = result * 59 + (int) ($totalCount >>> 32 ^ $totalCount);
@@ -72,7 +72,7 @@ public class ResultPage<T> implements Serializable {
 	}
 
 	public String toString() {
-		return "ResultPage(pageNo=" + getPageNo() + ", perPage=" + getPerPage() + ", totalCount=" + getTotalCount()
+		return "ResultPage(pageNo=" + getPageNo() + ", perPage=" + getPageSize() + ", totalCount=" + getTotalCount()
 				+ ", data=" + getData() + ")";
 	}
 
@@ -80,8 +80,8 @@ public class ResultPage<T> implements Serializable {
 		return pageNo;
 	}
 
-	public long getPerPage() {
-		return perPage;
+	public long getPageSize() {
+		return pageSize;
 	}
 
 	public long getTotalCount() {
@@ -94,7 +94,7 @@ public class ResultPage<T> implements Serializable {
 
 	public ResultPage(long pageNo, long perPage, long totalCount, List<T> data) {
 		this.pageNo = pageNo;
-		this.perPage = perPage;
+		this.pageSize = perPage;
 		this.totalCount = totalCount;
 		this.data = data;
 	}

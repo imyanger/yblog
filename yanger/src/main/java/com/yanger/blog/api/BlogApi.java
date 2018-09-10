@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yanger.blog.service.facade.BlogService;
 import com.yanger.blog.vo.HomeDataVo;
+import com.yanger.blog.vo.StudyDataVo;
 import com.yanger.common.vo.ApiResponse;
 
 import io.swagger.annotations.Api;
@@ -41,4 +42,25 @@ public class BlogApi {
 		
 	}
 
+	/**
+	 * <p>Description: 学习笔记页面数据初始化 </p>  
+	 * @author YangHao  
+	 * @date 2018年9月6日-下午11:07:41
+	 * @return
+	 */
+	@ApiOperation(value = "学习笔记页面数据初始化", notes = "")
+	@GetMapping("/studyInit")
+	public ApiResponse<StudyDataVo> studyInit(){
+		ApiResponse<StudyDataVo> api = new ApiResponse<>();
+		try {
+			StudyDataVo studyDataVo = blogService.getStudyData();
+			api.setData(studyDataVo);
+		} catch (Exception e) {
+			api.error("加载学习笔记数据失败");
+			e.printStackTrace();
+		}
+		return api;
+		
+	}
+	
 }
