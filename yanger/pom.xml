@@ -150,6 +150,16 @@
 		</dependency>
 		<!-- 测试相关 -->
 		
+		<!-- 热部署 -->
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <!-- optional=true,依赖不会传递 -->  
+            <optional>true</optional>
+            <scope>true</scope>
+		</dependency>
+		<!-- 热部署 -->
+		
 	</dependencies>
 
 	<build>
@@ -157,6 +167,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<fork>true</fork>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

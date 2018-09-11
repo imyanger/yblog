@@ -31,7 +31,7 @@ public class BlogApi {
 			String v = (String) RedisMagger.get("r");
 			System.out.println(v);
 		}else {
-			RedisMagger.set("r", "123");
+			RedisMagger.set("r", "123测试缓存");
 			
 		}
 	}
@@ -54,7 +54,6 @@ public class BlogApi {
 			e.printStackTrace();
 		}
 		return api;
-		
 	}
 
 	/**
@@ -75,7 +74,6 @@ public class BlogApi {
 			e.printStackTrace();
 		}
 		return api;
-		
 	}
 	
 }
