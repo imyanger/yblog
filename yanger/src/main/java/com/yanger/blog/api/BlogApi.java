@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yanger.blog.service.facade.BlogService;
+import com.yanger.blog.vo.EssayDataVo;
 import com.yanger.blog.vo.HomeDataVo;
 import com.yanger.blog.vo.StudyDataVo;
 import com.yanger.common.util.RedisMagger;
@@ -71,6 +72,26 @@ public class BlogApi {
 			api.setData(studyDataVo);
 		} catch (Exception e) {
 			api.error("加载学习笔记数据失败");
+			e.printStackTrace();
+		}
+		return api;
+	}
+	
+	/**
+	 * <p>Description: 学习笔记页面数据初始化 </p>  
+	 * @author YangHao  
+	 * @date 2018年9月6日-下午11:07:41
+	 * @return
+	 */
+	@ApiOperation(value = "心情随笔页面数据初始化", notes = "")
+	@GetMapping("/essayInit")
+	public ApiResponse<EssayDataVo> essayInit(){
+		ApiResponse<EssayDataVo> api = new ApiResponse<>();
+		try {
+			EssayDataVo essayDataVo = blogService.getEssayData();
+			api.setData(essayDataVo);
+		} catch (Exception e) {
+			api.error("加载心情随笔数据失败");
 			e.printStackTrace();
 		}
 		return api;

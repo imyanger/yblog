@@ -20,6 +20,7 @@ import com.yanger.blog.po.OuterLink;
 import com.yanger.blog.service.facade.BlogService;
 import com.yanger.blog.vo.ArticleKindVo;
 import com.yanger.blog.vo.ArticleVo;
+import com.yanger.blog.vo.EssayDataVo;
 import com.yanger.blog.vo.HomeDataVo;
 import com.yanger.blog.vo.LeavingMsgVo;
 import com.yanger.blog.vo.OuterLinkVo;
@@ -158,7 +159,7 @@ public class BlogServiceImpl implements BlogService{
 		List<ArticleVo> hots = this.findArticles(PageParam.NO_PAGE, 10, ConstantUtils.ARTICLE_MODULE_STUDY, "likes");
 		studyDataVo.setHots(hots);
 		//获取文章分类
-		List<ArticleKindVo> kinds = this.findArticleKinds();
+		List<ArticleKindVo> kinds = this.findArticleKinds(ConstantUtils.ARTICLE_MODULE_STUDY);
 		studyDataVo.setKinds(kinds);
 		return studyDataVo;
 	}
@@ -190,10 +191,10 @@ public class BlogServiceImpl implements BlogService{
 	 * @param type
 	 * @return
 	 */
-	private List<ArticleKindVo> findArticleKinds() throws Exception {
+	private List<ArticleKindVo> findArticleKinds(String module) throws Exception {
 		//重组新的层级分类
 		List<ArticleKindVo> kinds = new ArrayList<>();
-		List<ArticleKind> ArticleKindsList = articleKindDao.findAll(ConstantUtils.ARTICLE_MODULE_STUDY);
+		List<ArticleKind> ArticleKindsList = articleKindDao.findAll(module);
 		Map<String, ArticleKindVo> map = new HashedMap<>(0);
 		//按层级组织
 		for (ArticleKind articleKinds : ArticleKindsList) {
@@ -220,4 +221,28 @@ public class BlogServiceImpl implements BlogService{
 		//分页数据
 		return kinds;
 	}
+
+	/**
+	 * <p>Description: 获取心情随笔页面数据</p>  
+	 * @author YangHao  
+	 * @date 2018年9月3日-下午11:06:07
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public EssayDataVo getEssayData() throws Exception {
+		EssayDataVo essayDataVo = new EssayDataVo();
+		//获得读书笔记
+		ResultPage<ArticleVo> essayPage = this.findArticlePageByModule(1, 5, ConstantUtils.ARTICLE_MODULE_ESSAY);
+		essayDataVo.setEssayPage(essayPage);
+		//获取热门文章
+		List<ArticleVo> hots = this.findArticles(PageParam.NO_PAGE, 6, ConstantUtils.ARTICLE_MODULE_ESSAY, "views");
+		essayDataVo.setHots(hots);
+		//获取文章分类
+		List<ArticleKindVo> kinds = this.findArticleKinds(ConstantUtils.ARTICLE_MODULE_ESSAY);
+		essayDataVo.setKinds(kinds);
+		return essayDataVo;
+	}
+	
+	
 }
