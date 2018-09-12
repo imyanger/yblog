@@ -51,14 +51,15 @@
 		<if test="classify != null" >
 			and classify = #{classify}
 		</if>
-		<if test="title != null" >
-			and title = #{title}
-		</if>
 		<if test="author != null" >
 			and author = #{author}
 		</if>
+		<!-- 关键字的模糊查询 -->
 		<if test="ruxWords != null" >
-			and rux_words = #{ruxWords}
+			and (rux_words like "%"#{ruxWords}"%" or title like "%"#{ruxWords}"%")
+		</if>
+		<if test="title != null" >
+			and title = #{title}
 		</if>
 		<if test="summary != null" >
 			and summary = #{summary}

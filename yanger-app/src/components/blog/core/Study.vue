@@ -33,7 +33,7 @@
 				<el-tabs tab-position="left">
 					<el-tab-pane :label="kind.type" v-for="kind in studyData.kinds" :key="kind.index">
 						<ul v-for="child in kind.children" :key="child.index">
-							<li>{{child.classify}}（{{child.sum}}）</li>
+							<li @click="queryClassify(kind.type, child.classify)">{{child.classify}}（{{child.sum}}）</li>
 						</ul>
 					</el-tab-pane>
 				</el-tabs>
@@ -74,8 +74,9 @@
             });
         },
 		methods: {
+			//页码改变
 			handleCurrentChange(val) {
-				console.log(`当前页: ${val}`);
+				this.getPage(val);
 			},
 			handlePrevClick(val) {
 				console.log("上一页: ${val}");
@@ -84,7 +85,28 @@
 				console.log("下一页: ${val}");
 			},
 			queryArticle() {
-				alert(this.queryValue)
+				//条件查询，点击查询出符合条件的第一页
+				this.getPage(1);
+			},
+			queryClassify(type, classify) {
+				this.getPage(1, type, classify);
+			},
+			//获取页码数据
+			getPage(pageNo, type, classify) {
+				let _this = this;
+				this.$post("/blog/articlePage", {
+					module: "学习笔记",
+					pageNo: pageNo,
+					queryValue: _this.queryValue,
+					classify: classify,
+					type: type
+				})
+				.then(function (response) {
+					_this.studyData.studyPage = response.data;
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
 			}
 		},
 		components: {

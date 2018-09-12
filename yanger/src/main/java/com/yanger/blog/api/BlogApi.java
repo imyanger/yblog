@@ -2,15 +2,20 @@ package com.yanger.blog.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yanger.blog.service.facade.BlogService;
+import com.yanger.blog.vo.ArticleVo;
 import com.yanger.blog.vo.EssayDataVo;
 import com.yanger.blog.vo.HomeDataVo;
+import com.yanger.blog.vo.PageQueryVo;
 import com.yanger.blog.vo.StudyDataVo;
 import com.yanger.common.util.RedisMagger;
 import com.yanger.common.vo.ApiResponse;
+import com.yanger.mybatis.util.ResultPage;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -92,6 +97,20 @@ public class BlogApi {
 			api.setData(essayDataVo);
 		} catch (Exception e) {
 			api.error("加载心情随笔数据失败");
+			e.printStackTrace();
+		}
+		return api;
+	}
+	
+	@ApiOperation(value = "查询文章分页数据", notes = "")
+	@PostMapping("/articlePage")
+	public ApiResponse<ResultPage<ArticleVo>> articlePage(@RequestBody PageQueryVo pageQueryVo){
+		ApiResponse<ResultPage<ArticleVo>> api = new ApiResponse<>();
+		try {
+			ResultPage<ArticleVo> page = blogService.getPageData(pageQueryVo);
+			api.setData(page);
+		} catch (Exception e) {
+			api.error("加载文章分页数据失败");
 			e.printStackTrace();
 		}
 		return api;

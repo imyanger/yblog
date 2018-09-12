@@ -46,11 +46,6 @@ public class Pages {
 				totalCount = paginator.getTotalCount();
 			}
 		}
-		
-		//当前页数量不能大于总数
-		if(pageSize > totalCount){
-			pageSize = totalCount;
-		}
 
 		return new ResultPage<>(pageNo, pageSize, totalCount, toList);
 	}

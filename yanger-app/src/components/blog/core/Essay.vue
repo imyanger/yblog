@@ -28,7 +28,7 @@
 				<el-tabs tab-position="left">
 					<el-tab-pane :label="kind.type" v-for="kind in essayData.kinds" :key="kind.index">
 						<ul v-for="child in kind.children" :key="child.index">
-							<li>{{child.classify}}（{{child.sum}}）</li>
+							<li @click="queryClassify(kind.type, child.classify)">{{child.classify}}（{{child.sum}}）</li>
 						</ul>
 					</el-tab-pane>
 				</el-tabs>
@@ -69,7 +69,26 @@
         },
 		methods: {
 			handleCurrentChange(val) {
-				console.log(`当前页: ${val}`);
+				this.getPage(val);
+			},
+			queryClassify(type, classify) {
+				this.getPage(1, type, classify);
+			},
+			//获取页码数据
+			getPage(pageNo, type, classify) {
+				let _this = this;
+				this.$post("/blog/articlePage", {
+					module: "心情随笔",
+					pageNo: pageNo,
+					classify: classify,
+					type: type
+				})
+				.then(function (response) {
+					_this.essayData.essayPage = response.data;
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
 			}
 		},
 		components: {

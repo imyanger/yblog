@@ -1,8 +1,11 @@
 package com.yanger.blog.service.facade;
 
+import com.yanger.blog.vo.ArticleVo;
 import com.yanger.blog.vo.EssayDataVo;
 import com.yanger.blog.vo.HomeDataVo;
+import com.yanger.blog.vo.PageQueryVo;
 import com.yanger.blog.vo.StudyDataVo;
+import com.yanger.mybatis.util.ResultPage;
 
 public interface BlogService {
 
@@ -32,5 +35,14 @@ public interface BlogService {
 	 * @throws Exception
 	 */
 	EssayDataVo getEssayData() throws Exception;
+
+	/**
+	 * <p>Description: 查询文章分页数据   默认更新时间排序  </p>  
+	 * @author YangHao  
+	 * @date 2018年9月12日-下午11:13:03
+	 * @param pageQueryVo
+	 * @return
+	 */
+	ResultPage<ArticleVo> getPageData(PageQueryVo pageQueryVo) throws Exception;
 
 }

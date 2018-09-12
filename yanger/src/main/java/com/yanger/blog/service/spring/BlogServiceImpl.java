@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections4.map.HashedMap;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ import com.yanger.blog.vo.EssayDataVo;
 import com.yanger.blog.vo.HomeDataVo;
 import com.yanger.blog.vo.LeavingMsgVo;
 import com.yanger.blog.vo.OuterLinkVo;
+import com.yanger.blog.vo.PageQueryVo;
 import com.yanger.blog.vo.StudyDataVo;
 import com.yanger.common.util.ConstantUtils;
 import com.yanger.common.util.ParamUtils;
@@ -242,6 +244,40 @@ public class BlogServiceImpl implements BlogService{
 		List<ArticleKindVo> kinds = this.findArticleKinds(ConstantUtils.ARTICLE_MODULE_ESSAY);
 		essayDataVo.setKinds(kinds);
 		return essayDataVo;
+	}
+
+	/**
+	 * <p>Description: 查询文章分页数据   默认更新时间排序</p>  
+	 * @author YangHao  
+	 * @date 2018年9月12日-下午11:13:03
+	 * @param pageQueryVo
+	 * @return
+	 */
+	@Override
+	public ResultPage<ArticleVo> getPageData(PageQueryVo pageQueryVo) throws Exception {
+		int page = pageQueryVo.getPageNo();
+		int size = 6;
+		if(ConstantUtils.ARTICLE_MODULE_ESSAY.equals(pageQueryVo.getModule())){
+			size = 5;
+		}
+		PageParam pageParam = ParamUtils.getDescPageParam(page, size, "update_time");
+		Article entry = new Article();
+		entry.setModule(pageQueryVo.getModule());
+		//有效
+		entry.setStatus(ConstantUtils.STATUS_VALID);
+		//搜索条件
+		if(StringUtils.isNotBlank(pageQueryVo.getQueryValue())){
+			//关键字的模糊匹配
+			entry.setRuxWords(pageQueryVo.getQueryValue());
+		}
+		//类型的匹配
+		if(StringUtils.isNotBlank(pageQueryVo.getClassify())){
+			entry.setType(pageQueryVo.getType());
+			entry.setClassify(pageQueryVo.getClassify());
+		}
+		Page<Article> studysPage = articleDao.selectPage(pageParam, entry);
+		//分页数据
+		return Pages.convert(pageParam, studysPage, ArticleVo.class);
 	}
 	
 	
