@@ -64,7 +64,7 @@ CREATE TABLE `blog_user`(
 
 
 DROP TABLE IF EXISTS `article_kind`;
-CREATE TABLE `article_kinds`(  
+CREATE TABLE `article_kind`(  
   `art_kinds_id` INT NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `module` VARCHAR(50) COMMENT '模块',
   `type` VARCHAR(50) COMMENT '所属类型',
