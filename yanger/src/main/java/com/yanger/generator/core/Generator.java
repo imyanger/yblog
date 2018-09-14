@@ -12,12 +12,23 @@ import com.yanger.generator.util.GeneratorUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+* <p>Title: Generator.java</p>  
+* <p>Description: 代码生成工具 </p>  
+* @author 杨号  
+* @date 2018年9月14日
+ */
 @Slf4j
 public class Generator extends BaseGenerator {
+	
 	private GenFileInfo voInfo;
+	
 	private GenFileInfo poInfo;
+	
 	private GenFileInfo daoInfo;
+	
 	private GenFileInfo baseMapperXmlInfo;
+	
 	private GenFileInfo mapperXmlInfo;
 
 	private String assemblePackage(String module, String catalog) {

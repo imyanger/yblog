@@ -10,8 +10,10 @@ import java.util.Enumeration;
 import java.util.List;
 
 /**
- * MyBatisApi的工具类
- *
+* <p>Title: MybatisApiUtils.java</p>  
+* <p>Description: MyBatisApi的工具类 </p>  
+* @author 杨号  
+* @date 2018年9月14日
  */
 public class MybatisApiUtils {
 
@@ -57,6 +59,7 @@ public class MybatisApiUtils {
 		}
 		return pageParam;
 	}
+	
     public static List<Order> getListOrders(HttpServletRequest request){
         Enumeration<String> parameters = request.getParameterNames();
         List<Order> orders = null;
@@ -99,6 +102,7 @@ public class MybatisApiUtils {
         }
         return orders;
     }
+    
 	public static int getParameterValue(HttpServletRequest request, String name, int def) {
 		String str = request.getParameter(name);
 		int value = def;
@@ -117,4 +121,5 @@ public class MybatisApiUtils {
 		}
 		return value;
 	}
+	
 }

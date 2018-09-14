@@ -15,9 +15,17 @@ import com.yanger.generator.schema.Table;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+* <p>Title: DaoExecuter.java</p>  
+* <p>Description: dao层接口生成程序 </p>  
+* @author 杨号  
+* @date 2018年9月14日
+ */
 @Slf4j
 public class DaoExecuter extends BaseExecuter {
+	
 	private GenFileInfo daoInfo;
+	
 	private GenFileInfo poInfo;
 
 	public DaoExecuter(GenConfig genConfig, GenFileInfo daoInfo, GenFileInfo poInfo) {

@@ -87,5 +87,7 @@ public class Article implements Serializable {
 	@Column(name="update_time",description="更新时间")
 	private Date updateTime;
 
+	/** 检索条件 */
+	private String queryValue;
 
 }

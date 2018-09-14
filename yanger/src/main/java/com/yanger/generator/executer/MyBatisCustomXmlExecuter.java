@@ -12,9 +12,17 @@ import com.yanger.generator.schema.Table;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+* <p>Title: MyBatisCustomXmlExecuter.java</p>  
+* <p>Description: 个性化mapper映射文件 </p>  
+* @author 杨号  
+* @date 2018年9月14日
+ */
 @Slf4j
 public class MyBatisCustomXmlExecuter extends BaseExecuter {
+	
 	private GenFileInfo mapperXmlInfo;
+	
 	private GenFileInfo daoInfo;
 
 	public MyBatisCustomXmlExecuter(GenConfig genConfig, GenFileInfo mapperXmlInfo, GenFileInfo daoInfo) {

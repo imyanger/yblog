@@ -5,7 +5,6 @@ import lombok.Data;
 /**
  * <p>
  * 生成器配置类
- * 
  * <pre> 
  * saveDir 文件生成目录  
  * tableNames   	要生成的表名称，如为空就直接指定所有表.格式为逗号分割
@@ -45,6 +44,7 @@ public class GenConfig {
 
 	/** 设置忽略下划线，默认为false */
 	protected boolean ignoreUnderline = false; 
+	
 	/*
 	 * 指定生成表名
 	 */
@@ -74,6 +74,7 @@ public class GenConfig {
 	protected String dbPassword;
 
 	protected String dbUrl;
+	
 	protected String dbSchema; 
 
 }

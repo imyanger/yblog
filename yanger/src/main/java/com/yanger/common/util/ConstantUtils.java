@@ -1,5 +1,11 @@
 package com.yanger.common.util;
 
+/**
+* <p>Title: ConstantUtils.java</p>  
+* <p>Description: 常量工具类 </p>  
+* @author 杨号  
+* @date 2018年9月14日
+ */
 public class ConstantUtils {
 
 	/** 文件跟目录 */

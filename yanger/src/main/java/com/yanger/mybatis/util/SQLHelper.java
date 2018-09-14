@@ -19,8 +19,10 @@ import com.yanger.mybatis.paginator.dialect.Dialect;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * mybatis-paginator查询count
- *
+* <p>Title: SQLHelper.java</p>  
+* <p>Description: mybatis-paginator查询count </p>  
+* @author 杨号  
+* @date 2018年9月14日
  */
 @Slf4j
 public class SQLHelper {

@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.EnableCaching;
 
 @MapperScan(basePackages = "com.yanger.*.dao")
 @SpringBootApplication
+@EnableCaching
 public class YangerApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
@@ -19,4 +20,5 @@ public class YangerApplication extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(YangerApplication.class);
 	}
+	
 }

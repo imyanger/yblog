@@ -11,11 +11,21 @@ import org.apache.commons.lang3.StringUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+* <p>Title: WordFileUtils.java</p>  
+* <p>Description: 词义翻译工具类 </p>  
+* @author 杨号  
+* @date 2018年9月14日
+ */
 @Slf4j
 public class WordFileUtils {
+	
 	public static final String WORD_ROOT_FILE = "words/wordroot.properties";
+	
 	public static final String WORD_ROOT_TABLE_FILE = "words/wordroot-table.properties";
+	
 	private static Map<String, Word> wordMap = new HashMap<>();
+	
 	public static boolean hasShowHelp = false; 
 
 	private WordFileUtils() {

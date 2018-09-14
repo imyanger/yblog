@@ -17,8 +17,10 @@ import com.yanger.generator.schema.Table;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 数据库元数据解析工具类
- *
+* <p>Title: DatabaseUtils.java</p>  
+* <p>Description: 数据库元数据解析工具类 </p>  
+* @author 杨号  
+* @date 2018年9月14日
  */
 @Slf4j 
 class DatabaseUtils {
@@ -66,7 +68,6 @@ class DatabaseUtils {
 		return result;
 	}
  
-
 	public Table getTableInfo(String tableName) {
 		Table table = new Table();
 		table.setName(tableName);
@@ -141,4 +142,5 @@ class DatabaseUtils {
 
 		return primaryKeys;
 	}
+	
 }

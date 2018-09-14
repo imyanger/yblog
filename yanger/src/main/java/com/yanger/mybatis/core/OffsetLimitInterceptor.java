@@ -26,22 +26,28 @@ import com.yanger.mybatis.paginator.dialect.Dialect;
 import com.yanger.mybatis.paginator.domain.Paginator;
 import com.yanger.mybatis.util.SQLHelper;
 
-
 /**
- * 基于mybatis-paginator插件，去掉线程池 为MyBatis提供基于方言(Dialect)的分页查询的插件
- * 
- * 将拦截Executor.query()方法实现分页方言的插入
- *
+* <p>Title: OffsetLimitInterceptor.java</p>  
+* <p>Description: 基于mybatis-paginator插件，去掉线程池 
+* 				   为MyBatis提供基于方言(Dialect)的分页查询的插件  
+* 				    将拦截Executor.query()方法实现分页方言的插入
+* </p>  
+* @author 杨号  
+* @date 2018年9月14日
  */
-
 @Intercepts({ @Signature(type = Executor.class, method = "query", args = { MappedStatement.class, Object.class,
 		RowBounds.class, ResultHandler.class }) })
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class OffsetLimitInterceptor implements Interceptor {
+	
 	private static Logger logger = LoggerFactory.getLogger(OffsetLimitInterceptor.class);
+	
 	static final int MAPPED_STATEMENT_INDEX = 0;
+	
 	static final int PARAMETER_INDEX = 1;
+	
 	static final int ROWBOUNDS_INDEX = 2;
+	
 	static final int RESULT_HANDLER_INDEX = 3;
  
 	String dialectClass;

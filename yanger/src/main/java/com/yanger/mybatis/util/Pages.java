@@ -9,8 +9,11 @@ import com.yanger.mybatis.paginator.domain.Beans;
 import com.yanger.mybatis.paginator.domain.Paginator;
 
 public class Pages {
+	
 	private static final String WHERE = " where ";
+	
 	private static final String WHERE_ONE_EQ_ONE = " where 1=1 ";
+	
 	private Pages() {
 
 	}

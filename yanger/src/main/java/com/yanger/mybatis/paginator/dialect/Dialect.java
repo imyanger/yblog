@@ -23,16 +23,22 @@ import com.yanger.mybatis.util.SQLHelper;
  * 类似hibernate的Dialect,只精简出分页部分 
  */
 public class Dialect {
+	
     protected TypeHandlerRegistry typeHandlerRegistry;
+    
     protected MappedStatement mappedStatement;
+    
     protected PageParam pageParam;
+    
     protected Object parameterObject; 
+    
     protected List<ParameterMapping> parameterMappings;
+    
     protected Map<String, Object> pageParameters = new HashMap<>();
 
     private String pageSQL;
+    
     private String countSQL;
-
 
     public Dialect(MappedStatement mappedStatement, Object parameterObject, PageParam pageParam){
         this.mappedStatement = mappedStatement;

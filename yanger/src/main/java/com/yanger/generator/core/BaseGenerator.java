@@ -17,8 +17,10 @@ import com.yanger.generator.util.WordFileUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * <p>映射文件自动生成类</p>
- * 
+* <p>Title: BaseGenerator.java</p>  
+* <p>Description: 映射文件自动生成类 </p>  
+* @author 杨号  
+* @date 2018年9月14日
  */
 @Slf4j
 abstract class BaseGenerator {
@@ -213,9 +215,6 @@ abstract class BaseGenerator {
 		return !file.exists() || fileOvervide;
 	}
 
-	
-
-
 	protected void openDir() {
 		/**
 		 * 自动打开生成文件的目录
@@ -238,4 +237,5 @@ abstract class BaseGenerator {
 			log.warn("{}", e);
 		}
 	}
+	
 }

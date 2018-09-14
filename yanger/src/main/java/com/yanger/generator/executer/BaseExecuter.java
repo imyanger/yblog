@@ -9,8 +9,16 @@ import com.yanger.generator.schema.Table;
 import com.yanger.generator.util.TypeUtils;
 import com.yanger.generator.util.WordFileUtils;
 
+/**
+* <p>Title: BaseExecuter.java</p>  
+* <p>Description: 基础生成类 </p>  
+* @author 杨号  
+* @date 2018年9月14日
+ */
 public abstract class BaseExecuter {
+	
 	protected static final String JAVA_SUFFIX = ".java";
+	
 	protected static final String XML_SUFFIX = ".xml";
 
 	protected GenConfig genConfig;
@@ -50,10 +58,12 @@ public abstract class BaseExecuter {
 		bw.newLine();
 		bw.write(" */");
 	}
+	
 	protected static  String processType(Column column) {
 		String type = column.getType(); 
 		return TypeUtils.processType(type);
 	}
+	
 	/**
 	 * 得到实例名称
 	 * 
@@ -83,4 +93,5 @@ public abstract class BaseExecuter {
 		}
 		return result;
 	}
+	
 }

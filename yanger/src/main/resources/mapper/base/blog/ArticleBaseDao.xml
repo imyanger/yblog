@@ -54,9 +54,8 @@
 		<if test="author != null" >
 			and author = #{author}
 		</if>
-		<!-- 关键字的模糊查询 -->
 		<if test="ruxWords != null" >
-			and (rux_words like "%"#{ruxWords}"%" or title like "%"#{ruxWords}"%")
+			and ruxWords = #{ruxWords}
 		</if>
 		<if test="title != null" >
 			and title = #{title}
@@ -91,6 +90,10 @@
 		<if test="updateTime != null" >
 			<!-- 日期查询为当月 -->
 			and date_format(updateTime, '%Y%m') = date_format(#{updateTime} , '%Y%m')
+		</if>
+		<!-- 搜索字段的模糊查询 -->
+		<if test="queryValue != null" >
+			and (rux_words like "%"#{queryValue}"%" or title like "%"#{queryValue}"%")
 		</if>
 	</sql>
 

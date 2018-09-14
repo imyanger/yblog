@@ -6,11 +6,15 @@ import java.util.Collection;
 import com.yanger.mybatis.paginator.domain.Paginator;
 
 /**
- * 一页数据
- * 
+* <p>Title: Page.java</p>  
+* <p>Description: 分页器信息 </p>  
+* @author 杨号  
+* @date 2018年9月14日
  */
 public class Page<E> extends ArrayList<E> {
+	
 	private static final long serialVersionUID = 1L;
+	
 	private Paginator paginator;
 
 	/**
@@ -83,4 +87,5 @@ public class Page<E> extends ArrayList<E> {
 			return super.hashCode();
 		}
 	}
+	
 }

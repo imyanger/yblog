@@ -6,10 +6,20 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+/**
+* <p>Title: Order.java</p>  
+* <p>Description: 排序信息类 </p>  
+* @author 杨号  
+* @date 2018年9月14日
+ */
 public class Order implements Serializable {
+	
 	private static final long serialVersionUID = 8138022018100161833L;
+	
 	private Direction direction;
+	
 	private String property;
+	
 	private String orderExpr;
 
 	private static final String INJECTION_REGEX = "[A-Za-z0-9\\_\\-\\+\\.]+";

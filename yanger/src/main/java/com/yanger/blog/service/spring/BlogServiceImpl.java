@@ -268,7 +268,7 @@ public class BlogServiceImpl implements BlogService{
 		//搜索条件
 		if(StringUtils.isNotBlank(pageQueryVo.getQueryValue())){
 			//关键字的模糊匹配
-			entry.setRuxWords(pageQueryVo.getQueryValue());
+			entry.setQueryValue(pageQueryVo.getQueryValue());
 		}
 		//类型的匹配
 		if(StringUtils.isNotBlank(pageQueryVo.getClassify())){

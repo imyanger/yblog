@@ -26,6 +26,12 @@ import com.yanger.mybatis.paginator.dialect.SybaseDialect;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+* <p>Title: MybatisConfig.java</p>  
+* <p>Description: 配置文件类 </p>  
+* @author 杨号  
+* @date 2018年9月14日
+ */
 @Configuration
 @EnableTransactionManagement
 @Slf4j

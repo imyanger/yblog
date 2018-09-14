@@ -8,9 +8,16 @@ import com.yanger.generator.core.GenParam;
 import com.yanger.generator.core.GenType;
 import com.yanger.generator.core.Generator;
 
+/**
+* <p>Title: CodeGenerator.java</p>  
+* <p>Description: 代码生成执行程序入口类 </p>  
+* @author 杨号  
+* @date 2018年9月14日
+ */
 public class CodeGenerator {
 
 	public static void main(String[] args) {
+		
 		List<GenParam> paramList = new ArrayList<GenParam>();
 		//模块包名  -- 扫描的表名
 		paramList.add(new GenParam("blog", new String[] {"article_kind"}));

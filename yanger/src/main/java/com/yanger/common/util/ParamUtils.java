@@ -5,6 +5,12 @@ import java.util.List;
 import com.yanger.mybatis.core.Order;
 import com.yanger.mybatis.core.PageParam;
 
+/**
+* <p>Title: ParamUtils.java</p>  
+* <p>Description: 分页组件工具类 </p>  
+* @author 杨号  
+* @date 2018年9月14日
+ */
 public class ParamUtils {
 
 	/**

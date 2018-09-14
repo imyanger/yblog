@@ -16,9 +16,11 @@ import com.yanger.generator.util.GeneratorUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 生成VO
+* <p>Title: VoExecuter.java</p>  
+* <p>Description: VO生成程序 </p>  
+* @author 杨号  
+* @date 2018年9月14日
  */
-
 @Slf4j
 public class VoExecuter extends BaseExecuter {
 	private GenFileInfo voInfo;

@@ -16,9 +16,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yanger.common.util.RedisMagger;
 
 /**
- * redis 配置类
- * @author YangHao
- *
+* <p>Title: RedisConfig.java</p>  
+* <p>Description: redis緩存配置文件 </p>  
+* @author 杨号  
+* @date 2018年9月14日
  */
 @Configuration
 @EnableCaching
@@ -29,14 +30,6 @@ public class RedisConfig {
 
 	@Value("${spring.redis.port}")
 	private int redisPort;
-
-	/*@Bean
-	public JedisConnectionFactory jedisConnectionFactory() {
-		JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
-		jedisConnectionFactory.setHostName(redisHost);
-		jedisConnectionFactory.setPort(redisPort);
-		return jedisConnectionFactory;
-	}*/
   
     // 以下两种redisTemplate自由根据场景选择
     @SuppressWarnings({ "rawtypes", "unchecked" })

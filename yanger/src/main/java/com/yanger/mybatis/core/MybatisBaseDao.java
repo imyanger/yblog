@@ -3,12 +3,12 @@ package com.yanger.mybatis.core;
 import java.util.List;
 
 /**
- * <p>
- * Mapper 继承该接口后，无需编写 mapper.xml 文件，即可获得CRUD功能
- * </p>
- * <p>
- * 这个 Mapper 支持 id 泛型
- * </p>
+* <p>Title: MybatisBaseDao.java</p>  
+* <p>Description: Mapper 继承该接口后，无需编写 mapper.xml 文件，即可获得CRUD功能
+* 			这个 Mapper 支持 id 泛型
+*  </p>  
+* @author 杨号  
+* @date 2018年9月14日
  */
 public interface MybatisBaseDao<T, I> {
 

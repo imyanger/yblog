@@ -2,6 +2,12 @@ package com.yanger.common.vo;
 
 import java.io.Serializable;
 
+/**
+* <p>Title: ApiResponse.java</p>  
+* <p>Description: 通用请求响应VO </p>  
+* @author 杨号  
+* @date 2018年9月14日
+ */
 public class ApiResponse<T> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

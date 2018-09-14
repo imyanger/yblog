@@ -16,11 +16,14 @@ import com.yanger.generator.util.GeneratorUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 生成PO
+* <p>Title: PoExecuter.java</p>  
+* <p>Description: PO生成程序 </p>  
+* @author 杨号  
+* @date 2018年9月14日
  */
-
 @Slf4j
 public class PoExecuter extends BaseExecuter {
+	
 	private GenFileInfo poInfo;
 
 	public PoExecuter(GenConfig genConfig, GenFileInfo poInfo) {

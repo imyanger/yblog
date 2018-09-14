@@ -9,7 +9,14 @@ import com.yanger.generator.schema.Column;
 import com.yanger.generator.schema.PrimaryKey;
 import com.yanger.generator.schema.Table;
 
+/**
+* <p>Title: GeneratorUtils.java</p>  
+* <p>Description: 生成工具类 </p>  
+* @author 杨号  
+* @date 2018年9月14日
+ */
 public class GeneratorUtils {
+	
 	public static List<String> getTableColumnTypes(Table table) {
 		List<String> types = new ArrayList<>();
 		List<Column> columns = table.getColumns();

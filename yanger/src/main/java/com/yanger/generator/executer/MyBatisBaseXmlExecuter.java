@@ -18,10 +18,19 @@ import com.yanger.generator.util.GeneratorUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+* <p>Title: MyBatisBaseXmlExecuter.java</p>  
+* <p>Description: 公共mapper映射文件 </p>  
+* @author 杨号  
+* @date 2018年9月14日
+ */
 @Slf4j
 public class MyBatisBaseXmlExecuter extends BaseExecuter { 
+	
 	private GenFileInfo baseMapperXmlInfo;
+	
 	private GenFileInfo daoInfo;
+	
 	private GenFileInfo poInfo;
 
 	public MyBatisBaseXmlExecuter(GenConfig genConfig, GenFileInfo baseMapperXmlInfo, GenFileInfo daoInfo,

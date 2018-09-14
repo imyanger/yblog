@@ -8,8 +8,11 @@ public class ResultPage<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private long pageNo;
+	
 	private long pageSize;
+	
 	private long totalCount;
+	
 	private List<T> data;
 
 	public void setPageNo(long pageNo) {
