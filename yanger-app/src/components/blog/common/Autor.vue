@@ -1,6 +1,6 @@
 /**
- * @author
- * @des
+ * @author YangHao
+ * @description 文章列表底部公共区域
  */
 <template>
     <p class="autor">

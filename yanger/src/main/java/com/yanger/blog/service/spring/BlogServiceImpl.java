@@ -69,7 +69,7 @@ public class BlogServiceImpl implements BlogService{
 		List<LeavingMsgVo> msgs = this.findMsgs(PageParam.NO_PAGE, 10);
 		homeData.setMsgs(msgs);
 		//获取外连接
-		List<OuterLinkVo> shipLinks = this.findShipLinks(6, ConstantUtils.LINK_TYPE_SHIP);
+		List<OuterLinkVo> shipLinks = this.findShipLinks(8, ConstantUtils.LINK_TYPE_SHIP);
 		homeData.setShipLinks(shipLinks);
 		return homeData;
 	}

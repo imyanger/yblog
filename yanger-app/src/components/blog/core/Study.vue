@@ -21,6 +21,8 @@
 			</div>
 		</div>
 		<div id="content_right">
+			<!-- 用户信息 -->
+			<sign></sign>
 			<!-- 网站登录模块 -->
 			<div id="search">
 				<el-row>
@@ -51,7 +53,8 @@
 </template>
 
 <script>
-	import autor from '../common/Autor';
+	import autor from '../common/Autor'; //文章列表底部展示
+	import sign from '../common/Sign'; //用户信息展示
 	export default {
 		data() {
 			return {
@@ -110,7 +113,7 @@
 			}
 		},
 		components: {
-			autor
+			autor, sign
 		}
 	};
 </script>

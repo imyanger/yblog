@@ -101,20 +101,7 @@
 				console.log(`当前页: ${val}`);
             },
             leaveMsg() {
-                /* this.$axios.get('/api/core/blog/homeInit')
-                .then(function (response) {
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                }); */
-                this.$get("/blog/homeInit")
-                .then(function (response) {
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+                alert(this.$refs.ue.getContent());
             }
         }
     };
