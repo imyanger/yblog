@@ -21,25 +21,58 @@
 				</el-row>
 				<el-row id="login_row" v-if="sginData.isLogin">
                     <center>
-                        <el-input placeholder="请输入登录账号" prefix-icon="el-icon-info"></el-input>
+                        <el-input placeholder="请输入登录账号" prefix-icon="el-icon-info" 
+                            v-model="sginData.loginData.userCode" maxlength="20" 
+                            :suffix-icon="sginData.loginData.icon.userCode" 
+                            @change="loCgUserCode(sginData.loginData.userCode)">
+                        </el-input>
                         <br/><br/>
-                        <el-input placeholder="请输入登录密码" prefix-icon="el-icon-sold-out"></el-input>
+                        <el-input placeholder="请输入登录密码" prefix-icon="el-icon-sold-out" type="password" maxlength="20" 
+                            v-model="sginData.loginData.password" 
+                            :suffix-icon="sginData.loginData.icon.password"
+                            @change="loCgPassword(sginData.loginData.password)">
+                        </el-input>
                         <br/><br/>
                         <drag v-on:dragOk = 'dealDragOk'></drag>
                     </center>
 				</el-row>
                 <el-row id="register_row" v-if="sginData.isLogin === false">
                     <center>
-                        <el-input placeholder="请输入注册账号" prefix-icon="el-icon-info"></el-input>
-                        <el-input placeholder="请输入注册密码" prefix-icon="el-icon-sold-out" type='password'></el-input>
-                        <el-input placeholder="请再次输入密码" prefix-icon="el-icon-goods" type='password'></el-input>
-                        <el-input placeholder="请输入用户昵称" prefix-icon="el-icon-service"></el-input>
-                        <el-input placeholder="请输入邮箱地址" prefix-icon="el-icon-message"></el-input>
-                        <el-input placeholder="请输入手机号码" prefix-icon="el-icon-phone-outline"></el-input>
+                        <el-input placeholder="请输入注册账号" prefix-icon="el-icon-info" 
+                            v-model="sginData.registerData.userCode" maxlength="20" 
+                            :suffix-icon="sginData.registerData.icon.userCode" 
+                            @change="reCgUserCode(sginData.registerData.userCode)">
+                        </el-input>
+                        <div><i :class="sginData.registerData.icon.userCode"></i></div>
+                        <el-input placeholder="请输入注册密码" prefix-icon="el-icon-sold-out" type='password' 
+                            v-model="sginData.registerData.password" maxlength="20" 
+                            :suffix-icon="sginData.registerData.icon.password" 
+                            @change="reCgPassword(sginData.registerData.password)">
+                        </el-input>
+                        <el-input placeholder="请再次输入密码" prefix-icon="el-icon-goods" type='password' 
+                            v-model="sginData.registerData.password2" maxlength="20" 
+                            :suffix-icon="sginData.registerData.icon.password2"
+                            @change="reCgPassword2(sginData.registerData.password2)">
+                        </el-input>
+                        <el-input placeholder="请输入用户昵称" prefix-icon="el-icon-service" 
+                            v-model="sginData.registerData.userNickName" maxlength="12" 
+                            :suffix-icon="sginData.registerData.icon.userNickName"
+                            @change="reCgUserNickName(sginData.registerData.userNickName)">
+                        </el-input>
+                        <el-input placeholder="请输入邮箱地址" prefix-icon="el-icon-message" 
+                            v-model="sginData.registerData.email" maxlength="30" 
+                            :suffix-icon="sginData.registerData.icon.email" 
+                            @change="reCgEmail(sginData.registerData.email)">
+                        </el-input>
+                        <el-input placeholder="请输入手机号码" prefix-icon="el-icon-phone-outline" 
+                            v-model="sginData.registerData.moblie" maxlength="11" 
+                            :suffix-icon="sginData.registerData.icon.moblie" 
+                            @change="reCgMoblie(sginData.registerData.moblie)">
+                        </el-input>
                     </center>
 				</el-row>
-                <el-row>
-                    <span>错误信息</span>
+                <el-row id="error_msg">
+                    <span>{{sginData.errorMsg}}</span>
                 </el-row>
 				<div slot="footer" class="dialog-footer">
                     <el-row>
@@ -59,89 +92,137 @@
 </template>
 
 <script>
-    import drag from './Drag'; //列表文章底部部分
+    import drag from "./Drag"; //列表文章底部部分
+    import simpleValidate from 'static/js/simpleValidate'; //date格式化
+    const el_icon_error = 'el-icon-error';
+    const el_icon_success = 'el-icon-success';
     export default {
-		props: [],
-		data() {
-			return {
-				sginData:{
-					dialogVisible: false,     //模态框是否显示
-                    addLoading: false,       //是否显示loading
-                    signTips: '没有账号，快速注册',
-                    signTitle: '登录',
+        props: [],
+        data() {
+            return {
+                sginData: {
+                    dialogVisible: false, //模态框是否显示
+                    addLoading: false, //是否显示loading
+                    signTips: "没有账号，快速注册",
+                    signTitle: "登录",
                     isLogin: true, //是否加载登录区域
-                    isDragOk: false // 登录滑块时候解锁
-				}
-			};
-		},
-		methods: {
-			openSignDialog() {
+                    isDragOk: false, // 登录滑块时候解锁
+                    loginData: {
+                        icon: {},
+                    },
+                    registerData: {
+                        icon: {}
+                    },
+                    errorMsg: ""
+                }
+            };
+        },
+        methods: {
+            openSignDialog() {
                 this.sginData.dialogVisible = true;
             },
             //登录注册切换
             signChange(type) {
                 this.sginData.isLogin = !this.sginData.isLogin;
-                if(this.sginData.isLogin){
-                    this.sginData.signTips = '没有账号，快速注册';
-                    this.sginData.signTitle = '登录';
-                }else {
-                    this.sginData.signTips = '已有账号，快速登录';
-                    this.sginData.signTitle = '注册';
+                if (this.sginData.isLogin) {
+                    this.sginData.signTips = "没有账号，快速注册";
+                    this.sginData.signTitle = "登录";
+                } else {
+                    this.sginData.signTips = "已有账号，快速登录";
+                    this.sginData.signTitle = "注册";
                     //切换后滑块解锁需要重新加载
                     this.isDragOk = false;
                 }
             },
             //找回密码
             findPwd() {
-                alert('找回密码')
+                alert("找回密码");
             },
             //接受滑动解锁成功的回调
-            dealDragOk(dragRes){
+            dealDragOk(dragRes) {
                 this.isDragOk = dragRes;
-            }
+            },
+            //登录账号
+            loCgUserCode(val){
+                let f = simpleValidate.isUsername(val);
+                if(f){
+                    this.sginData.loginData.icon.userCode = el_icon_success;
+                }else {
+                    this.sginData.loginData.icon.userCode = el_icon_error;
+                }
+            },
+            //登录账号
+            loCgPassword(val){
+    alert(val)
+            },
+            //注册账号
+            reCgUserCode(val){
+                alert(val)
+            },
+            //注册密码
+            reCgPassword(val){
+    alert(val)
+            },
+            //注册重复密码
+            reCgPassword2(val){
+    alert(val)
+            },
+            //注册昵称
+            reCgUserNickName(val){
+    alert(val)
+            },
+            //注册邮箱
+            reCgEmail(val){
+    alert(val)
+            },
+            //注册手机号
+            reCgMoblie(val){
+    alert(val)
+            },
         },
         components: {
             drag
-        }
-    }
+        },
+    };
 </script>
 
 <style scoped>
-	#user_info h3 {
-		line-height: 40px;
-		color: #38485a;
-		font-size: 18px;
-		border-bottom: 1px solid #ff3300;
-		text-align: center;
-		height: 40px;
-		margin-bottom: 16px;
-		font-weight: 500;
-	}
+    #user_info h3 {
+        line-height: 40px;
+        color: #38485a;
+        font-size: 18px;
+        border-bottom: 1px solid #ff3300;
+        text-align: center;
+        height: 40px;
+        margin-bottom: 16px;
+        font-weight: 500;
+    }
     #header_msg {
         color: #ab6a8a;
         cursor: auto;
         font-size: 15px;
-    	line-height: 27px;
+        line-height: 27px;
     }
-	#user_info #openSignDialog, #find_pwd {
-		color: #72afd2;
-		cursor: pointer;
-		font-size: 15px;
-    	line-height: 27px;
-	}
+    #user_info #openSignDialog,
+    #find_pwd {
+        color: #72afd2;
+        cursor: pointer;
+        font-size: 15px;
+        line-height: 27px;
+    }
     .dialog-footer {
         color: #72afd2;
-		cursor: pointer;
-		font-size: 15px;
-    	line-height: 27px;
+        cursor: pointer;
+        font-size: 14px;
+        line-height: 30px;
     }
-	#sign {
-		margin-top: -20px;
+    #sign {
+        margin-top: -20px;
         margin-bottom: 20px;
-	}
-	#sign span {
-		font-size: 18px;
-	}
+    }
+    #sign span {
+        font-size: 18px;
+    }
     #login_row .el-input {
         width: 330px;
     }
@@ -159,5 +240,13 @@
     }
     .footer_right button {
         margin-right: 80px;
+    }
+    #error_msg {
+        text-align: center;
+        padding-top: 15px;
+        margin-bottom: -25px;
+    }
+    #error_msg span {
+        color: #e03131;
     }
 </style>

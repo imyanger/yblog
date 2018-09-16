@@ -2,7 +2,7 @@
     <div class="content_aboutMe">
         <h3>About Me</h3>
         <div class="aboutMe_left">
-            <img alt="" src="static/img/blog/me.jpg">
+            <img alt="" src="static/img/img.jpg">
         </div>
         <div class="aboutMe_right">
             <p>姓名：杨号</p>
