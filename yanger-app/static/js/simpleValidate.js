@@ -4,12 +4,13 @@
  */
 const validateRules = {}
 
-//用户名正则 只能输入5-20个以字母开头、可带数字、“_”、“.”的字串
+//用户名正则 只能输入6-20个以字母、可带数字、“_”、“.”、“@”的字串
 validateRules.isUsername = function(v) {
-    var pattern = /^[a-zA-Z]{1}([a-zA-Z0-9]|[._]){4,19}$/;
+    var pattern = /^([a-zA-Z0-9]|[._-]){6,19}$/;
     if (!pattern.exec(v)) return false;
     return true;
 };
+
 //用户密码 只能输入6-20个字母、数字
 validateRules.isPassword = function(v) {
     var pattern = /^(\w){6,20}$/;
@@ -78,6 +79,18 @@ validateRules.hasCN = function(v) {
     var pattern = /[\u4E00-\u9FA5]/;
     if (!pattern.exec(v)) return false;
     return true;
+};
+
+//昵称--校验是否包含特殊字符
+validateRules.isNickName = function(v) {
+    let flag = false;
+    if(v.length > 2 && v.length < 13){
+        var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>《》/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]");
+        if(!pattern.test(v)){
+            flag = true;
+        }
+    }
+    return flag;
 };
 
 export default validateRules;

@@ -12,15 +12,18 @@ import org.springframework.stereotype.Service;
 
 import com.yanger.blog.dao.ArticleDao;
 import com.yanger.blog.dao.ArticleKindDao;
+import com.yanger.blog.dao.BlogUserDao;
 import com.yanger.blog.dao.LeavingMsgDao;
 import com.yanger.blog.dao.OuterLinkDao;
 import com.yanger.blog.po.Article;
 import com.yanger.blog.po.ArticleKind;
+import com.yanger.blog.po.BlogUser;
 import com.yanger.blog.po.LeavingMsg;
 import com.yanger.blog.po.OuterLink;
 import com.yanger.blog.service.facade.BlogService;
 import com.yanger.blog.vo.ArticleKindVo;
 import com.yanger.blog.vo.ArticleVo;
+import com.yanger.blog.vo.BlogUserVo;
 import com.yanger.blog.vo.EssayDataVo;
 import com.yanger.blog.vo.HomeDataVo;
 import com.yanger.blog.vo.LeavingMsgVo;
@@ -28,6 +31,7 @@ import com.yanger.blog.vo.OuterLinkVo;
 import com.yanger.blog.vo.PageQueryVo;
 import com.yanger.blog.vo.StudyDataVo;
 import com.yanger.common.util.ConstantUtils;
+import com.yanger.common.util.EncryptUtils;
 import com.yanger.common.util.ParamUtils;
 import com.yanger.mybatis.core.Page;
 import com.yanger.mybatis.core.PageParam;
@@ -48,6 +52,9 @@ public class BlogServiceImpl implements BlogService{
 	
 	@Autowired
 	private ArticleKindDao articleKindDao;
+	
+	@Autowired
+	private BlogUserDao blogUserDao;
 	
 	/**
 	 * <p>Description: 获取博客首页数据</p>  
@@ -278,6 +285,23 @@ public class BlogServiceImpl implements BlogService{
 		Page<Article> studysPage = articleDao.selectPage(pageParam, entry);
 		//分页数据
 		return Pages.convert(pageParam, studysPage, ArticleVo.class);
+	}
+
+	/**
+	 * <p>Description: 用户注册，插入用户信息 </p>  
+	 * @author YangHao  
+	 * @date 2018年9月18日-上午12:18:31
+	 * @param blogUserVo
+	 * @throws Exception
+	 */
+	@Override
+	public void userRegister(BlogUserVo blogUserVo) throws Exception {
+		BlogUser blogUser = new BlogUser();
+		BeanUtils.copyProperties(blogUser, blogUserVo);
+		//密码MD5加密
+		String md5Pwd = EncryptUtils.getMD5(blogUser.getPassword());
+		blogUser.setPassword(md5Pwd);
+		blogUserDao.insert(blogUser);
 	}
 	
 	

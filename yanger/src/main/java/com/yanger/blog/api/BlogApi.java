@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yanger.blog.service.facade.BlogService;
 import com.yanger.blog.vo.ArticleVo;
+import com.yanger.blog.vo.BlogUserVo;
 import com.yanger.blog.vo.EssayDataVo;
 import com.yanger.blog.vo.HomeDataVo;
 import com.yanger.blog.vo.PageQueryVo;
@@ -109,6 +110,20 @@ public class BlogApi {
 		try {
 			ResultPage<ArticleVo> page = blogService.getPageData(pageQueryVo);
 			api.setData(page);
+		} catch (Exception e) {
+			api.error("加载文章分页数据失败");
+			e.printStackTrace();
+		}
+		return api;
+	}
+	
+	@ApiOperation(value = "用户注册", notes = "")
+	@PostMapping("/register")
+	public ApiResponse<String> register(@RequestBody BlogUserVo blogUserVo){
+		ApiResponse<String> api = new ApiResponse<>();
+		try {
+			blogService.userRegister(blogUserVo);
+			api.setData("注册成功");
 		} catch (Exception e) {
 			api.error("加载文章分页数据失败");
 			e.printStackTrace();

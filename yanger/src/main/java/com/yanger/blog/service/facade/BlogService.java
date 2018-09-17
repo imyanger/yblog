@@ -1,6 +1,7 @@
 package com.yanger.blog.service.facade;
 
 import com.yanger.blog.vo.ArticleVo;
+import com.yanger.blog.vo.BlogUserVo;
 import com.yanger.blog.vo.EssayDataVo;
 import com.yanger.blog.vo.HomeDataVo;
 import com.yanger.blog.vo.PageQueryVo;
@@ -44,5 +45,14 @@ public interface BlogService {
 	 * @return
 	 */
 	ResultPage<ArticleVo> getPageData(PageQueryVo pageQueryVo) throws Exception;
+
+	/**
+	 * <p>Description: 用户注册，插入用户信息 </p>  
+	 * @author YangHao  
+	 * @date 2018年9月18日-上午12:18:31
+	 * @param blogUserVo
+	 * @throws Exception
+	 */
+	void userRegister(BlogUserVo blogUserVo) throws Exception;
 
 }

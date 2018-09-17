@@ -22,15 +22,11 @@
 				<el-row id="login_row" v-if="sginData.isLogin">
                     <center>
                         <el-input placeholder="请输入登录账号" prefix-icon="el-icon-info" 
-                            v-model="sginData.loginData.userCode" maxlength="20" 
-                            :suffix-icon="sginData.loginData.icon.userCode" 
-                            @change="loCgUserCode(sginData.loginData.userCode)">
+                            v-model="sginData.loginData.userCode" maxlength="20">
                         </el-input>
                         <br/><br/>
                         <el-input placeholder="请输入登录密码" prefix-icon="el-icon-sold-out" type="password" maxlength="20" 
-                            v-model="sginData.loginData.password" 
-                            :suffix-icon="sginData.loginData.icon.password"
-                            @change="loCgPassword(sginData.loginData.password)">
+                            v-model="sginData.loginData.password">
                         </el-input>
                         <br/><br/>
                         <drag v-on:dragOk = 'dealDragOk'></drag>
@@ -38,23 +34,22 @@
 				</el-row>
                 <el-row id="register_row" v-if="sginData.isLogin === false">
                     <center>
-                        <el-input placeholder="请输入注册账号" prefix-icon="el-icon-info" 
+                        <el-input placeholder="请输入注册账号    6-20字母或数字" prefix-icon="el-icon-info" 
                             v-model="sginData.registerData.userCode" maxlength="20" 
                             :suffix-icon="sginData.registerData.icon.userCode" 
                             @change="reCgUserCode(sginData.registerData.userCode)">
                         </el-input>
-                        <div><i :class="sginData.registerData.icon.userCode"></i></div>
-                        <el-input placeholder="请输入注册密码" prefix-icon="el-icon-sold-out" type='password' 
+                        <el-input placeholder="请输入注册密码    6-20字母或数字" prefix-icon="el-icon-sold-out" type='password' 
                             v-model="sginData.registerData.password" maxlength="20" 
                             :suffix-icon="sginData.registerData.icon.password" 
                             @change="reCgPassword(sginData.registerData.password)">
                         </el-input>
-                        <el-input placeholder="请再次输入密码" prefix-icon="el-icon-goods" type='password' 
+                        <el-input placeholder="请输入确认密码    6-20字母或数字" prefix-icon="el-icon-goods" type='password' 
                             v-model="sginData.registerData.password2" maxlength="20" 
                             :suffix-icon="sginData.registerData.icon.password2"
                             @change="reCgPassword2(sginData.registerData.password2)">
                         </el-input>
-                        <el-input placeholder="请输入用户昵称" prefix-icon="el-icon-service" 
+                        <el-input placeholder="请输入用户昵称    3-12非特殊字符" prefix-icon="el-icon-service" 
                             v-model="sginData.registerData.userNickName" maxlength="12" 
                             :suffix-icon="sginData.registerData.icon.userNickName"
                             @change="reCgUserNickName(sginData.registerData.userNickName)">
@@ -80,7 +75,7 @@
                             <span id="sign_change" @click="signChange(sginData.isLogin)">{{sginData.signTips}}</span>
                         </div>
                         <div class="footer_right">
-                            <el-button type="primary" :loading="sginData.addLoading">{{sginData.signTitle}}</el-button>
+                            <el-button type="primary" :loading="sginData.addLoading" @click="signSubmit(sginData.signTitle)">{{sginData.signTitle}}</el-button>
                         </div>
                     </el-row>
                     <center>
@@ -94,7 +89,7 @@
 <script>
     import drag from "./Drag"; //列表文章底部部分
     import simpleValidate from 'static/js/simpleValidate'; //date格式化
-    const el_icon_error = 'el-icon-error';
+    const el_icon_error = 'el-icon-warning';
     const el_icon_success = 'el-icon-success';
     export default {
         props: [],
@@ -107,21 +102,24 @@
                     signTitle: "登录",
                     isLogin: true, //是否加载登录区域
                     isDragOk: false, // 登录滑块时候解锁
-                    loginData: {
+                    loginData: {},
+                    registerData: {
                         icon: {
                             //动态绑定class必须初始化声明
                             userCode: '',
-                            password: ''
-                        },
-                    },
-                    registerData: {
-                        icon: {}
+                            password: '',
+                            password2: '',
+                            userNickName: '',
+                            email: '',
+                            moblie: ''
+                        }
                     },
                     errorMsg: ""
                 }
             };
         },
         methods: {
+            //打开模态框
             openSignDialog() {
                 this.sginData.dialogVisible = true;
             },
@@ -146,42 +144,138 @@
             dealDragOk(dragRes) {
                 this.isDragOk = dragRes;
             },
-            //登录账号
-            loCgUserCode(val){
-                let f = simpleValidate.isUsername(val);
-                if(f){
-                    this.sginData.loginData.icon.userCode = el_icon_success;
-                }else {
-                    this.sginData.loginData.icon.userCode = el_icon_error;
+            signSubmit(title){
+                let _this = this;
+                if('登录' === title){
+
+                }else if('注册' === title){
+                    let msg = "请输入";
+                    //校验是否全部必录
+                    if(!this.sginData.registerData.userCode){
+                        msg += "注册账号";
+                    }else if(!this.sginData.registerData.password){
+                        msg += "注册密码";
+                    }else if(!this.sginData.registerData.password2){
+                        msg += "确认密码";
+                    }else if(!this.sginData.registerData.userNickName){
+                        msg += "用户昵称";
+                    }else if(!this.sginData.registerData.email){
+                        msg += "邮箱地址";
+                    }else if(!this.sginData.registerData.moblie){
+                        msg += "手机号码";
+                    }
+                    if(msg.length === 3){
+                        //检查是否全部录入正确
+                        if(el_icon_success !== this.sginData.registerData.icon.userCode){
+                            msg += "正确的注册账号";
+                        }else if(el_icon_success !== this.sginData.registerData.icon.password){
+                            msg += "正确的注册密码";
+                        }else if(el_icon_success !== this.sginData.registerData.icon.password2){
+                            msg += "正确的确认密码";
+                        }else if(el_icon_success !== this.sginData.registerData.icon.userNickName){
+                            msg += "正确的用户昵称";
+                        }else if(el_icon_success !== this.sginData.registerData.icon.email){
+                            msg += "正确的邮箱地址";
+                        }else if(el_icon_success !== this.sginData.registerData.icon.moblie){
+                            msg += "正确的手机号码";
+                        }
+                        if(msg.length === 3){
+                            //进行提交
+                            this.$post("/blog/register", this.sginData.registerData)
+                            .then(function (response) {
+                                if(response.status === 0){
+                                    alert('注册成功');
+                                    //清空数据
+                                }else {
+                                    alert(response.msg);
+                                }
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                        }else {
+                            this.sginData.errorMsg = msg;
+                        }
+                    }else {
+                        this.sginData.errorMsg = msg;
+                    }
                 }
             },
-            //登录账号
-            loCgPassword(val){
-    alert(val)
-            },
-            //注册账号
+            //注册账号校验
             reCgUserCode(val){
-                alert(val)
+                let f = simpleValidate.isUsername(val);
+                if(f){
+                    this.sginData.registerData.icon.userCode = el_icon_success;
+                    this.sginData.errorMsg = "";
+                }else {
+                    this.sginData.registerData.icon.userCode = el_icon_error;
+                    this.sginData.errorMsg = "注册账号输入错误，请使用6-20字母或数字";
+                }
             },
-            //注册密码
+            //注册密码校验
             reCgPassword(val){
-    alert(val)
+                let f = simpleValidate.isPassword(val);
+                if(f){
+                    if(this.sginData.registerData.password2 && val !== this.sginData.registerData.password2){
+                        this.sginData.registerData.icon.password = el_icon_error;
+                        this.sginData.errorMsg = "注册密码输入错误，两次密码不一致";
+                    }else{
+                        this.sginData.registerData.icon.password = el_icon_success;
+                        this.sginData.errorMsg = "";
+                    }
+                }else {
+                    this.sginData.registerData.icon.password = el_icon_error;
+                    this.sginData.errorMsg = "注册密码输入错误，请使用6-20字母或数字";
+                }
             },
-            //注册重复密码
+            //注册重复密码校验
             reCgPassword2(val){
-    alert(val)
+                let f = simpleValidate.isPassword(val);
+                if(f){
+                    if(this.sginData.registerData.password && val !== this.sginData.registerData.password){
+                        this.sginData.registerData.icon.password2 = el_icon_error;
+                        this.sginData.errorMsg = "确认密码输入错误，两次密码不一致";
+                    }else {
+                        this.sginData.registerData.icon.password2 = el_icon_success;
+                        this.sginData.errorMsg = "";
+                    }
+                }else {
+                    this.sginData.registerData.icon.password2 = el_icon_error;
+                    this.sginData.errorMsg = "确认密码输入错误，请使用6-20字母或数字";
+                }
             },
-            //注册昵称
+            //注册昵称校验
             reCgUserNickName(val){
-    alert(val)
+                let f = simpleValidate.isNickName(val);
+                if(f){
+                    this.sginData.registerData.icon.userNickName = el_icon_success;
+                    this.sginData.errorMsg = "";
+                }else {
+                    this.sginData.registerData.icon.userNickName = el_icon_error;
+                    this.sginData.errorMsg = "用户昵称输入错误，请使用3-12非特殊字符";
+                }
             },
-            //注册邮箱
+            //注册邮箱校验
             reCgEmail(val){
-    alert(val)
+                let f = simpleValidate.isEmail(val);
+                if(f){
+                    this.sginData.registerData.icon.email = el_icon_success;
+                    this.sginData.errorMsg = "";
+                }else {
+                    this.sginData.registerData.icon.email = el_icon_error;
+                    this.sginData.errorMsg = "邮箱格式错误";
+                }
             },
-            //注册手机号
+            //注册手机号校验
             reCgMoblie(val){
-    alert(val)
+                let f = simpleValidate.isTelphone(val);
+                if(f){
+                    this.sginData.registerData.icon.moblie = el_icon_success;
+                    this.sginData.errorMsg = "";
+                }else {
+                    this.sginData.registerData.icon.moblie = el_icon_error;
+                    this.sginData.errorMsg = "手机号格式错误";
+                }
             },
         },
         components: {
@@ -252,5 +346,14 @@
     }
     #error_msg span {
         color: #e03131;
+    }
+</style>
+
+<style>
+    #register_row .el-icon-warning {
+        color: red;
+    }
+    #register_row .el-icon-success {
+        color: #25c523 !important;
     }
 </style>

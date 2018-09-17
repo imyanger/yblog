@@ -42,7 +42,7 @@ DROP TABLE IF EXISTS `blog_user`;
 CREATE TABLE `blog_user`(  
   `user_id` INT NOT NULL AUTO_INCREMENT COMMENT '用户id',
   `user_code` VARCHAR(20) COMMENT '用户账号',
-  `password` VARCHAR(20) COMMENT '用户密码',
+  `password` VARCHAR(300) COMMENT '用户密码',
   `user_nick_name` VARCHAR(60) COMMENT '用户昵称',
   `gender` VARCHAR(10) COMMENT '性别',
   `user_img_path` VARCHAR(100) COMMENT '头像图片路径',
