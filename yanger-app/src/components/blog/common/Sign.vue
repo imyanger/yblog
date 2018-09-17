@@ -108,7 +108,11 @@
                     isLogin: true, //是否加载登录区域
                     isDragOk: false, // 登录滑块时候解锁
                     loginData: {
-                        icon: {},
+                        icon: {
+                            //动态绑定class必须初始化声明
+                            userCode: '',
+                            password: ''
+                        },
                     },
                     registerData: {
                         icon: {}
