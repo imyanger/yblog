@@ -6,5 +6,18 @@
 <mapper namespace="com.yanger.blog.dao.BlogUserDao">
   <!-- 请在下方添加自定义配置-->
 
+	<select id="findLoginUser" resultMap="BaseResultMap">
+		select
+			<include refid="Base_Column_List" />
+		from blog_user
+		where (user_code = #{param1} or moblie = #{param1} or email = #{param1}) and password = #{param2}
+	</select>
+
+	<select id="findUserByCode" resultMap="BaseResultMap" parameterType="String">
+		select
+			<include refid="Base_Column_List" />
+		from blog_user
+		where user_code = #{param1} or moblie = #{param1} or email = #{param1}
+	</select>
 
 </mapper>

@@ -55,4 +55,22 @@ public interface BlogService {
 	 */
 	void userRegister(BlogUserVo blogUserVo) throws Exception;
 
+	/**
+	 * <p>Description: 用户登录 </p>  
+	 * @author YangHao  
+	 * @date 2018年9月18日-下午11:35:44
+	 * @param blogUserVo
+	 * @return
+	 * @throws Exception
+	 */
+	BlogUserVo userLogin(BlogUserVo blogUserVo) throws Exception;
+
+	/**
+	 * <p>Description: 校验用户名是否被使用 </p>  
+	 * @author YangHao  
+	 * @date 2018年9月6日-下午11:07:41
+	 * @return
+	 */
+	Boolean checkUserCode(String code) throws Exception;
+
 }

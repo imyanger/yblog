@@ -303,6 +303,40 @@ public class BlogServiceImpl implements BlogService{
 		blogUser.setPassword(md5Pwd);
 		blogUserDao.insert(blogUser);
 	}
+
+	/**
+	 * <p>Description: 用户登录 </p>  
+	 * @author YangHao  
+	 * @date 2018年9月18日-下午11:35:44
+	 * @param blogUserVo
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public BlogUserVo userLogin(BlogUserVo blogUserVo) throws Exception {
+		BlogUserVo user = null;
+		String password = EncryptUtils.getMD5(blogUserVo.getPassword());
+		//根据用户名密码查询用户
+		BlogUser blogUser = blogUserDao.findLoginUser(blogUserVo.getUserCode(), password);
+		if(blogUser != null){
+			user = new BlogUserVo();
+			user.setUserNickName(blogUser.getUserNickName());
+			user.setUserId(blogUser.getUserId());
+		}
+		return user;
+	}
+
+	/**
+	 * <p>Description: 校验用户名是否被使用 </p>  
+	 * @author YangHao  
+	 * @date 2018年9月6日-下午11:07:41
+	 * @return
+	 */
+	@Override
+	public Boolean checkUserCode(String code) throws Exception {
+		BlogUser blogUser = blogUserDao.findUserByCode(code);
+		return blogUser != null;
+	}
 	
 	
 }

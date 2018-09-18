@@ -2,6 +2,7 @@ package com.yanger.blog.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -103,6 +104,12 @@ public class BlogApi {
 		return api;
 	}
 	
+	/**
+	 * <p>Description: 查询文章分页数据 </p>  
+	 * @author YangHao  
+	 * @date 2018年9月6日-下午11:07:41
+	 * @return
+	 */
 	@ApiOperation(value = "查询文章分页数据", notes = "")
 	@PostMapping("/articlePage")
 	public ApiResponse<ResultPage<ArticleVo>> articlePage(@RequestBody PageQueryVo pageQueryVo){
@@ -117,6 +124,12 @@ public class BlogApi {
 		return api;
 	}
 	
+	/**
+	 * <p>Description: 用户注册 </p>  
+	 * @author YangHao  
+	 * @date 2018年9月6日-下午11:07:41
+	 * @return
+	 */
 	@ApiOperation(value = "用户注册", notes = "")
 	@PostMapping("/register")
 	public ApiResponse<String> register(@RequestBody BlogUserVo blogUserVo){
@@ -125,10 +138,56 @@ public class BlogApi {
 			blogService.userRegister(blogUserVo);
 			api.setData("注册成功");
 		} catch (Exception e) {
-			api.error("加载文章分页数据失败");
+			api.error("用户注册失败");
 			e.printStackTrace();
 		}
 		return api;
 	}
 	
+	/**
+	 * <p>Description: 用户登录 </p>  
+	 * @author YangHao  
+	 * @date 2018年9月6日-下午11:07:41
+	 * @return
+	 */
+	@ApiOperation(value = "用户登录", notes = "")
+	@PostMapping("/login")
+	public ApiResponse<BlogUserVo> login(@RequestBody BlogUserVo blogUserVo){
+		ApiResponse<BlogUserVo> api = new ApiResponse<>();
+		try {
+			BlogUserVo user = blogService.userLogin(blogUserVo);
+			if(user != null){
+				api.setData(user);
+			}else {
+				api.error("输入的账号不存在或密码错误");
+			}
+		} catch (Exception e) {
+			api.error("用户登录失败");
+			e.printStackTrace();
+		}
+		return api;
+	}
+	
+	
+	/**
+	 * <p>Description: 校验用户名是否被使用 </p>  
+	 * @author YangHao  
+	 * @date 2018年9月6日-下午11:07:41
+	 * @return
+	 */
+	@ApiOperation(value = "校验用户名是否被使用 ", notes = "")
+	@GetMapping("/checkCode/{code}")
+	public ApiResponse<String> checkCode(@PathVariable(value="code") String code){
+		ApiResponse<String> api = new ApiResponse<>();
+		try {
+			Boolean exist = blogService.checkUserCode(code);
+			if(exist){
+				api.error("已经被使用");
+			}
+		} catch (Exception e) {
+			api.error("校验用户名失败");
+			e.printStackTrace();
+		}
+		return api;
+	}
 }

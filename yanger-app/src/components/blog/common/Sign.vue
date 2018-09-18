@@ -7,10 +7,14 @@
         <div  id="user_info">
             <h3>用户信息 </h3>
             <div>
-                <center>
+                <center v-if="!sginData.user.userNickName">
                     <span id="header_msg">亲爱的游客，您还未登录</span><br/>
                     <span @click="openSignDialog" id="openSignDialog">点此快速登录</span><br/>
                     <span id="find_pwd" @click="findPwd">忘记密码，点击找回</span><br/>
+                </center>
+                <center v-if="sginData.user.userNickName">
+                    <span id="header_msg">亲爱的{{sginData.user.userNickName}}，欢迎您</span><br/>
+                    <span @click="openSignDialog" id="openSignDialog">[注销]</span><br/>
                 </center>
             </div>
 			<el-dialog :visible.sync="sginData.dialogVisible" :close-on-click-modal="false" width="450px">
@@ -21,7 +25,7 @@
 				</el-row>
 				<el-row id="login_row" v-if="sginData.isLogin">
                     <center>
-                        <el-input placeholder="请输入登录账号" prefix-icon="el-icon-info" 
+                        <el-input placeholder="请输入登录账号|手机号|邮箱" prefix-icon="el-icon-info" 
                             v-model="sginData.loginData.userCode" maxlength="20">
                         </el-input>
                         <br/><br/>
@@ -114,6 +118,7 @@
                             moblie: ''
                         }
                     },
+                    user: {},
                     errorMsg: ""
                 }
             };
@@ -135,6 +140,8 @@
                     //切换后滑块解锁需要重新加载
                     this.isDragOk = false;
                 }
+                //清空提示语
+                this.sginData.errorMsg = "";
             },
             //找回密码
             findPwd() {
@@ -147,59 +154,112 @@
             signSubmit(title){
                 let _this = this;
                 if('登录' === title){
+                    let loginMsg = "";
+                    //校验录入
+                    if(!this.sginData.loginData.userCode){
+                        loginMsg = "请输入登录账号|手机号|邮箱";
+                    }else if(!this.sginData.loginData.password){
+                        loginMsg = "请输入登录密码";
+                    }else if(!this.isDragOk){
+                        loginMsg = "请拖动滑块验证";
+                    }
+                    if(loginMsg){
+                        this.sginData.errorMsg = loginMsg;
+                    }else{
+                        this.sginData.errorMsg = "";
+                        //进行登录
+                        this.$post("/blog/login", this.sginData.loginData)
+                        .then(function (response) {
+                            if(response.status === 0){
+                                //关闭模态框
+                                _this.sginData.dialogVisible = false;
+                                //渲染用户信息
+                                _this.sginData.user = response.data;
+                            }else {
+                               _this.sginData.errorMsg = response.msg;
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    }
 
                 }else if('注册' === title){
-                    let msg = "请输入";
-                    //校验是否全部必录
-                    if(!this.sginData.registerData.userCode){
-                        msg += "注册账号";
-                    }else if(!this.sginData.registerData.password){
-                        msg += "注册密码";
-                    }else if(!this.sginData.registerData.password2){
-                        msg += "确认密码";
-                    }else if(!this.sginData.registerData.userNickName){
-                        msg += "用户昵称";
-                    }else if(!this.sginData.registerData.email){
-                        msg += "邮箱地址";
-                    }else if(!this.sginData.registerData.moblie){
-                        msg += "手机号码";
+                    let msg = _this.validate();
+                    if(!msg){
+                        //进行提交
+                        this.$post("/blog/register", this.sginData.registerData)
+                        .then(function (response) {
+                            if(response.status === 0){
+                                _this.$alert('注册成功', "提示", {
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                       //清空数据
+                                       _this.sginData.registerData = {
+                                           icon: {
+                                                userCode: '',
+                                                password: '',
+                                                password2: '',
+                                                userNickName: '',
+                                                email: '',
+                                                moblie: ''
+                                            }
+                                       };
+                                       //切换到登录页面
+                                       _this.signChange("登录");
+                                    }
+                                });
+                            }else {
+                                 _this.$alert(response.msg, "提示", {confirmButtonText: '确定',});
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    }
+                }
+            },
+            //注册数据校验
+            validate(){
+                let msg = "请输入";
+                //校验是否全部必录
+                if(!this.sginData.registerData.userCode){
+                    msg += "注册账号";
+                }else if(!this.sginData.registerData.password){
+                    msg += "注册密码";
+                }else if(!this.sginData.registerData.password2){
+                    msg += "确认密码";
+                }else if(!this.sginData.registerData.userNickName){
+                    msg += "用户昵称";
+                }else if(!this.sginData.registerData.email){
+                    msg += "邮箱地址";
+                }else if(!this.sginData.registerData.moblie){
+                    msg += "手机号码";
+                }
+                if(msg.length === 3){
+                    //检查是否全部录入正确
+                    if(el_icon_success !== this.sginData.registerData.icon.userCode){
+                        msg += "正确的注册账号";
+                    }else if(el_icon_success !== this.sginData.registerData.icon.password){
+                        msg += "正确的注册密码";
+                    }else if(el_icon_success !== this.sginData.registerData.icon.password2){
+                        msg += "正确的确认密码";
+                    }else if(el_icon_success !== this.sginData.registerData.icon.userNickName){
+                        msg += "正确的用户昵称";
+                    }else if(el_icon_success !== this.sginData.registerData.icon.email){
+                        msg += "正确的邮箱地址";
+                    }else if(el_icon_success !== this.sginData.registerData.icon.moblie){
+                        msg += "正确的手机号码";
                     }
                     if(msg.length === 3){
-                        //检查是否全部录入正确
-                        if(el_icon_success !== this.sginData.registerData.icon.userCode){
-                            msg += "正确的注册账号";
-                        }else if(el_icon_success !== this.sginData.registerData.icon.password){
-                            msg += "正确的注册密码";
-                        }else if(el_icon_success !== this.sginData.registerData.icon.password2){
-                            msg += "正确的确认密码";
-                        }else if(el_icon_success !== this.sginData.registerData.icon.userNickName){
-                            msg += "正确的用户昵称";
-                        }else if(el_icon_success !== this.sginData.registerData.icon.email){
-                            msg += "正确的邮箱地址";
-                        }else if(el_icon_success !== this.sginData.registerData.icon.moblie){
-                            msg += "正确的手机号码";
-                        }
-                        if(msg.length === 3){
-                            //进行提交
-                            this.$post("/blog/register", this.sginData.registerData)
-                            .then(function (response) {
-                                if(response.status === 0){
-                                    alert('注册成功');
-                                    //清空数据
-                                }else {
-                                    alert(response.msg);
-                                }
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                            });
-                        }else {
-                            this.sginData.errorMsg = msg;
-                        }
+                        msg = "";
                     }else {
                         this.sginData.errorMsg = msg;
                     }
+                }else {
+                    this.sginData.errorMsg = msg;
                 }
+                return msg;
             },
             //注册账号校验
             reCgUserCode(val){
@@ -216,12 +276,16 @@
             reCgPassword(val){
                 let f = simpleValidate.isPassword(val);
                 if(f){
+                    //校验两次密码是否一致
                     if(this.sginData.registerData.password2 && val !== this.sginData.registerData.password2){
                         this.sginData.registerData.icon.password = el_icon_error;
                         this.sginData.errorMsg = "注册密码输入错误，两次密码不一致";
                     }else{
                         this.sginData.registerData.icon.password = el_icon_success;
                         this.sginData.errorMsg = "";
+                        if(this.sginData.registerData.password2){
+                            this.sginData.registerData.icon.password2 = el_icon_success;
+                        }
                     }
                 }else {
                     this.sginData.registerData.icon.password = el_icon_error;
@@ -238,6 +302,9 @@
                     }else {
                         this.sginData.registerData.icon.password2 = el_icon_success;
                         this.sginData.errorMsg = "";
+                        if(this.sginData.registerData.password){
+                            this.sginData.registerData.icon.password = el_icon_success;
+                        }
                     }
                 }else {
                     this.sginData.registerData.icon.password2 = el_icon_error;
