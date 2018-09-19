@@ -321,6 +321,7 @@ public class BlogServiceImpl implements BlogService{
 		if(blogUser != null){
 			user = new BlogUserVo();
 			user.setUserNickName(blogUser.getUserNickName());
+			user.setUserImgPath(blogUser.getUserImgPath());
 			user.setUserId(blogUser.getUserId());
 		}
 		return user;

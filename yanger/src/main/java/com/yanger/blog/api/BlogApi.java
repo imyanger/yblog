@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yanger.blog.service.facade.BlogService;
@@ -158,6 +159,7 @@ public class BlogApi {
 			BlogUserVo user = blogService.userLogin(blogUserVo);
 			if(user != null){
 				api.setData(user);
+				//添加token
 			}else {
 				api.error("输入的账号不存在或密码错误");
 			}
@@ -176,8 +178,8 @@ public class BlogApi {
 	 * @return
 	 */
 	@ApiOperation(value = "校验用户名是否被使用 ", notes = "")
-	@GetMapping("/checkCode/{code}")
-	public ApiResponse<String> checkCode(@PathVariable(value="code") String code){
+	@GetMapping("/checkCode")
+	public ApiResponse<String> checkCode(@RequestParam(value="code") String code){
 		ApiResponse<String> api = new ApiResponse<>();
 		try {
 			Boolean exist = blogService.checkUserCode(code);

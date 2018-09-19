@@ -12,6 +12,9 @@ import '../static/ueditor/lang/zh-cn/zh-cn.js';
 import '../static/ueditor/ueditor.parse.min.js';
 //axios的封装
 import { post, get, patch, put } from '../static/js/http';
+//vuex
+import store from './store';
+
 //定义全局变量
 Vue.prototype.$post = post;
 Vue.prototype.$get = get;
@@ -44,5 +47,6 @@ router.beforeEach((to, from, next) => {
 
 new Vue({
     router,
+    store,
     render: h => h(App)
 }).$mount('#app');

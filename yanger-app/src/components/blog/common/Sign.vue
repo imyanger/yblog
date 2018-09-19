@@ -12,10 +12,15 @@
                     <span @click="openSignDialog" id="openSignDialog">点此快速登录</span><br/>
                     <span id="find_pwd" @click="findPwd">忘记密码，点击找回</span><br/>
                 </center>
-                <center v-if="sginData.user.userNickName">
-                    <span id="header_msg">亲爱的{{sginData.user.userNickName}}，欢迎您</span><br/>
-                    <span @click="openSignDialog" id="openSignDialog">[注销]</span><br/>
-                </center>
+                <div v-if="sginData.user.userNickName">
+                    <div id="info_left">
+                        <img alt="" :src="sginData.user.userImgPath">
+                    </div>
+                    <div id="info_right">
+                        <span id="header_msg">亲爱的{{sginData.user.userNickName}}，欢迎您</span><br/>
+                        <span @click="clearUserInfo" id="openSignDialog">[注销]</span><br/>
+                    </div>
+                </div>
             </div>
 			<el-dialog :visible.sync="sginData.dialogVisible" :close-on-click-modal="false" width="450px">
 				<el-row id="sign">
@@ -93,6 +98,7 @@
 <script>
     import drag from "./Drag"; //列表文章底部部分
     import simpleValidate from 'static/js/simpleValidate'; //date格式化
+    import { mapGetters, mapMutations } from 'vuex'; //vuex组件
     const el_icon_error = 'el-icon-warning';
     const el_icon_success = 'el-icon-success';
     export default {
@@ -123,7 +129,17 @@
                 }
             };
         },
+        created(){
+            console.log(this.getUser())
+            //从sessionStorage获取登录信息
+            let user = this.getUser();
+            if(user.userNickName){
+                this.sginData.user = user;
+            }
+        },
         methods: {
+            ...mapGetters(['getUser']),
+            ...mapMutations(['setUser', 'clearUser']),
             //打开模态框
             openSignDialog() {
                 this.sginData.dialogVisible = true;
@@ -146,6 +162,11 @@
             //找回密码
             findPwd() {
                 alert("找回密码");
+            },
+            //注销用户
+            clearUserInfo(){
+                this.sginData.user = {};
+                this.clearUser();
             },
             //接受滑动解锁成功的回调
             dealDragOk(dragRes) {
@@ -174,7 +195,10 @@
                                 //关闭模态框
                                 _this.sginData.dialogVisible = false;
                                 //渲染用户信息
-                                _this.sginData.user = response.data;
+                                _this.sginData.user.userNickName = response.data.userNickName;
+                                _this.sginData.user.userImgPath = response.data.userImgPath;
+                                //将登录信息放入vuex中
+                                _this.setUser(_this.sginData.user);
                             }else {
                                _this.sginData.errorMsg = response.msg;
                             }
@@ -413,6 +437,21 @@
     }
     #error_msg span {
         color: #e03131;
+    }
+    #info_left {
+        float: left;
+        margin-left: 30px;
+    }
+    #info_left img {
+        margin: 5px 5px 5px 5px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50px;
+        cursor: pointer;
+    }
+    #info_right {
+        float: right;
+        width: 180px;
     }
 </style>
 

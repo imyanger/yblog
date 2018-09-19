@@ -23,6 +23,7 @@
 		</div>
 		<div id="content_right">
 			<!-- 网站登录模块 -->
+			<sign></sign>
 			<div id="dete_line">
 				<h3>时间线</h3>
 				<el-tabs tab-position="left">
@@ -47,6 +48,7 @@
 
 <script>
 	import autor from '../common/Autor';
+	import sign from '../common/Sign'; //用户信息展示
 	export default {
 		data() {
 			return {
@@ -92,7 +94,7 @@
 			}
 		},
 		components: {
-			autor
+			autor, sign
 		}
 	};
 </script>

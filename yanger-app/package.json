@@ -21,7 +21,8 @@
     "vue-router": "^3.0.1",
     "vue-schart": "^1.0.0",
     "vue-seamless-scroll": "^1.1.16",
-    "vuedraggable": "^2.16.0"
+    "vuedraggable": "^2.16.0",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
