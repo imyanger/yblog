@@ -142,6 +142,14 @@
 		</dependency>
 		<!-- swagger2API文档支持 -->
 		
+		<!-- jwt相关 -->
+		<dependency>
+    		<groupId>com.auth0</groupId>
+    		<artifactId>java-jwt</artifactId>
+    		<version>2.2.0</version>
+   		</dependency>
+   		<!-- jwt相关 -->
+   
 		<!-- 测试相关 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -24,6 +24,7 @@ import com.yanger.blog.service.facade.BlogService;
 import com.yanger.blog.vo.ArticleKindVo;
 import com.yanger.blog.vo.ArticleVo;
 import com.yanger.blog.vo.BlogUserVo;
+import com.yanger.blog.vo.BoardDataVo;
 import com.yanger.blog.vo.EssayDataVo;
 import com.yanger.blog.vo.HomeDataVo;
 import com.yanger.blog.vo.LeavingMsgVo;
@@ -130,6 +131,25 @@ public class BlogServiceImpl implements BlogService{
 		Page<LeavingMsg> msgsPage = leavingMsgDao.selectPage(pageParam, entry);
 		ResultPage<LeavingMsgVo> msgsResult = Pages.convert(pageParam, msgsPage, LeavingMsgVo.class);
 		return msgsResult.getData();
+	}
+	
+	/**
+	 * <p>Description: 获取留言信息  </p>  
+	 * @author YangHao  
+	 * @date 2018年9月24日-上午12:54:05
+	 * @param page
+	 * @param size
+	 * @return
+	 * @throws Exception
+	 */
+	private ResultPage<LeavingMsgVo> findMsgPage(int page, int size) throws Exception {
+		PageParam pageParam = ParamUtils.getDescPageParam(page, size, "update_time");
+		LeavingMsg entry = new LeavingMsg();
+		entry.setStatus(ConstantUtils.STATUS_VALID);
+		//留言类型
+		entry.setType(ConstantUtils.MSG_TYPE_BOARD);
+		Page<LeavingMsg> msgsPage = leavingMsgDao.selectPage(pageParam, entry);
+		return Pages.convert(pageParam, msgsPage, LeavingMsgVo.class);
 	}
 	
 	/**
@@ -320,6 +340,7 @@ public class BlogServiceImpl implements BlogService{
 		BlogUser blogUser = blogUserDao.findLoginUser(blogUserVo.getUserCode(), password);
 		if(blogUser != null){
 			user = new BlogUserVo();
+			user.setUserCode(blogUser.getUserCode());
 			user.setUserNickName(blogUser.getUserNickName());
 			user.setUserImgPath(blogUser.getUserImgPath());
 			user.setUserId(blogUser.getUserId());
@@ -339,5 +360,17 @@ public class BlogServiceImpl implements BlogService{
 		return blogUser != null;
 	}
 	
+	/**
+	 * <p>Description: 获取留言板分页信息 </p>  
+	 * @author YangHao  
+	 * @date 2018年9月24日-上午12:47:32
+	 * @return
+	 */
+	public BoardDataVo getBoardData() throws Exception {
+		BoardDataVo boardDataVo = new BoardDataVo();
+		ResultPage<LeavingMsgVo> msgPage = findMsgPage(1, 6);
+		boardDataVo.setMsgPage(msgPage);
+		return boardDataVo;
+	}
 	
 }

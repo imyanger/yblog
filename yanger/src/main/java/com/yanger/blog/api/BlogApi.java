@@ -12,18 +12,23 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yanger.blog.service.facade.BlogService;
 import com.yanger.blog.vo.ArticleVo;
 import com.yanger.blog.vo.BlogUserVo;
+import com.yanger.blog.vo.BoardDataVo;
 import com.yanger.blog.vo.EssayDataVo;
 import com.yanger.blog.vo.HomeDataVo;
 import com.yanger.blog.vo.PageQueryVo;
 import com.yanger.blog.vo.StudyDataVo;
+import com.yanger.common.annotation.Token;
+import com.yanger.common.util.JwtUtils;
 import com.yanger.common.util.RedisMagger;
 import com.yanger.common.vo.ApiResponse;
+import com.yanger.common.vo.TokenVo;
 import com.yanger.mybatis.util.ResultPage;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @Api
+@Token
 @RestController
 @RequestMapping("/blog")
 public class BlogApi {
@@ -160,6 +165,8 @@ public class BlogApi {
 			if(user != null){
 				api.setData(user);
 				//添加token
+				String token = JwtUtils.sign(new TokenVo(user.getUserCode(), user.getUserNickName()));
+				api.setToken(token);
 			}else {
 				api.error("输入的账号不存在或密码错误");
 			}
@@ -188,6 +195,26 @@ public class BlogApi {
 			}
 		} catch (Exception e) {
 			api.error("校验用户名失败");
+			e.printStackTrace();
+		}
+		return api;
+	}
+	
+	/**
+	 * <p>Description: 留言板页面数据初始化 </p>  
+	 * @author YangHao  
+	 * @date 2018年9月6日-下午11:07:41
+	 * @return
+	 */
+	@ApiOperation(value = "留言板页面数据初始化", notes = "")
+	@GetMapping("/boardInit")
+	public ApiResponse<BoardDataVo> boardInit(){
+		ApiResponse<BoardDataVo> api = new ApiResponse<>();
+		try {
+			BoardDataVo boardDataVo = blogService.getBoardData();
+			api.setData(boardDataVo);
+		} catch (Exception e) {
+			api.error("加载留言板数据失败");
 			e.printStackTrace();
 		}
 		return api;

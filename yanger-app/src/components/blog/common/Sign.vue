@@ -18,7 +18,7 @@
                     </div>
                     <div id="info_right">
                         <span id="header_msg">亲爱的{{sginData.user.userNickName}}，欢迎您</span><br/>
-                        <span @click="clearUserInfo" id="openSignDialog">[注销]</span><br/>
+                        <span @click="clearUserInfo" id="openSignDialog">[退出]</span><br/>
                     </div>
                 </div>
             </div>
@@ -167,11 +167,13 @@
             clearUserInfo(){
                 this.sginData.user = {};
                 this.clearUser();
+                sessionStorage.setItem('$token', '');
             },
             //接受滑动解锁成功的回调
             dealDragOk(dragRes) {
                 this.isDragOk = dragRes;
             },
+            //用户登录
             signSubmit(title){
                 let _this = this;
                 if('登录' === title){

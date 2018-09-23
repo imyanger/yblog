@@ -4,15 +4,15 @@
 			<div id="Msg">
 				<h2 id="">留言板</h2>
                 <div class="editor-container">
-                    <UE :defaultMsg='msgData.defaultMsg' :config='msgData.config' ref="ue"></UE>
+                    <UE :defaultMsg='msg' :config='config' ref="ue"></UE>
                 </div>
 				<button @click="leaveMsg">发表</button>
-				<h3>留言总数（{{msgData.page.total}}）</h3>
-				<div id="Msg_content" v-for="(msg, index) in msgData.data.msgs" :key="msg.index">
+				<h3>留言总数（{{msgData.msgPage.totalCount}}）</h3>
+				<div id="Msg_content" v-for="(msg, index) in msgData.msgPage.data" :key="msg.index">
                     <el-row>
                         <div class="row each_Msg" style="margin: 0 auto;">
                             <div class="row each_Msg_right">
-                                <p><font>{{msg.createDate}}&nbsp;&nbsp;&nbsp;&nbsp;</font>{{msg.userName}}&nbsp;:</p>
+                                <p><font>{{msg.updateTime | formatDate}}&nbsp;&nbsp;&nbsp;&nbsp;</font>{{msg.userNickName}}&nbsp;:</p>
                                 <div class="each_Msg_right_c">{{msg.content}}</div>
                                 <hr>
                             </div>
@@ -25,15 +25,16 @@
 			</div>
 			<div id="page_bar">
 				<el-pagination @current-change="handleCurrentChange" 
-                    :current-page.sync="msgData.page.currentPage" :page-size="msgData.page.size" 
-                    layout="total,jumper, prev, pager, next" :total="msgData.page.total">
+                    :current-page.sync="msgData.msgPage.pageNo" :page-size="msgData.msgPage.pageSize" 
+					layout="total,jumper, prev, pager, next" :total="msgData.msgPage.totalCount">
                 </el-pagination>
 			</div>
 		</div>
 		<div id="content_right">
-            <about-me></about-me>
 			<!-- 网站登录模块 -->
+            <sign></sign>
 			<!-- 关于我 -->
+            <about-me></about-me>
 		</div>
 	</el-row>
 </template>
@@ -41,42 +42,40 @@
 <script>
     import UE from '../common/ueditor'; //ueditor富文本编辑器
     import aboutMe from './AboutMe';
+    import sign from '../common/Sign'; //用户信息展示
+    import { formatDate } from 'static/js/date'; //date格式化
     export default {
         components: {
-            UE, aboutMe
+            UE, aboutMe, sign
         },
         data() {
             return {
                 msgData: {
-                    defaultMsg: '这里是UE测试',
-                    config: {
-                        initialFrameWidth: 700,
-                        initialFrameHeight: 200
-                    },
-                    data: {
-                        msgs: [
-                            {
-                                createDate:'2019-04-22',
-                                userName: '张飒',
-                                content: '测试谁数据'
-                            },
-                            {
-                                createDate:'2019-04-22',
-                                userName: '张飒',
-                                content: '测试谁但是防守是放松放松放松放松的放松放松放松法放松方式方法如何让人个人得分躲躲\
-                                测试谁但是防守是放松放松放松放松的放松放松放松法放松方式方法如何让人个人得分躲躲\
-                                测试谁但是防守是放松放松放松放松的放松放松放松法放松方式方法如何让人个人得分躲躲\
-                                测试谁但是防守是放松放松放松放松的放松放松放松法放松方式方法如何让人个人得分躲躲藏藏数据'
-                            }
-                        ]
-                    },
-                    page: {
-                        currentPage: 1,
-                        size: 5,
-                        total: 20
-                    },
+                    msgPage: {}
+                },
+                msg: '',
+                config: {
+                    initialFrameWidth: 700,
+                    initialFrameHeight: 200
                 }
             }
+        },
+        filters: {
+            formatDate(time) {
+                var date = new Date(time);
+                return formatDate(date, 'yyyy-MM-dd hh:mm');
+            }
+        },
+        created() {
+            //上下文的改变
+            let _this = this;
+            this.$get("/blog/boardInit")
+            .then(function (response) {
+               _this.msgData.msgPage = response.data.msgPage;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         },
         methods: {
             getUEContent() {
