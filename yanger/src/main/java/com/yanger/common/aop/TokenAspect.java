@@ -16,6 +16,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.yanger.common.annotation.NoToken;
 import com.yanger.common.annotation.Token;
+import com.yanger.common.util.JwtUtils;
+import com.yanger.common.vo.TokenVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -69,6 +71,10 @@ public class TokenAspect {
 			String token = request.getParameter("token");
 			log.info("需要token" + token);
 			//校验token
+			TokenVo tokenVo = JwtUtils.parse(TokenVo.class, token);
+			if(tokenVo != null){
+				request.setAttribute("user", tokenVo);
+			}
 		}
 		return point.proceed();
 	}

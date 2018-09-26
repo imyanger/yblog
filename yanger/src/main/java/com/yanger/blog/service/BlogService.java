@@ -1,6 +1,7 @@
-package com.yanger.blog.service.spring;
+package com.yanger.blog.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,6 @@ import com.yanger.blog.po.ArticleKind;
 import com.yanger.blog.po.BlogUser;
 import com.yanger.blog.po.LeavingMsg;
 import com.yanger.blog.po.OuterLink;
-import com.yanger.blog.service.facade.BlogService;
 import com.yanger.blog.vo.ArticleKindVo;
 import com.yanger.blog.vo.ArticleVo;
 import com.yanger.blog.vo.BlogUserVo;
@@ -34,13 +34,14 @@ import com.yanger.blog.vo.StudyDataVo;
 import com.yanger.common.util.ConstantUtils;
 import com.yanger.common.util.EncryptUtils;
 import com.yanger.common.util.ParamUtils;
+import com.yanger.common.vo.TokenVo;
 import com.yanger.mybatis.core.Page;
 import com.yanger.mybatis.core.PageParam;
 import com.yanger.mybatis.util.Pages;
 import com.yanger.mybatis.util.ResultPage;
 
 @Service(value = "blogService")
-public class BlogServiceImpl implements BlogService{
+public class BlogService {
 
 	@Autowired
 	private ArticleDao articleDao;
@@ -64,7 +65,6 @@ public class BlogServiceImpl implements BlogService{
 	 * @return
 	 * @throws Exception
 	 */
-	@Override
 	public HomeDataVo getHomeData() throws Exception {
 		HomeDataVo homeData = new HomeDataVo();
 		//获得读书笔记
@@ -178,7 +178,6 @@ public class BlogServiceImpl implements BlogService{
 	 * @return
 	 * @throws Exception
 	 */
-	@Override
 	public StudyDataVo getStudyData() throws Exception {
 		StudyDataVo studyDataVo = new StudyDataVo();
 		//获得读书笔记
@@ -258,7 +257,6 @@ public class BlogServiceImpl implements BlogService{
 	 * @return
 	 * @throws Exception
 	 */
-	@Override
 	public EssayDataVo getEssayData() throws Exception {
 		EssayDataVo essayDataVo = new EssayDataVo();
 		//获得读书笔记
@@ -280,7 +278,6 @@ public class BlogServiceImpl implements BlogService{
 	 * @param pageQueryVo
 	 * @return
 	 */
-	@Override
 	public ResultPage<ArticleVo> getPageData(PageQueryVo pageQueryVo) throws Exception {
 		int page = pageQueryVo.getPageNo();
 		int size = 6;
@@ -314,7 +311,6 @@ public class BlogServiceImpl implements BlogService{
 	 * @param blogUserVo
 	 * @throws Exception
 	 */
-	@Override
 	public void userRegister(BlogUserVo blogUserVo) throws Exception {
 		BlogUser blogUser = new BlogUser();
 		BeanUtils.copyProperties(blogUser, blogUserVo);
@@ -332,7 +328,6 @@ public class BlogServiceImpl implements BlogService{
 	 * @return
 	 * @throws Exception
 	 */
-	@Override
 	public BlogUserVo userLogin(BlogUserVo blogUserVo) throws Exception {
 		BlogUserVo user = null;
 		String password = EncryptUtils.getMD5(blogUserVo.getPassword());
@@ -354,7 +349,6 @@ public class BlogServiceImpl implements BlogService{
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
 	 */
-	@Override
 	public Boolean checkUserCode(String code) throws Exception {
 		BlogUser blogUser = blogUserDao.findUserByCode(code);
 		return blogUser != null;
@@ -371,6 +365,43 @@ public class BlogServiceImpl implements BlogService{
 		ResultPage<LeavingMsgVo> msgPage = findMsgPage(1, 6);
 		boardDataVo.setMsgPage(msgPage);
 		return boardDataVo;
+	}
+
+	/**
+	 * <p>Description: 获取留言板分页数据 </p>  
+	 * @author YangHao  
+	 * @date 2018年9月26日-下午10:56:04
+	 * @param pageQueryVo
+	 * @return
+	 * @throws Exception
+	 */
+	public ResultPage<LeavingMsgVo> getMsgPageData(PageQueryVo pageQueryVo) throws Exception {
+		return findMsgPage(pageQueryVo.getPageNo(), 6);
+	}
+
+	/**
+	 * <p>Description: 发表留言 </p>  
+	 * @author YangHao  
+	 * @date 2018年9月26日-下午11:56:45
+	 * @param user
+	 * @param msgVo
+	 * @return
+	 * @throws Exception 
+	 */
+	public ResultPage<LeavingMsgVo> leaveMsg(TokenVo user, LeavingMsgVo msgVo) throws Exception {
+		//保存留言信息
+		LeavingMsg entity = new LeavingMsg();
+		entity.setContent(msgVo.getContent());
+		entity.setUserId(user.getId());
+		entity.setUserNickName(user.getName());
+		entity.setUserImgPath(user.getPath());
+		//留言类型
+		entity.setType(ConstantUtils.MSG_TYPE_BOARD);
+		entity.setInsertTime(new Date());
+		entity.setStatus(ConstantUtils.STATUS_VALID);
+		leavingMsgDao.insert(entity);
+		//查询新的第一页数据
+		return findMsgPage(1, 6);
 	}
 	
 }

@@ -13,7 +13,9 @@
                         <div class="row each_Msg" style="margin: 0 auto;">
                             <div class="row each_Msg_right">
                                 <p><font>{{msg.updateTime | formatDate}}&nbsp;&nbsp;&nbsp;&nbsp;</font>{{msg.userNickName}}&nbsp;:</p>
-                                <div class="each_Msg_right_c">{{msg.content}}</div>
+                                <div class="each_Msg_right_c">
+                                    <div v-html="msg.content"></div>
+                                </div>
                                 <hr>
                             </div>
                             <div class="each_Msg_left">
@@ -44,6 +46,7 @@
     import aboutMe from './AboutMe';
     import sign from '../common/Sign'; //用户信息展示
     import { formatDate } from 'static/js/date'; //date格式化
+    import { mapGetters } from 'vuex'; //vuex组件
     export default {
         components: {
             UE, aboutMe, sign
@@ -56,7 +59,19 @@
                 msg: '',
                 config: {
                     initialFrameWidth: 700,
-                    initialFrameHeight: 200
+                    initialFrameHeight: 200,
+                    toolbars: [[
+                        'fullscreen', 'source', '|', 'undo', 'redo', '|',
+                        'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
+                        'rowspacingtop', 'rowspacingbottom', 'lineheight', 'fontfamily', '|', 
+                        'directionalityltr', 'directionalityrtl', 'indent', '|',
+                        'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
+                        'link', 'unlink', 'anchor', '|',
+                        'simpleupload', 'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'gmap', 'insertframe', 'pagebreak', 'template', 'background', '|',
+                        'horizontal', 'date', 'time', 'spechars', 'snapscreen'
+                    ]],
+                    maximumWords: 300,
+                    elementPathEnabled: false
                 }
             }
         },
@@ -78,17 +93,18 @@
             });
         },
         methods: {
+            ...mapGetters(['getUser']),
             getUEContent() {
                 let content = this.$refs.ue.getContent();
                 this.$notify({
-                title: '获取成功，可在控制台查看！',
-                message: content,
-                type: 'success'
+                    title: '获取成功，可在控制台查看！',
+                    message: content,
+                    type: 'success'
                 });
                 console.log(content)
             },
             getUEContentTxt() {
-                alert(this.$refs.ue.getContentTxt());
+                return this.$refs.ue.getContentTxt();
             },
             setHide() {
                 this.$refs.ue.setHide()
@@ -97,10 +113,42 @@
                 this.$refs.ue.setShow()
             },
             handleCurrentChange(val) {
-				console.log(`当前页: ${val}`);
+				let _this = this;
+				this.$post("/blog/msgPage", {
+					pageNo: val
+				})
+				.then(function (response) {
+                    _this.msgData.msgPage = response.data;
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
             },
+            //发表留言
             leaveMsg() {
-                alert(this.$refs.ue.getContent());
+                let user = this.getUser();
+                if(user.userId){
+                    let msg = this.$refs.ue.getContent();
+                    if(msg){
+                        //发送留言信息
+                        let _this = this;
+                        this.$post("/blog/leaveMsg", {
+                            content: msg
+                        })
+                        .then(function (response) {
+                            _this.msgData.msgPage = response.data;
+                            //清空内容
+                            _this.$refs.ue.clear();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    }else {
+                        this.$alert("请输入留言内容", "提示");
+                    }
+                }else {
+                    this.$alert("登录后可使用留言功能，请先登录", "提示");
+                }
             }
         }
     };

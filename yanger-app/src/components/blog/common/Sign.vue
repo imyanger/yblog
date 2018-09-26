@@ -199,6 +199,8 @@
                                 //渲染用户信息
                                 _this.sginData.user.userNickName = response.data.userNickName;
                                 _this.sginData.user.userImgPath = response.data.userImgPath;
+                                _this.sginData.user.userId = response.data.userId;
+                                _this.sginData.user.userCode = response.data.userCode;
                                 //将登录信息放入vuex中
                                 _this.setUser(_this.sginData.user);
                             }else {

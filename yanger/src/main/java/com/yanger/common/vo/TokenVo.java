@@ -2,6 +2,8 @@ package com.yanger.common.vo;
 
 import java.io.Serializable;
 
+import com.yanger.blog.vo.BlogUserVo;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +19,12 @@ import lombok.NoArgsConstructor;
 public class TokenVo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	//用户id
+	private Integer id;
+	
+	//用户头像路径
+	private String path;
 
 	//用户账号
 	private String code;
@@ -24,4 +32,11 @@ public class TokenVo implements Serializable {
 	//用户名
 	private String name;
 
+	public TokenVo setInfo(BlogUserVo user){
+		this.id = user.getUserId();
+		this.path = user.getUserImgPath();
+		this.code = user.getUserCode();
+		this.name = user.getUserNickName();
+		return this;
+	}
 }

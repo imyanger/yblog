@@ -51,7 +51,7 @@ public class JwtUtils {
      * @param jwt
      * @return
      */
-    public static<T> T parse(String jwt, Class<T> classT) {
+    public static<T> T parse(Class<T> classT, String jwt) {
         final JWTVerifier verifier = new JWTVerifier(SECRET);
         try {
             final Map<String,Object> claims = verifier.verify(jwt);
