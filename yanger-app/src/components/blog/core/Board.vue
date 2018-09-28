@@ -66,9 +66,7 @@
                         'rowspacingtop', 'rowspacingbottom', 'lineheight', 'fontfamily', '|', 
                         'directionalityltr', 'directionalityrtl', 'indent', '|',
                         'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
-                        'link', 'unlink', 'anchor', '|',
-                        'simpleupload', 'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'gmap', 'insertframe', 'pagebreak', 'template', 'background', '|',
-                        'horizontal', 'date', 'time', 'spechars', 'snapscreen'
+                        'link', 'unlink', 'emotion','horizontal', 'date', 'time', 'spechars'
                     ]],
                     maximumWords: 300,
                     elementPathEnabled: false

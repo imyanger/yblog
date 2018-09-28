@@ -8,12 +8,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.imageio.stream.FileImageOutputStream;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import com.yanger.common.util.ConstantUtils;
 import com.yanger.ueditor.define.AppInfo;
 import com.yanger.ueditor.define.BaseState;
 import com.yanger.ueditor.define.State;
@@ -88,11 +90,11 @@ public class StorageManager {
 				tmpFile.delete();
 				return new BaseState(false, AppInfo.MAX_SIZE);
 			}
-			//调用DFS的存储服务上传文件
-			//:TODO
-			/**
-			 * 此处调用文件上传服务，并获取返回结果返回
-			 */
+			
+			//进行存储图片
+			com.yanger.common.util.FileUtils.saveFile(path, picName , dataBuf);
+			
+			//此处调用文件上传服务，并获取返回结果返回
 //			UploadResult result = baseFileService.upload(dataBuf, picName, "OM", null);
 			
 			boolean success = true;
@@ -100,9 +102,13 @@ public class StorageManager {
 			if (success) {
 				state = new BaseState(true);
 				state.putInfo( "size", tmpFile.length() );
-				state.putInfo( "title", "");//文件名填入此处
-				state.putInfo( "group", "");//所属group填入此处
-				state.putInfo( "url", "");//文件访问的url填入此处
+				//文件名填入此处
+				state.putInfo( "title", picName);
+				//所属group填入此处
+				state.putInfo( "group", "");
+				//文件访问的url填入此处
+				String url = "/file/getImg?path=" + path.substring(ConstantUtils.FILE_PATH.length()) + "/" + picName;
+				state.putInfo( "url", url);
 				tmpFile.delete();
 			}else{
 				state = new BaseState(false, 4);
