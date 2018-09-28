@@ -149,6 +149,14 @@
     		<version>2.2.0</version>
    		</dependency>
    		<!-- jwt相关 -->
+   		
+   		<!-- ueditor依赖 -->
+   		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20160810</version>
+		</dependency>
+		<!-- ueditor依赖 -->
    
 		<!-- 测试相关 -->
 		<dependency>
