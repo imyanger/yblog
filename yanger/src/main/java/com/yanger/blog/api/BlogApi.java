@@ -247,6 +247,7 @@ public class BlogApi {
 	
 	@ApiOperation(value = "发表留言", notes = "")
 	@PostMapping("/leaveMsg")
+	@Token
 	public ApiResponse<ResultPage<LeavingMsgVo>> msgPage(@RequestBody LeavingMsgVo msgVo, HttpServletRequest request){
 		ApiResponse<ResultPage<LeavingMsgVo>> api = new ApiResponse<>();
 		TokenVo user = (TokenVo) request.getAttribute("user");

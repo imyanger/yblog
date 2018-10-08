@@ -40,6 +40,18 @@ export default new Router({
             ]
         },
         {
+            path: '/back',
+            component: resolve => require(['../components/back/common/Layout.vue'], resolve),
+            meta: { title: '自述文件' },
+            children:[
+                {
+                    path: '/back/dashboard',
+                    component: resolve => require(['../components/page/Dashboard.vue'], resolve),
+                    meta: { title: '系统首页' }
+                }
+            ]
+        },
+        {
             path: '/',
             component: resolve => require(['../components/common/Home.vue'], resolve),
             meta: { title: '自述文件' },
@@ -107,12 +119,12 @@ export default new Router({
             component: resolve => require(['../components/page/Login.vue'], resolve)
         },
         {
-            path: '/404',
-            component: resolve => require(['../components/page/404.vue'], resolve)
-        },
-        {
             path: '/403',
             component: resolve => require(['../components/page/403.vue'], resolve)
+        },
+        {
+            path: '/404',
+            component: resolve => require(['../components/common/404.vue'], resolve)
         },
         {
             path: '*',

@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * 此注解不校验token
  * @author YangHao
  */
-@Target({ElementType.TYPE})
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public  @interface Token {

@@ -1,7 +1,11 @@
 <template>
     <div class="error-page">
-        <div class="error-code">4<span>0</span>4</div>
-        <div class="error-desc">啊哦~ 你所访问的页面不存在</div>
+        <el-row>
+            <div class="error-desc">您访问的页面消失在遥远的二次元</div>
+        </el-row>
+        <el-row>
+            <div><img src="static/img/blog/404.jpg"></div>
+        </el-row>
         <div class="error-handle">
             <router-link to="/">
                 <el-button type="primary" size="large">返回首页</el-button>
@@ -21,6 +25,7 @@
     }
 </script>
 
+
 <style scoped>
     .error-page{
         display: flex;
@@ -32,6 +37,10 @@
         background: #f3f3f3;
         box-sizing: border-box;
     }
+    img {
+        margin-top: 30px;
+        height: 350px;
+    }
     .error-code{
         line-height: 1;
         font-size: 250px;
@@ -42,7 +51,8 @@
         color: #00a854;
     }
     .error-desc{
-        font-size: 25px;
+        margin-top: 150px;
+        font-size: 26px;
         color: #777;
     }
     .error-handle{
