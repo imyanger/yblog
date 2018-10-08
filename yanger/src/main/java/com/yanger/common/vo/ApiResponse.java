@@ -16,6 +16,8 @@ public class ApiResponse<T> implements Serializable {
 	
 	public static final int ERROR = 1;
 	
+	public static final int ERROR_TOKEN = 2;
+	
 	public static final int BUSY = -100;
 
 	public static final String SUCCESS_TEXT = "Success";
@@ -102,6 +104,11 @@ public class ApiResponse<T> implements Serializable {
 	public void error(String msg){
 		this.msg = msg;
 		this.status = ERROR;
+	}
+	
+	public void errorToken(){
+		this.msg = "token不合法";
+		this.status = ERROR_TOKEN;
 	}
 	
 }

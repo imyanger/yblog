@@ -1,6 +1,7 @@
 package com.yanger.blog.dao;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.yanger.blog.po.BlogUser;
 import com.yanger.mybatis.core.MybatisBaseDao;
@@ -22,7 +23,7 @@ public interface BlogUserDao extends MybatisBaseDao<BlogUser, Integer> {
 	 * @param pwd
 	 * @return
 	 */
-	public BlogUser findLoginUser(String code, String pwd);
+	public BlogUser findLoginUser(@Param("code") String code, @Param("pwd") String pwd);
 	
 	/**
 	 * <p>Description: 根据用户名/邮箱/手机号查找用户 </p>  
@@ -32,6 +33,6 @@ public interface BlogUserDao extends MybatisBaseDao<BlogUser, Integer> {
 	 * @param pwd
 	 * @return
 	 */
-	public BlogUser findUserByCode(String code);
+	public BlogUser findUserByCode(@Param("code") String code);
 
 }

@@ -33,7 +33,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @Api
-@Token
+//@Token
 @RestController
 @RequestMapping("/blog")
 public class BlogApi {

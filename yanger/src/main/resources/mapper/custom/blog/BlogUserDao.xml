@@ -10,14 +10,14 @@
 		select
 			<include refid="Base_Column_List" />
 		from blog_user
-		where (user_code = #{param1} or moblie = #{param1} or email = #{param1}) and password = #{param2}
+		where (user_code = #{code} or moblie = #{code} or email = #{code}) and password = #{pwd}
 	</select>
 
 	<select id="findUserByCode" resultMap="BaseResultMap" parameterType="String">
 		select
 			<include refid="Base_Column_List" />
 		from blog_user
-		where user_code = #{param1} or moblie = #{param1} or email = #{param1}
+		where user_code = #{code} or moblie = #{code} or email = #{code}
 	</select>
 
 </mapper>
