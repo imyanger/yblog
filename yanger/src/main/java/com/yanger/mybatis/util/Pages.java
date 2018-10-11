@@ -3,10 +3,8 @@ package com.yanger.mybatis.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.yanger.mybatis.core.Page;
-import com.yanger.mybatis.core.PageParam;
-import com.yanger.mybatis.paginator.domain.Beans;
-import com.yanger.mybatis.paginator.domain.Paginator;
+import com.yanger.mybatis.paginator.Page;
+import com.yanger.mybatis.paginator.PageParam;
 
 public class Pages {
 	

@@ -3,10 +3,10 @@ package com.yanger.generator.start;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.yanger.generator.core.GenConfig;
-import com.yanger.generator.core.GenParam;
-import com.yanger.generator.core.GenType;
-import com.yanger.generator.core.Generator;
+import com.yanger.generator.support.GenConfig;
+import com.yanger.generator.support.GenParam;
+import com.yanger.generator.support.GenType;
+import com.yanger.generator.support.Generator;
 
 /**
 * <p>Title: CodeGenerator.java</p>  
@@ -20,7 +20,7 @@ public class CodeGenerator {
 		
 		List<GenParam> paramList = new ArrayList<GenParam>();
 		//模块包名  -- 扫描的表名
-		paramList.add(new GenParam("blog", new String[] {"article_kind"}));
+		paramList.add(new GenParam("blog", new String[] {"upload_file"}));
 		GenConfig gc = new GenConfig();
 		gc.setBasePackage("com.yanger");
 		// 设置要忽略的表名前缀，默认空

@@ -1,13 +1,9 @@
 package com.yanger.generator.util;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.PropertyResourceBundle;
 
-import org.apache.commons.lang3.StringUtils; 
+import org.apache.commons.lang3.StringUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,10 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WordFileUtils {
 	
-	public static final String WORD_ROOT_FILE = "words/wordroot.properties";
-	
-	public static final String WORD_ROOT_TABLE_FILE = "words/wordroot-table.properties";
-	
 	private static Map<String, Word> wordMap = new HashMap<>();
 	
 	public static boolean hasShowHelp = false; 
@@ -34,21 +26,8 @@ public class WordFileUtils {
 
 	public synchronized static void initWordMap() {
 		if (!hasShowHelp) {
-			log.info("**************************************************************");
-			log.info("**开始加载词根表，词根优先级如下： ");
-			log.info("**1：以下划线分隔的命名");
-			log.info("**2：自带标准词根表(wordroot.properties)");
-			log.info("**3：自带标准词根表业务表(wordroot-table.properties)");
-			log.info("**4：数据库中的大小写");
-			log.info("**5：全部改成小写");
-			log.info("**************************************************************");
+			log.info("********词根优先级如下：以下划线分隔的命名 > 数据库中的大小写 > 全部改成小写********");
 			hasShowHelp = true;
-		}
-		try {
-			init(WORD_ROOT_TABLE_FILE);
-			init(WORD_ROOT_FILE);
-		} catch (IOException e) {
-			log.warn("{}", e);
 		}
 	}
 
@@ -69,45 +48,14 @@ public class WordFileUtils {
 		return null;
 	}
 
-	private static void init(String fileName) throws IOException {
-		InputStream is = WordFileUtils.class.getClassLoader().getResourceAsStream(fileName);
-		if (is != null) {
-			try {
-				log.info("Load wordfile " + fileName);
-				PropertyResourceBundle bundle = new PropertyResourceBundle(is);
-				Enumeration<String> ration = bundle.getKeys();
-				while (ration.hasMoreElements()) {
-					String objKey = ration.nextElement();
-					if (objKey != null) {
-						String name = (String) objKey;
-						String key = name.toLowerCase();
-						String value = bundle.getString(name);
-						if (StringUtils.isNotEmpty(value)) {
-							value = new String(value.getBytes("UTF-8"));
-							Word word = new Word(name, value);
-							wordMap.put(key, word);
-						}
-					}
-				}
-			} finally {
-				if (is != null) {
-					is.close();
-				}
-			}
-		}
-	}
-
 	/**
 	 * 得到对象名，首字母大写。其他规则如下：
 	 * <ol>
 	 * <li>包含下划线的，每个下划线后面的第1字符大写，删除下划线后连接作为Name
-	 * <li>否则：Wordfile.properties有定义，则用Wordfile.properties对应行中等于号之前的内容作为Name
 	 * <li>否则：传入内容包含大写和小写的，传入内容作为Name
 	 * <li>否则：传入内容全部小写作为Name
 	 * </ol>
-	 * 
-	 * @param name
-	 *            传入名称（表名或字段名）
+	 * @param name 传入名称（表名或字段名）
 	 * @return 类实例名或属性名
 	 */
 	public static String getBeautyObjectName(String name) {
@@ -138,9 +86,6 @@ public class WordFileUtils {
 
 		beautyName = upperCaseFirstChar(beautyName);
 
-		// log.info("getBeautyObjectName(\"" + name + "\")=" +
-		// beautyName);
-
 		return beautyName;
 	}
 
@@ -148,13 +93,10 @@ public class WordFileUtils {
 	 * 得到实例名，如果第前两个字符均为大写，则直接返回，否则返回首字母小写的内容 。其他规则如下：
 	 * <ol>
 	 * <li>包含下划线的，每个下划线后面的第1字符大写，删除下划线后连接作为Name
-	 * <li>否则：Wordfile.properties有定义，则用Wordfile.properties对应行中等于号之前的内容作为Name
 	 * <li>否则：传入内容包含大写和小写的，传入内容作为Name
 	 * <li>否则：传入内容全部小写作为Name
 	 * </ol>
-	 * 
-	 * @param name
-	 *            传入名称（表名或字段名）
+	 * @param name 传入名称（表名或字段名）
 	 * @return 类实例名或属性名
 	 */
 	public static String getBeautyInstanceName(String name) {
@@ -165,8 +107,6 @@ public class WordFileUtils {
 		} else {
 			beautyName = lowerCaseFirstChar(beautyName);
 		}
-		// log.info("getBeautyInstanceName(\"" + name + "\")=" +
-		// beautyName);
 		return beautyName;
 	}
 
@@ -188,9 +128,7 @@ public class WordFileUtils {
 	 * <br>
 	 * <b>示例 </b> <br>
 	 * StringUtils.lowerCaseFirstChar(&quot;ABc&quot;) 返回 &quot;aBc&quot;
-	 * 
-	 * @param iString
-	 *            传入字符串
+	 * @param iString 传入字符串
 	 * @return 传出字符串
 	 */
 	public static String lowerCaseFirstChar(String iString) {
@@ -204,9 +142,7 @@ public class WordFileUtils {
 	 * <br>
 	 * <b>示例 </b> <br>
 	 * StringUtils.upperCaseFirstChar(&quot;aBc&quot;) 返回 &quot;ABc&quot;
-	 * 
-	 * @param iString
-	 *            传入字符串
+	 * @param iString 传入字符串
 	 * @return 传出字符串
 	 */
 	public static String upperCaseFirstChar(String iString) {
@@ -235,9 +171,11 @@ public class WordFileUtils {
 			log.warn("{}", e);
 		}
 	}
+	
 }
 
 class Word {
+	
 	private String key = "";
 
 	private String name = "";
@@ -282,4 +220,5 @@ class Word {
 	public String toString() {
 		return "key=" + key + ",name=" + name + ",desc=" + desc;
 	}
+	
 }

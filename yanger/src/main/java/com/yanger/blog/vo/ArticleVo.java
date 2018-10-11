@@ -3,15 +3,11 @@ package com.yanger.blog.vo;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.yanger.mybatis.annotations.Column;
-
 import lombok.Data;
 
 /**
- *
- * 表article的VO对象,通过com.yanger.generator包代码工具自动生成<br/>
+ * 表article的VO对象,通过com.yanger.generator包代码工具自动生成
  * 对应表名：article
- *
  */
 @Data
 public class ArticleVo implements Serializable {

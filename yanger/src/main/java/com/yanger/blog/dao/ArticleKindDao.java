@@ -5,13 +5,10 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.yanger.blog.po.ArticleKind;
-import com.yanger.mybatis.core.MybatisBaseDao;
+import com.yanger.generator.dao.MybatisBaseDao;
 
 /**
- *
- * 表article_kind对应的基于MyBatis实现的Dao接口<br/>
- * 在其中添加自定义方法
- *
+ * 表article_kind对应Dao接口<br/>
  */
 @Mapper
 public interface ArticleKindDao extends MybatisBaseDao<ArticleKind, Integer> {

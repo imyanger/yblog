@@ -14,7 +14,7 @@ import org.apache.ibatis.scripting.defaults.DefaultParameterHandler;
 import org.apache.ibatis.transaction.Transaction;
 import org.springframework.util.Assert;
 
-import com.yanger.mybatis.paginator.dialect.Dialect;
+import com.yanger.mybatis.dialect.Dialect;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class SQLHelper {
+	
 	private SQLHelper() {
 
 	}

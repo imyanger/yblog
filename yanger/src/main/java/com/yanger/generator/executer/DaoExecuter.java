@@ -7,11 +7,11 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
-import com.yanger.generator.core.GenConfig;
-import com.yanger.generator.core.GenFileInfo;
 import com.yanger.generator.schema.Column;
 import com.yanger.generator.schema.PrimaryKey;
 import com.yanger.generator.schema.Table;
+import com.yanger.generator.support.GenConfig;
+import com.yanger.generator.support.GenFileInfo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -66,16 +66,14 @@ public class DaoExecuter extends BaseExecuter {
 			bw.newLine();
 			bw.write("import " + poInfo.getPackageName() + "." + poInfo.getName() + ";");
 			bw.newLine();
-			bw.write("import com.yanger.mybatis.core.MybatisBaseDao;");
+			bw.write("import com.yanger.generator.dao.MybatisBaseDao;");
 			bw.newLine();
-
-			buildClassComment(bw, "", "表" + getName(table.getName()) + "对应的基于MyBatis实现的Dao接口<br/>\r\n * 在其中添加自定义方法");
+			buildClassComment(bw, "", "表" + getName(table.getName()) + "对应Dao接口");
 			bw.newLine();
 			bw.write("@Mapper");
 			bw.newLine();
 			bw.write("public interface " + daoInfo.getName() + " extends MybatisBaseDao<" + poInfo.getName() + ", "
 					+ processType(idColumn) + "> {");
-
 			bw.newLine();
 			bw.newLine();
 			bw.write("}");

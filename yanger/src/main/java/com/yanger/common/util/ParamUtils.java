@@ -2,8 +2,8 @@ package com.yanger.common.util;
 
 import java.util.List;
 
-import com.yanger.mybatis.core.Order;
-import com.yanger.mybatis.core.PageParam;
+import com.yanger.mybatis.paginator.Order;
+import com.yanger.mybatis.paginator.PageParam;
 
 /**
 * <p>Title: ParamUtils.java</p>  

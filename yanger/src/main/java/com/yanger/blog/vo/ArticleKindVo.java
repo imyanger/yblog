@@ -7,10 +7,8 @@ import java.util.List;
 import lombok.Data;
 
 /**
- *
- * 表article_kind的VO对象,通过com.yanger.generator包代码工具自动生成<br/>
+ * 表article_kind的VO对象,通过com.yanger.generator包代码工具自动生成
  * 对应表名：article_kind
- *
  */
 @Data
 public class ArticleKindVo implements Serializable {

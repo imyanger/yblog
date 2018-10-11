@@ -9,11 +9,11 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.yanger.generator.core.GenConfig;
-import com.yanger.generator.core.GenFileInfo;
 import com.yanger.generator.schema.Column;
 import com.yanger.generator.schema.PrimaryKey;
 import com.yanger.generator.schema.Table;
+import com.yanger.generator.support.GenConfig;
+import com.yanger.generator.support.GenFileInfo;
 import com.yanger.generator.util.GeneratorUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -52,13 +52,9 @@ public class MyBatisBaseXmlExecuter extends BaseExecuter {
 			bw.newLine();
 			bw.write("<!-- ============================================================== -->");
 			bw.newLine();
-			bw.write("<!-- ============================================================== -->");
+			bw.write("<!-- =======      通过com.yanger.generator包代码工具自动生成           ======= -->");
 			bw.newLine();
-			bw.write("<!-- =======     通过com.yanger.generator包代码工具自动生成       ======= -->");
-			bw.newLine();
-			bw.write("<!-- =======   本配置文件中定义的节点可在自定义配置文件中直接使     ======= -->");
-			bw.newLine();
-			bw.write("<!-- ============================================================== -->");
+			bw.write("<!-- =======   本配置文件中定义的节点可在自定义配置文件中直接使用     ======= -->");
 			bw.newLine();
 			bw.write("<!-- ============================================================== -->");
 			bw.newLine();
@@ -82,7 +78,6 @@ public class MyBatisBaseXmlExecuter extends BaseExecuter {
 			buildBaseDaoBaseSelectByEntity(bw, table, primaryKey, columns);
 			buildBaseDaoSelectByPrimaryKey(bw, table, primaryKey, columns);
 			buildBaseDaoSelectBatchByPrimaryKeys(bw, table, primaryKey, columns);
-			// buildBaseDaoSelectOne(bw, table, primaryKey, columns);
 			buildBaseDaoSelectPage(bw, table, primaryKey, columns);
 			buildBaseDaoDeleteByPrimaryKey(bw, table, primaryKey, columns);
 			buildBaseDaoDeleteBatchByPrimaryKeys(bw, table, primaryKey, columns);
@@ -209,7 +204,7 @@ public class MyBatisBaseXmlExecuter extends BaseExecuter {
 			List<Column> columns) throws IOException {
 		bw.write("\t<!-- 按主键查询一条记录 -->");
 		bw.newLine();
-		bw.write("\t<select id=\"selectByPrimaryKey\" resultMap=\"BaseResultMap\" parameterType=\"map\">");
+		bw.write("\t<select id=\"selectById\" resultMap=\"BaseResultMap\" parameterType=\"map\">");
 		bw.newLine();
 		bw.write("\t\tselect");
 		bw.newLine();
@@ -228,7 +223,7 @@ public class MyBatisBaseXmlExecuter extends BaseExecuter {
 			List<Column> columns) throws IOException {
 		bw.write("\t<!-- 按主键List查询多条记录 -->");
 		bw.newLine();
-		bw.write("\t<select id=\"selectByPrimaryKeys\" resultMap=\"BaseResultMap\" parameterType=\"map\">");
+		bw.write("\t<select id=\"selectByIds\" resultMap=\"BaseResultMap\" parameterType=\"map\">");
 		bw.newLine();
 		bw.write("\t\tselect");
 		bw.newLine();
@@ -244,20 +239,6 @@ public class MyBatisBaseXmlExecuter extends BaseExecuter {
 		bw.write("\t\t\t#{item}");
 		bw.newLine();
 		bw.write("\t\t</foreach>");
-		bw.newLine();
-		bw.write("\t</select>");
-		bw.newLine();
-		bw.newLine();
-	}
-
-	protected void buildBaseDaoSelectOne(BufferedWriter bw, Table table, PrimaryKey primaryKey, List<Column> columns)
-			throws IOException {
-		bw.write("\t<!-- 按对象查询一条记录 -->");
-		bw.newLine();
-		bw.write("\t<select id=\"selectOne\" resultMap=\"BaseResultMap\" parameterType=\"" + poInfo.getPackageName()
-				+ "." + poInfo.getName() + "\">");
-		bw.newLine();
-		bw.write(getName("\t\t<include refid=\"Base_Select_By_Entity\" />"));
 		bw.newLine();
 		bw.write("\t</select>");
 		bw.newLine();
@@ -294,7 +275,7 @@ public class MyBatisBaseXmlExecuter extends BaseExecuter {
 			List<Column> columns) throws IOException {
 		bw.write("\t<!-- 按主键删除一条记录 -->");
 		bw.newLine();
-		bw.write("\t<delete id=\"deleteByPrimaryKey\" parameterType=\"map\">");
+		bw.write("\t<delete id=\"deleteById\" parameterType=\"map\">");
 		bw.newLine();
 		if (genConfig.isDeletedFlagMode() && containsDeleteFlagField(table)) {
 
@@ -348,7 +329,7 @@ public class MyBatisBaseXmlExecuter extends BaseExecuter {
 			List<Column> columns) throws IOException {
 		bw.write("\t<!-- 按主键List删除多条记录 -->");
 		bw.newLine();
-		bw.write("\t<delete id=\"deleteByPrimaryKeys\" parameterType=\"map\">");
+		bw.write("\t<delete id=\"deleteByIds\" parameterType=\"map\">");
 		bw.newLine();
 		if (genConfig.isDeletedFlagMode() && containsDeleteFlagField(table)) {
 
@@ -490,7 +471,7 @@ public class MyBatisBaseXmlExecuter extends BaseExecuter {
 		bw.write("\t<!-- 插入一条记录(为空的字段不操作) -->");
 		bw.newLine();
 		
-		bw.write("\t<insert id=\"insertSelective\"");
+		bw.write("\t<insert id=\"insertVal\"");
 		String keyProperty =  GeneratorUtils.getKeyProperty(table);
 		if(StringUtils.isNotBlank(keyProperty)) { 
 			bw.write(" useGeneratedKeys=\"true\" keyProperty=\"" + keyProperty + "\"");
@@ -571,7 +552,7 @@ public class MyBatisBaseXmlExecuter extends BaseExecuter {
 		int size = columns.size();
 		bw.write("\t<!-- 更新一条记录(为空的字段不操作) -->");
 		bw.newLine();
-		bw.write("\t<update id=\"updateSelectiveByPrimaryKey\""); 
+		bw.write("\t<update id=\"updateValById\""); 
 		String keyProperty =  GeneratorUtils.getKeyProperty(table);
 		if(StringUtils.isNotBlank(keyProperty)) { 
 			bw.write(" useGeneratedKeys=\"true\" keyProperty=\"" + keyProperty + "\"");
@@ -633,7 +614,7 @@ public class MyBatisBaseXmlExecuter extends BaseExecuter {
 		int size = columns.size();
 		bw.write("\t<!-- 完整更新一条记录 -->");
 		bw.newLine(); 
-		bw.write("\t<update id=\"updateByPrimaryKey\""); 
+		bw.write("\t<update id=\"updateById\""); 
 		String keyProperty =  GeneratorUtils.getKeyProperty(table);
 		if(StringUtils.isNotBlank(keyProperty)) { 
 			bw.write(" useGeneratedKeys=\"true\" keyProperty=\"" + keyProperty + "\"");

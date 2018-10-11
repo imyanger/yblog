@@ -6,9 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import com.yanger.generator.core.GenConfig;
-import com.yanger.generator.core.GenFileInfo;
 import com.yanger.generator.schema.Table;
+import com.yanger.generator.support.GenConfig;
+import com.yanger.generator.support.GenFileInfo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,15 +41,11 @@ public class MyBatisCustomXmlExecuter extends BaseExecuter {
 			bw.newLine();
 			bw.write("<!-- ============================================================== -->");
 			bw.newLine();
-			bw.write("<!-- ================可直接使用Base配置文件中定义的节点！================ -->");
+			bw.write("<!-- ===============可直接使用Base配置文件中定义的节点=============== -->");
 			bw.newLine();
 			bw.write("<!-- ============================================================== -->");
 			bw.newLine();
 			bw.write("<mapper namespace=\"" + daoInfo.getPackageName() + "." + daoInfo.getName() + "\">");
-			bw.newLine();
-
-			bw.write("  <!-- 请在下方添加自定义配置-->");
-			bw.newLine();
 			bw.newLine();
 			bw.newLine();
 			bw.write("</mapper>");

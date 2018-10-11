@@ -3,9 +3,9 @@ package com.yanger.generator.executer;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-import com.yanger.generator.core.GenConfig;
 import com.yanger.generator.schema.Column;
 import com.yanger.generator.schema.Table;
+import com.yanger.generator.support.GenConfig;
 import com.yanger.generator.util.TypeUtils;
 import com.yanger.generator.util.WordFileUtils;
 
@@ -46,15 +46,11 @@ public abstract class BaseExecuter {
 		bw.newLine();
 		bw.write("/**");
 		bw.newLine();
-		bw.write(" *");
-		bw.newLine();
 		if (prefix != null && prefix.trim().length() > 0) {
 			bw.write(" * " + prefix);
 			bw.newLine();
 		}
 		bw.write(" * " + text);
-		bw.newLine();
-		bw.write(" *");
 		bw.newLine();
 		bw.write(" */");
 	}

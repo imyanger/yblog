@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
-import com.yanger.generator.core.GenConfig;
-import com.yanger.generator.core.GenFileInfo;
 import com.yanger.generator.schema.Column;
 import com.yanger.generator.schema.Table;
+import com.yanger.generator.support.GenConfig;
+import com.yanger.generator.support.GenFileInfo;
 import com.yanger.generator.util.GeneratorUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class VoExecuter extends BaseExecuter {
+	
 	private GenFileInfo voInfo;
 
 	public VoExecuter(GenConfig genConfig, GenFileInfo voInfo) {
@@ -63,7 +64,7 @@ public class VoExecuter extends BaseExecuter {
 		}
 
 		buildClassComment(bw,
-				String.format("表%s的%s,通过com.yanger.generator包代码工具自动生成<br/>", getName(table.getName()), info),
+				String.format("表%s的%s,通过com.yanger.generator包代码工具自动生成", getName(table.getName()), info),
 				classComment);
 
 		bw.newLine();
@@ -157,8 +158,6 @@ public class VoExecuter extends BaseExecuter {
 				}
 				buildFieldGetterSetter(bw, column);
 			}
-
-			bw.newLine();
 			bw.write("}");
 			bw.newLine();
 			bw.flush();

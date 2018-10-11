@@ -35,8 +35,8 @@ import com.yanger.common.util.ConstantUtils;
 import com.yanger.common.util.EncryptUtils;
 import com.yanger.common.util.ParamUtils;
 import com.yanger.common.vo.TokenVo;
-import com.yanger.mybatis.core.Page;
-import com.yanger.mybatis.core.PageParam;
+import com.yanger.mybatis.paginator.Page;
+import com.yanger.mybatis.paginator.PageParam;
 import com.yanger.mybatis.util.Pages;
 import com.yanger.mybatis.util.ResultPage;
 

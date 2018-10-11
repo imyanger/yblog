@@ -6,10 +6,8 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- *
- * 表outer_link的VO对象,通过com.yanger.generator包代码工具自动生成<br/>
+ * 表outer_link的VO对象,通过com.yanger.generator包代码工具自动生成
  * 对应表名：outer_link
- *
  */
 @Data
 public class OuterLinkVo implements Serializable {

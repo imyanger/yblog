@@ -6,10 +6,8 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- *
- * 表upload_file的VO对象,通过com.yanger.generator包代码工具自动生成<br/>
+ * 表upload_file的VO对象,通过com.yanger.generator包代码工具自动生成
  * 对应表名：upload_file
- *
  */
 @Data
 public class UploadFileVo implements Serializable {

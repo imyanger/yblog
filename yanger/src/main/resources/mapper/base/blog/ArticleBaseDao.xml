@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- ============================================================== -->
-<!-- ============================================================== -->
-<!-- =======     通过com.yanger.generator包代码工具自动生成       ======= -->
-<!-- =======   本配置文件中定义的节点可在自定义配置文件中直接使     ======= -->
-<!-- ============================================================== -->
+<!-- =======      通过com.yanger.generator包代码工具自动生成           ======= -->
+<!-- =======   本配置文件中定义的节点可在自定义配置文件中直接使用     ======= -->
 <!-- ============================================================== -->
 <mapper namespace="com.yanger.blog.dao.ArticleDao">
 
@@ -51,14 +49,14 @@
 		<if test="classify != null" >
 			and classify = #{classify}
 		</if>
+		<if test="title != null" >
+			and title = #{title}
+		</if>
 		<if test="author != null" >
 			and author = #{author}
 		</if>
 		<if test="ruxWords != null" >
-			and ruxWords = #{ruxWords}
-		</if>
-		<if test="title != null" >
-			and title = #{title}
+			and rux_words = #{ruxWords}
 		</if>
 		<if test="summary != null" >
 			and summary = #{summary}
@@ -88,12 +86,10 @@
 			and insert_time = #{insertTime}
 		</if>
 		<if test="updateTime != null" >
-			<!-- 日期查询为当月 -->
-			and date_format(updateTime, '%Y%m') = date_format(#{updateTime} , '%Y%m')
+			and update_time = #{updateTime}
 		</if>
-		<!-- 搜索字段的模糊查询 -->
 		<if test="queryValue != null" >
-			and (rux_words like "%"#{queryValue}"%" or title like "%"#{queryValue}"%")
+			and (rux_words like "%"#{queryValue}"%" or title like "%"#{queryValue}"%" or type = #{queryValue} or classify = #{queryValue})
 		</if>
 	</sql>
 
@@ -108,7 +104,7 @@
 	</sql>
 
 	<!-- 按主键查询一条记录 -->
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map">
+	<select id="selectById" resultMap="BaseResultMap" parameterType="map">
 		select
 			<include refid="Base_Column_List" />
 		from article
@@ -116,7 +112,7 @@
 	</select>
 
 	<!-- 按主键List查询多条记录 -->
-	<select id="selectByPrimaryKeys" resultMap="BaseResultMap" parameterType="map">
+	<select id="selectByIds" resultMap="BaseResultMap" parameterType="map">
 		select
 			<include refid="Base_Column_List" />
 		from article
@@ -132,13 +128,13 @@
 	</select>
 
 	<!-- 按主键删除一条记录 -->
-	<delete id="deleteByPrimaryKey" parameterType="map">
+	<delete id="deleteById" parameterType="map">
 		delete from article
 		where article_id = #{param1}
 	</delete>
 
 	<!-- 按主键List删除多条记录 -->
-	<delete id="deleteByPrimaryKeys" parameterType="map">
+	<delete id="deleteByIds" parameterType="map">
 		delete from article
 		where article_id in 
 		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
@@ -159,7 +155,7 @@
 	</insert>
 
 	<!-- 插入一条记录(为空的字段不操作) -->
-	<insert id="insertSelective" useGeneratedKeys="true" keyProperty="article_id" parameterType="com.yanger.blog.po.Article">
+	<insert id="insertVal" useGeneratedKeys="true" keyProperty="article_id" parameterType="com.yanger.blog.po.Article">
 		insert into article
 		<trim prefix="(" suffix=")" suffixOverrides="," >
 			<if test="articleId != null" >
@@ -270,7 +266,7 @@
 	</insert>
 
 	<!-- 更新一条记录(为空的字段不操作) -->
-	<update id="updateSelectiveByPrimaryKey" useGeneratedKeys="true" keyProperty="article_id" parameterType="com.yanger.blog.po.Article">
+	<update id="updateValById" useGeneratedKeys="true" keyProperty="article_id" parameterType="com.yanger.blog.po.Article">
 		update article
 		<set>
 			<if test="module != null" >
@@ -326,7 +322,7 @@
 	</update>
 
 	<!-- 完整更新一条记录 -->
-	<update id="updateByPrimaryKey" useGeneratedKeys="true" keyProperty="article_id" parameterType="com.yanger.blog.po.Article">
+	<update id="updateById" useGeneratedKeys="true" keyProperty="article_id" parameterType="com.yanger.blog.po.Article">
 		update article
 		set module=#{module},
 			type=#{type},

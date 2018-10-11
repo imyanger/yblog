@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- ============================================================== -->
-<!-- ============================================================== -->
-<!-- =======     通过com.yanger.generator包代码工具自动生成       ======= -->
-<!-- =======   本配置文件中定义的节点可在自定义配置文件中直接使     ======= -->
-<!-- ============================================================== -->
+<!-- =======      通过com.yanger.generator包代码工具自动生成           ======= -->
+<!-- =======   本配置文件中定义的节点可在自定义配置文件中直接使用     ======= -->
 <!-- ============================================================== -->
 <mapper namespace="com.yanger.blog.dao.OuterLinkDao">
 
@@ -65,7 +63,7 @@
 	</sql>
 
 	<!-- 按主键查询一条记录 -->
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map">
+	<select id="selectById" resultMap="BaseResultMap" parameterType="map">
 		select
 			<include refid="Base_Column_List" />
 		from outer_link
@@ -73,7 +71,7 @@
 	</select>
 
 	<!-- 按主键List查询多条记录 -->
-	<select id="selectByPrimaryKeys" resultMap="BaseResultMap" parameterType="map">
+	<select id="selectByIds" resultMap="BaseResultMap" parameterType="map">
 		select
 			<include refid="Base_Column_List" />
 		from outer_link
@@ -89,13 +87,13 @@
 	</select>
 
 	<!-- 按主键删除一条记录 -->
-	<delete id="deleteByPrimaryKey" parameterType="map">
+	<delete id="deleteById" parameterType="map">
 		delete from outer_link
 		where link_id = #{param1}
 	</delete>
 
 	<!-- 按主键List删除多条记录 -->
-	<delete id="deleteByPrimaryKeys" parameterType="map">
+	<delete id="deleteByIds" parameterType="map">
 		delete from outer_link
 		where link_id in 
 		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
@@ -112,7 +110,7 @@
 	</insert>
 
 	<!-- 插入一条记录(为空的字段不操作) -->
-	<insert id="insertSelective" useGeneratedKeys="true" keyProperty="link_id" parameterType="com.yanger.blog.po.OuterLink">
+	<insert id="insertVal" useGeneratedKeys="true" keyProperty="link_id" parameterType="com.yanger.blog.po.OuterLink">
 		insert into outer_link
 		<trim prefix="(" suffix=")" suffixOverrides="," >
 			<if test="linkId != null" >
@@ -169,7 +167,7 @@
 	</insert>
 
 	<!-- 更新一条记录(为空的字段不操作) -->
-	<update id="updateSelectiveByPrimaryKey" useGeneratedKeys="true" keyProperty="link_id" parameterType="com.yanger.blog.po.OuterLink">
+	<update id="updateValById" useGeneratedKeys="true" keyProperty="link_id" parameterType="com.yanger.blog.po.OuterLink">
 		update outer_link
 		<set>
 			<if test="type != null" >
@@ -198,7 +196,7 @@
 	</update>
 
 	<!-- 完整更新一条记录 -->
-	<update id="updateByPrimaryKey" useGeneratedKeys="true" keyProperty="link_id" parameterType="com.yanger.blog.po.OuterLink">
+	<update id="updateById" useGeneratedKeys="true" keyProperty="link_id" parameterType="com.yanger.blog.po.OuterLink">
 		update outer_link
 		set type=#{type},
 			depict=#{depict},

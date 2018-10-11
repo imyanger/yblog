@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
-import com.yanger.generator.core.GenConfig;
-import com.yanger.generator.core.GenFileInfo;
 import com.yanger.generator.schema.Column;
 import com.yanger.generator.schema.Table;
+import com.yanger.generator.support.GenConfig;
+import com.yanger.generator.support.GenFileInfo;
 import com.yanger.generator.util.GeneratorUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -56,10 +56,6 @@ public class PoExecuter extends BaseExecuter {
 			bw.newLine();
 		}
 		bw.newLine();
-		bw.write("import com.yanger.mybatis.annotations.Table;");
-		bw.newLine();
-		bw.write("import com.yanger.mybatis.annotations.Column;");
-		bw.newLine();
 		bw.write("import lombok.Data;");
 		bw.newLine();
 		String classComment = "对应表名：" + getName(table.getName());
@@ -67,13 +63,10 @@ public class PoExecuter extends BaseExecuter {
 			classComment = classComment + ",备注：" + table.getComment().trim();
 		}
 		buildClassComment(bw,
-				String.format("表%s的%s，通过com.yanger.generator包代码工具自动生成<br/>", getName(table.getName()), info),
+				String.format("表%s的%s，通过com.yanger.generator包代码工具自动生成", getName(table.getName()), info),
 				classComment);
 		bw.newLine();
 		bw.write("@Data");
-		// 增加表注释
-		bw.newLine();
-		bw.write(String.format("@Table(name=\"%s\")",getName(table.getName())));
 		bw.newLine();
 		bw.write(String.format("public class %s implements Serializable {", className));
 		bw.newLine();
@@ -92,8 +85,6 @@ public class PoExecuter extends BaseExecuter {
 		}
 		bw.write(" */");
 		bw.newLine();
-		bw.write("\t@Column(name=\"" + getName(column.getName()) + "\",description=\"" + column.getComment() + "\")");
-		bw.newLine();
 		bw.write("\tprivate " + processType(column) + " " + field + ";");
 		bw.newLine();
 		bw.newLine();
@@ -110,8 +101,6 @@ public class PoExecuter extends BaseExecuter {
 				Column column = columns.get(i);
 				buildFieldGetterSetter(bw, column);
 			}
-
-			bw.newLine();
 			bw.write("}");
 			bw.newLine();
 			bw.flush();

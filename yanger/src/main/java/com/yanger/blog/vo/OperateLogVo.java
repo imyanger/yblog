@@ -6,10 +6,8 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- *
- * 表operate_log的VO对象,通过com.yanger.generator包代码工具自动生成<br/>
+ * 表operate_log的VO对象,通过com.yanger.generator包代码工具自动生成
  * 对应表名：operate_log
- *
  */
 @Data
 public class OperateLogVo implements Serializable {
