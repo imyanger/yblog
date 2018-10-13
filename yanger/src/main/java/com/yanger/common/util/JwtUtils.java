@@ -6,7 +6,7 @@ import java.util.Map;
 import com.auth0.jwt.JWTSigner;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.internal.com.fasterxml.jackson.databind.ObjectMapper;
-import com.yanger.common.vo.TokenVo;
+import com.yanger.common.vo.TokenMsg;
 
 /**
  * <p>Description: jwt工具类 </p>  
@@ -71,7 +71,7 @@ public class JwtUtils {
     }
     
     public static void main(String[] args) {
-    	TokenVo v = new TokenVo();
+    	TokenMsg v = new TokenMsg();
     	v.setCode("11");
     	v.setName("12");
     	System.out.println(sign(v));;

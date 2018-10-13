@@ -23,7 +23,7 @@ import com.yanger.common.annotation.Token;
 import com.yanger.common.util.JwtUtils;
 import com.yanger.common.util.RedisMagger;
 import com.yanger.common.vo.ApiResponse;
-import com.yanger.common.vo.TokenVo;
+import com.yanger.common.vo.TokenMsg;
 import com.yanger.mybatis.util.ResultPage;
 
 import io.swagger.annotations.Api;
@@ -167,7 +167,7 @@ public class BlogApi {
 			if(user != null){
 				api.setData(user);
 				//添加token
-				String token = JwtUtils.sign(new TokenVo().setInfo(user));
+				String token = JwtUtils.sign(new TokenMsg().setInfo(user));
 				api.setToken(token);
 			}else {
 				api.error("输入的账号不存在或密码错误");
@@ -247,7 +247,7 @@ public class BlogApi {
 	@Token
 	public ApiResponse<ResultPage<LeavingMsgVo>> msgPage(@RequestBody LeavingMsgVo msgVo, HttpServletRequest request){
 		ApiResponse<ResultPage<LeavingMsgVo>> api = new ApiResponse<>();
-		TokenVo user = (TokenVo) request.getAttribute("user");
+		TokenMsg user = (TokenMsg) request.getAttribute("user");
 		try {
 			ResultPage<LeavingMsgVo> page = blogService.leaveMsg(user, msgVo);
 			api.setData(page);

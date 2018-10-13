@@ -34,7 +34,7 @@ import com.yanger.blog.vo.StudyDataVo;
 import com.yanger.common.util.ConstantUtils;
 import com.yanger.common.util.EncryptUtils;
 import com.yanger.common.util.ParamUtils;
-import com.yanger.common.vo.TokenVo;
+import com.yanger.common.vo.TokenMsg;
 import com.yanger.mybatis.paginator.Page;
 import com.yanger.mybatis.paginator.PageParam;
 import com.yanger.mybatis.util.Pages;
@@ -388,7 +388,7 @@ public class BlogService {
 	 * @return
 	 * @throws Exception 
 	 */
-	public ResultPage<LeavingMsgVo> leaveMsg(TokenVo user, LeavingMsgVo msgVo) throws Exception {
+	public ResultPage<LeavingMsgVo> leaveMsg(TokenMsg user, LeavingMsgVo msgVo) throws Exception {
 		//保存留言信息
 		LeavingMsg entity = new LeavingMsg();
 		entity.setContent(msgVo.getContent());

@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TokenVo implements Serializable {
+public class TokenMsg implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -32,11 +32,12 @@ public class TokenVo implements Serializable {
 	//用户名
 	private String name;
 
-	public TokenVo setInfo(BlogUserVo user){
+	public TokenMsg setInfo(BlogUserVo user){
 		this.id = user.getUserId();
 		this.path = user.getUserImgPath();
 		this.code = user.getUserCode();
 		this.name = user.getUserNickName();
 		return this;
 	}
+	
 }

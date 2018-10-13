@@ -21,7 +21,7 @@ import com.yanger.common.annotation.NoToken;
 import com.yanger.common.annotation.Token;
 import com.yanger.common.util.JwtUtils;
 import com.yanger.common.vo.ApiResponse;
-import com.yanger.common.vo.TokenVo;
+import com.yanger.common.vo.TokenMsg;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -75,9 +75,9 @@ public class TokenAspect {
 			String token = request.getParameter("token");
 			log.info("TokenAspect--token：" + token);
 			//校验token
-			TokenVo tokenVo = JwtUtils.parse(TokenVo.class, token);
-			if(tokenVo != null){
-				request.setAttribute("user", tokenVo);
+			TokenMsg tokenMsg = JwtUtils.parse(TokenMsg.class, token);
+			if(tokenMsg != null){
+				request.setAttribute("user", tokenMsg);
 			}else {
 				//token解析失败，则直接返回失败信息
 				HttpServletResponse response = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getResponse();
