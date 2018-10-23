@@ -8,3 +8,4 @@ spring:
     host: localhost
     port: 6379
     password: 1234
+    timeout: 180000

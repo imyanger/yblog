@@ -119,6 +119,11 @@
 			<artifactId>shiro-spring</artifactId>
 			<version>1.2.3</version>
 		</dependency>
+		<dependency>
+			<groupId>org.crazycake</groupId>
+			<artifactId>shiro-redis</artifactId>
+			<version>2.4.2.1-RELEASE</version>
+		</dependency>
 		<!-- shiro相关 -->
 		
 		<!-- lombok插件 -->
