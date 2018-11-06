@@ -40,6 +40,11 @@ export default new Router({
             ]
         },
         {
+            path: '/view',
+            component: resolve => require(['../components/blog/core/View.vue'], resolve),
+            meta: { title: '文章浏览' }
+        },
+        {
             path: '/back',
             component: resolve => require(['../components/back/common/Layout.vue'], resolve),
             meta: { title: '自述文件' },

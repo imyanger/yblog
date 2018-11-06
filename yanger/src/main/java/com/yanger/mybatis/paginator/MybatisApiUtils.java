@@ -2,6 +2,7 @@ package com.yanger.mybatis.paginator;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -24,13 +25,13 @@ public class MybatisApiUtils {
 	public static final int MAX_PAGE_SIZE = 3000;
 
 	public static PageParam getPageParam() {
-		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
-				.getRequest();
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 		return getPageParam(request);
 	}
 
 	public static PageParam getPageParam(HttpServletRequest request) {
-
+		ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+		String myValue = (String) requestAttributes.getAttribute("pageNo",RequestAttributes.SCOPE_REQUEST);
 		int inPageSize = 0;
 		int inPageNo = 0;
 		int inTotalCount = 0;
@@ -118,7 +119,6 @@ public class MybatisApiUtils {
 		String value = def;
 		if (str != null) {
 			value = str;
-
 		}
 		return value;
 	}

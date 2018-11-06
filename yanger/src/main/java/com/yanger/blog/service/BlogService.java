@@ -35,6 +35,7 @@ import com.yanger.common.util.ConstantUtils;
 import com.yanger.common.util.EncryptUtils;
 import com.yanger.common.util.ParamUtils;
 import com.yanger.common.vo.TokenMsg;
+import com.yanger.mybatis.paginator.MybatisApiUtils;
 import com.yanger.mybatis.paginator.Page;
 import com.yanger.mybatis.paginator.PageParam;
 import com.yanger.mybatis.util.Pages;
@@ -143,6 +144,8 @@ public class BlogService {
 	 * @throws Exception
 	 */
 	private ResultPage<LeavingMsgVo> findMsgPage(int page, int size) throws Exception {
+		PageParam pageParamt = MybatisApiUtils.getPageParam();
+		System.out.println(pageParamt);
 		PageParam pageParam = ParamUtils.getDescPageParam(page, size, "update_time");
 		LeavingMsg entry = new LeavingMsg();
 		entry.setStatus(ConstantUtils.STATUS_VALID);
