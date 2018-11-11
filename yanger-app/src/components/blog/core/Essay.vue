@@ -8,7 +8,7 @@
                         <img alt="" src="static/img/img.jpg">
                     </div>
                     <div class="note_right">
-                        <h4><a href="" title="文章标题">{{essay.title}}</a></h4>
+                        <h4><a :href="'#/view/'+ essay.articleId" title="文章标题" target="_blank">{{essay.title}}</a></h4>
                         <p class="note_c">{{essay.summary}}</p>
                         <autor :createDate='essay.updateTime' :likes='essay.likes' :commons='essay.commons' :views='essay.views'></autor>
                     </div>

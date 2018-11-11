@@ -8,15 +8,84 @@
 		<div id="content">
 			<el-row id="content_center">
 				<div id="article">
-					<h3>假装有标题</h3>
-					<div id="article_describe">XX:个人日志 浏览：1010</div>
-					<div id="article_html">
-					11111
-
+					<h3>{{viewData.article.title}}</h3>
+					<div id="article_describe">
+						<div id="article_describe_left">
+							<span>
+								<i class="el-icon-document"></i>
+								<span>{{viewData.article.type}} - {{viewData.article.classify}}</span>
+							</span>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<span>
+								<i class="el-icon-date"></i>
+								<span>{{viewData.article.updateTime | formatDate}}</span>
+							</span>
+						</div>
+						<div id="article_describe_right">
+							<span>
+								<i class="el-icon-star-off"></i>
+								<span>{{viewData.article.likes}}</span>
+							</span>
+							<span>
+								<i class="el-icon-edit"></i>
+								<span>{{viewData.article.commons}}</span>
+							</span>
+							<span>
+								<i class="el-icon-view"></i>
+								<span>{{viewData.article.views}}</span>
+							</span>
+						</div>
+					</div>
+					<el-row>
+						<div id="article_html" v-html="viewData.article.content"></div>
+					</el-row>
+					<div id="Msg">
+						
+						<div id="Msg_le">
+							<span>想说点什么，留下你的想法吧</span>
+							<button @click="leaveMsg">发表评论</button>
+						</div>
+						<div class="editor-container">
+							<UE :defaultMsg='msg' :config='config' ref="ue"></UE>
+						</div>
+						<div id="Msg_content" v-for="(msg, index) in viewData.msgPage.data" :key="msg.index">
+							<el-row>
+								<div class="row each_Msg" style="margin: 0 auto;">
+									<div class="row each_Msg_right">
+										<p><font>{{msg.updateTime | formatDate}}&nbsp;&nbsp;&nbsp;&nbsp;</font>{{msg.userNickName}}&nbsp;:</p>
+										<div class="each_Msg_right_c">
+											<div v-html="msg.content"></div>
+										</div>
+										<hr>
+									</div>
+									<div class="each_Msg_left">
+										<img alt="" src="static/img/img.jpg">
+									</div>
+								</div>
+							</el-row>
+						</div>
+						<div id="page_bar">
+							<el-pagination @current-change="handleCurrentChange" 
+								:current-page.sync="viewData.msgPage.pageNo" :page-size="viewData.msgPage.pageSize" 
+								layout="total,jumper, prev, pager, next" :total="viewData.msgPage.totalCount">
+							</el-pagination>
+						</div>
 					</div>
 				</div>
-				<div id="msg">
-					222
+				<div id="info">
+					<!-- 网站登录模块 -->
+					<sign></sign>
+					<!-- 关于我 -->
+					<about-me></about-me>
+					<!-- 推荐文章 -->
+					<div  id="note_hot">
+					<h3>推荐阅读</h3>
+					<ul  v-for="(hot, index) in viewData.hots" :key="hot.index">
+						<li>
+							<a href="" :title="hot.id" target="_blank">{{hot.title}}</a>
+						</li>
+					</ul>
+				</div>
 				</div>
 			</el-row>
 		</div >
@@ -26,19 +95,74 @@
 
 <script>
 	import bFooter from '../common/Footer';
+	import UE from '../common/ueditor'; //ueditor富文本编辑器
+	import { formatDate } from 'static/js/date'; //date格式化
+	import aboutMe from './AboutMe';
+    import sign from '../common/Sign'; //用户信息展示
     export default {
         data() {
             return {
+                viewData: {
+					msgPage: {},
+					hots: [],
+					article: {}
+                },
+                msg: '',
+                config: {
+                    initialFrameWidth: 698,
+                    initialFrameHeight: 120,
+                    toolbars: [[
+                        'fullscreen', 'source', '|', 'undo', 'redo', '|',
+                        'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
+                        'rowspacingtop', 'rowspacingbottom', 'lineheight', 'fontfamily', '|', 
+                        'directionalityltr', 'directionalityrtl', 'indent', '|',
+                        'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
+                        'link', 'unlink', 'emotion','horizontal', 'date', 'time', 'spechars'
+                    ]],
+                    maximumWords: 300,
+                    elementPathEnabled: false
+                }
             }
         },
         computed:{
         },
         methods:{
+			//发表评论
+			leaveMsg(){
+
+			},
+			//页码改变
+			handleCurrentChange(val) {
+				this.getPage(val);
+			},
         },
         mounted(){
 		},
+		created(){
+			//获取url传递参数id
+			let id = this.$route.params.id;
+			//上下文的改变
+            let _this = this;
+            this.$get("/blog/view",{
+				id: id
+			})
+            .then(function (response) {
+				_this.viewData.msgPage = response.data.msgPage;
+				_this.viewData.hots = response.data.hots;
+				_this.viewData.article = response.data.article;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+		},
 		components: {
-            bFooter
+            bFooter, UE, aboutMe, sign
+		},
+		filters: {
+             formatDate(time) {
+                var date = new Date(time);
+                return formatDate(date, 'yyyy-MM-dd hh:mm');
+            }
         },
     }
 </script>
@@ -72,15 +196,6 @@
 		float: left;
 		margin-top: -20px;
 		background-color: #fefefe;
-		height: 1000px;
-	}
-	#msg {
-		width: 280px;
-		float: right;
-		margin: 0 auto;
-		margin-top: -20px;
-		background-color: #fefefe;
-		height: 2000px;
 	}
 	#article h3 {
 		text-decoration: none;
@@ -93,7 +208,144 @@
 	}
 	#article_html {
 		width: 96%;
-		height: 100px;
+		height: auto;
 		margin: 0 auto;
+		font-size: 15px;
+    	line-height: 25px;
+	}
+	#article_describe {
+	    font-size: 14px;
+		height: 20px;
+		margin-top: 15px;
+		margin-bottom: 20px;
+    	padding-bottom: 10px;
+    	border-bottom: #bfab86 1px solid;
+	}
+	#article_describe_left {
+		width: 300px;
+		float: left;
+    	margin-left: 20px;
+	}
+	#article_describe_right {
+		width: 300px;
+		float: right;
+		margin-right: 20px;
+	}
+	#article_describe_right span {
+		float: right;
+		margin-right: 10px;
+	}
+
+	/* ----------------留言信息上下页-------------- */
+    #page_bar {
+        width: 100%;
+        height: 37px;
+        background-color: #fefefe;
+        border-bottom: #BFAB86 1px solid;
+        border-top: #BFAB86 1px solid;
+    }
+
+	/*-------------- 留言板  --------------------*/
+	#Msg {
+		border-top: #bfab86 1px solid;
+	}
+    .editor-container {
+		margin-bottom: 10px;
+    }
+	#Msg_le {
+		height: 60px;
+	}
+    #Msg_le button{
+        width: 70px;
+        height: 24px;
+        border-style: none;
+        border-radius: 3px;
+        background-color: #EDA347;
+        float: right;
+        margin-top: 20px;
+        margin-right: 40px;
+    }
+    #Msg_le span {
+        width: 250px;
+		color: #db6d4c;
+		font-size: 16px;
+		font-weight: 400;
+		margin: 20px 0 20px 200px;
+		float: left;
+    }
+    #Msg_content{
+        width: 100%;
+    }
+    .each_Msg {
+        width: 680px;
+        margin: 0 auto;
+    }
+    .each_Msg_left {
+        float: right;
+        width: 70px;
+    }
+    .each_Msg_left img {
+        height:100%;
+        margin-left: -18px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50px;
+    }
+    .each_Msg_right {
+        margin-top: 5px;
+        float: right;
+        width: 580px;
+    }
+    .each_Msg_right font {
+        color: #888;
+        font-size: 15px;
+    }
+    .each_Msg_right p {
+        font-size: 14px;
+    }
+    .each_Msg_right_c {
+        margin-left: 10px;
+        line-height: 25px;
+        font-size: 13px;
+        margin-right: 20px;
+    }
+    .each_Msg_right hr {
+        margin-left:-92px;
+        margin-right: 17px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        height:1px;
+        background-color: #db6d4c;
+    }
+
+	/*-------------- 右侧部分  --------------------*/
+	#info {
+		width: 280px;
+		float: right;
+		margin: 0 auto;
+		margin-top: -20px;
+		background-color: #fefefe;
+	}
+
+	/*------------------ 推荐日志------------------*/
+	#note_hot h3 {
+		line-height: 40px;
+		color: #38485a;
+		font-size: 18px;
+		border-bottom: 1px solid #ff3300;
+		text-align: center;
+		height: 40px;
+		margin-bottom: 16px;
+		font-weight: 500;
+	}
+	#note_hot ul li {
+		line-height: 26px;
+		list-style: square;
+		font-size: 15px;
+		margin-left: 25px;
+		font-size: 14px;
+	}
+	#note_hot ul li a {
+		color: #72afd2;
 	}
 </style>

@@ -8,7 +8,7 @@
 						<img alt="" src="static/img/img.jpg">
 					</div>
 					<div class="note_right">
-						<h4><a href="" title="文章标题">{{study.title}}</a><span>分类：{{study.classify}}</span></h4>
+						<h4><a :href="'#/view/'+ study.articleId" title="文章标题" target="_blank">{{study.title}}</a><span>分类：{{study.classify}}</span></h4>
 						<p class="note_c">{{study.summary}}</p>
 						<autor :createDate='study.updateTime' :likes='study.likes' :commons='study.commons' :views='study.views'></autor>
 					</div>

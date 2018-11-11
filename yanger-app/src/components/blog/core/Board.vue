@@ -58,7 +58,7 @@
                 },
                 msg: '',
                 config: {
-                    initialFrameWidth: 700,
+                    initialFrameWidth: 698,
                     initialFrameHeight: 200,
                     toolbars: [[
                         'fullscreen', 'source', '|', 'undo', 'redo', '|',
@@ -213,7 +213,7 @@
         width: 100%;
     }
     .each_Msg {
-        width: 658px;
+        width: 690px;
         margin: 0 auto;
     }
     .each_Msg_left {

@@ -8,7 +8,7 @@
                         <img alt="" src="static/img/img.jpg" title="">
                     </div>
                     <div class="note_right">
-                        <h4><a href="" title="" target="_blank">{{study.title}}</a></h4>
+                        <h4><a :href="'#/view/'+ study.articleId" title="" target="_blank">{{study.title}}</a></h4>
                         <p class="note_c">{{study.summary}}</p>
                         <autor :createDate='study.updateTime' :likes='study.likes' :commons='study.commons' :views='study.views'></autor>
                     </div>
@@ -21,7 +21,7 @@
                         <img alt="" src="static/img/img.jpg" title="">
                     </div>
                     <div class="journal_right">
-                        <h4><a href="" title="">{{essay.title}}</a></h4>
+                        <h4><a :href="'#/view/'+ essay.articleId" title="" target="_blank">{{essay.title}}</a></h4>
                         <p class="note_c">{{essay.summary}}</p>
                         <autor :createDate='essay.updateTime' :likes='essay.likes' :commons='essay.commons' :views='essay.views'></autor>
                     </div>

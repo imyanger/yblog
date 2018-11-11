@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import com.yanger.blog.vo.HomeDataVo;
 import com.yanger.blog.vo.LeavingMsgVo;
 import com.yanger.blog.vo.PageQueryVo;
 import com.yanger.blog.vo.StudyDataVo;
+import com.yanger.blog.vo.ViewDataVo;
 import com.yanger.common.annotation.Token;
 import com.yanger.common.util.JwtUtils;
 import com.yanger.common.util.RedisMagger;
@@ -257,4 +259,20 @@ public class BlogApi {
 		}
 		return api;
 	}
+	
+	@ApiOperation(value = "文章浏览界面", notes = "")
+	@GetMapping("/view")
+	public ApiResponse<ViewDataVo> view(@RequestParam(value="id") Integer id){
+		ApiResponse<ViewDataVo> api = new ApiResponse<>();
+		try {
+			ViewDataVo viewDataVo = blogService.view(id);
+			api.setData(viewDataVo);
+		} catch (Exception e) {
+			api.error("文章浏览加载失败");
+			e.printStackTrace();
+		}
+		return api;
+	}
+	
+	
 }

@@ -31,6 +31,7 @@ import com.yanger.blog.vo.LeavingMsgVo;
 import com.yanger.blog.vo.OuterLinkVo;
 import com.yanger.blog.vo.PageQueryVo;
 import com.yanger.blog.vo.StudyDataVo;
+import com.yanger.blog.vo.ViewDataVo;
 import com.yanger.common.util.ConstantUtils;
 import com.yanger.common.util.EncryptUtils;
 import com.yanger.common.util.ParamUtils;
@@ -72,7 +73,7 @@ public class BlogService {
 		List<ArticleVo> studys = this.findArticlesByModule(3, ConstantUtils.ARTICLE_MODULE_STUDY);
 		homeData.setStudys(studys);
 		//获取心情随笔
-		List<ArticleVo> essays = this.findArticlesByModule(2, ConstantUtils.ARTICLE_MODULE_STUDY);
+		List<ArticleVo> essays = this.findArticlesByModule(2, ConstantUtils.ARTICLE_MODULE_ESSAY);
 		homeData.setEssays(essays);
 		//获取最新留言
 		List<LeavingMsgVo> msgs = this.findMsgs(PageParam.NO_PAGE, 10);
@@ -144,8 +145,6 @@ public class BlogService {
 	 * @throws Exception
 	 */
 	private ResultPage<LeavingMsgVo> findMsgPage(int page, int size) throws Exception {
-		PageParam pageParamt = MybatisApiUtils.getPageParam();
-		System.out.println(pageParamt);
 		PageParam pageParam = ParamUtils.getDescPageParam(page, size, "update_time");
 		LeavingMsg entry = new LeavingMsg();
 		entry.setStatus(ConstantUtils.STATUS_VALID);
@@ -405,6 +404,49 @@ public class BlogService {
 		leavingMsgDao.insert(entity);
 		//查询新的第一页数据
 		return findMsgPage(1, 6);
+	}
+
+	/**
+	 * <p>Description: 文章预览界面展示 </p>  
+	 * @author YangHao  
+	 * @date 2018年11月11日-下午10:33:25
+	 * @param id
+	 */
+	public ViewDataVo view(Integer id) throws Exception {
+		ViewDataVo viewDataVo = new ViewDataVo();
+		//获取文章
+		Article article = articleDao.selectById(id);
+		ArticleVo articleVo = new ArticleVo();
+		BeanUtils.copyProperties(articleVo, article);
+		viewDataVo.setArticle(articleVo);
+		//文章留言信息
+		ResultPage<LeavingMsgVo> msgPage = findArticleMsgPage(id, PageParam.NO_PAGE, 6);
+		viewDataVo.setMsgPage(msgPage);
+		//推荐文章
+		List<ArticleVo> hots = this.findArticles(PageParam.NO_PAGE, 8, null, "views");
+		viewDataVo.setHots(hots);
+		return viewDataVo;
+	}
+	
+	/**
+	 * <p>Description: 获取文章留言信息 </p>  
+	 * @author YangHao  
+	 * @date 2018年11月11日-下午10:44:17
+	 * @param page
+	 * @param size
+	 * @return
+	 * @throws Exception
+	 */
+	private ResultPage<LeavingMsgVo> findArticleMsgPage(Integer id, int page, int size) throws Exception {
+		PageParam pageParam = ParamUtils.getDescPageParam(page, size, "update_time");
+		LeavingMsg entry = new LeavingMsg();
+		entry.setStatus(ConstantUtils.STATUS_VALID);
+		//留言类型
+		entry.setType(ConstantUtils.MSG_TYPE_ARTICLE);
+		//文章id
+		entry.setArticleId(id);
+		Page<LeavingMsg> msgsPage = leavingMsgDao.selectPage(pageParam, entry);
+		return Pages.convert(pageParam, msgsPage, LeavingMsgVo.class);
 	}
 	
 }
