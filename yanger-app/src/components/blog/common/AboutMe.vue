@@ -12,14 +12,47 @@
             <p>爱好：阅读，编程，写作</p>
         </div>
         <div id="about_me_follow">
-            <img id="about_me_sinaweb" alt="" src="static/img/blog/sinaweb.png">
-            <img id="about_me_weichat" alt="" src="static/img/blog/weichat.png">
-            <img id="about_me_csdn" alt="" src="static/img/blog/csdn.png">
+            <a href="https://weibo.com/u/2022020142?is_hot=1" target="_Blank">
+                <img id="about_me_sinaweb" alt="" src="static/img/blog/sinaweb.png">
+            </a>
+            <img id="about_me_weichat" alt="" src="static/img/blog/weichat.png" @click="showWechat">
+            <a href="https://github.com/imyanger" target="_Blank">
+                <img id="about_me_github" alt="" src="static/img/blog/github.png">
+            </a>
+            <a href="https://blog.csdn.net/Simple_Yangger" target="_Blank">
+                <img id="about_me_csdn" alt="" src="static/img/blog/csdn.png">
+            </a>
             <!-- 引入微信公众号关注的模态框 -->
-           
+            <el-dialog :visible.sync="dialogVisible" :close-on-click-modal="false" width="450px">
+                <center>
+                    <el-row>
+                        <img src="static/img/blog/nswmym.jpg">
+                    </el-row>
+                    <el-row>
+                        <span id="wechat_des">喜欢我你就关注我<br/>有话说你就评论我</span>
+                    </el-row>
+                </center>
+           </el-dialog>
         </div>
     </div>
 </template>
+
+<script>
+    export default {
+        data(){
+            return {
+                dialogVisible: false
+            }
+        },
+        methods: {
+            showWechat(){
+                this.dialogVisible = true;
+            }
+        }
+    }
+</script>
+
+
 <style scoped>
     .content_aboutMe {
         width: 100%;
@@ -64,18 +97,22 @@
         height: 65px;
         margin-top: 150px;
     }
-    #about_me_sinaweb, #about_me_weichat {
-        width: 50px;
-        height: 50px;
+    #about_me_sinaweb, #about_me_weichat, #about_me_github {
+        width: 40px;
+        height: 40px;
         float: left;
-        margin-left: 33px;
+        margin-left: 23px;
         cursor: pointer;
     }
     #about_me_csdn {
-        width: 42px;
-        height: 42px;
+        width: 36px;
+        height: 36px;
         float: left;
-        margin-left: 33px;
+        margin-left: 23px;
         cursor: pointer;
+    }
+    #wechat_des {
+        font-size: 20px;
+        font-weight: 500;
     }
 </style>

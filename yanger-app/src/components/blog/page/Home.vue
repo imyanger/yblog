@@ -65,7 +65,7 @@
 <script>
     // import $ from 'jquery'; //引入jquery
     import vueScroll from 'vue-seamless-scroll'; //滚动组件
-    import aboutMe from './AboutMe'; //关于我模块
+    import aboutMe from '../common/AboutMe'; //关于我模块
     import autor from '../common/Autor'; //列表文章底部部分
     import { formatDate } from 'static/js/date'; //date格式化
 

@@ -15,33 +15,33 @@ export default new Router({
             children: [
                 {
                     path: '/blog/home',
-                    component: resolve => require(['../components/blog/core/Home.vue'], resolve)
+                    component: resolve => require(['../components/blog/page/Home.vue'], resolve)
                 },
                 {
                     path: '/blog/study',
-                    component: resolve => require(['../components/blog/core/Study.vue'], resolve)
+                    component: resolve => require(['../components/blog/page/Study.vue'], resolve)
                 },
                 {
                     path: '/blog/essay',
-                    component: resolve => require(['../components/blog/core/Essay.vue'], resolve)
+                    component: resolve => require(['../components/blog/page/Essay.vue'], resolve)
                 },
                 {
                     path: '/blog/func',
-                    component: resolve => require(['../components/blog/core/Func.vue'], resolve)
+                    component: resolve => require(['../components/blog/page/Func.vue'], resolve)
                 },
                 {
                     path: '/blog/board',
-                    component: resolve => require(['../components/blog/core/Board.vue'], resolve)
+                    component: resolve => require(['../components/blog/page/Board.vue'], resolve)
                 },
                 {
                     path: '/blog/about',
-                    component: resolve => require(['../components/blog/core/About.vue'], resolve)
+                    component: resolve => require(['../components/blog/page/About.vue'], resolve)
                 },
             ]
         },
         {
             path: '/view/:id',
-            component: resolve => require(['../components/blog/core/View.vue'], resolve),
+            component: resolve => require(['../components/blog/page/View.vue'], resolve),
             meta: { title: '文章浏览' }
         },
         {

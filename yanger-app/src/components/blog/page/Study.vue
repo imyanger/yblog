@@ -44,7 +44,7 @@
 				<h3>热门文章 </h3>
 				<ul  v-for="(hot, index) in studyData.hots" :key="hot.index">
 					<li>
-						<a href="" :title="hot.id" target="_blank">{{hot.title}}</a>
+						<a :href="'#/view/'+ hot.articleId" :title="hot.id" target="_blank">{{hot.title}}</a>
 					</li>
 				</ul>
 			</div>

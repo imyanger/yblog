@@ -38,7 +38,7 @@
 				<h3>推荐日志</h3>
 				<ul  v-for="(hot, index) in essayData.hots" :key="hot.index">
 					<li>
-						<a href="" :title="hot.id" target="_blank">{{hot.title}}</a>
+						<a :href="'#/view/'+ hot.articleId" :title="hot.id" target="_blank">{{hot.title}}</a>
 					</li>
 				</ul>
 			</div>

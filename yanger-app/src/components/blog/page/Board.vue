@@ -43,7 +43,7 @@
 
 <script>
     import UE from '../common/ueditor'; //ueditor富文本编辑器
-    import aboutMe from './AboutMe';
+    import aboutMe from '../common/AboutMe';
     import sign from '../common/Sign'; //用户信息展示
     import { formatDate } from 'static/js/date'; //date格式化
     import { mapGetters } from 'vuex'; //vuex组件
