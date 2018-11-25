@@ -22,7 +22,7 @@ a {
 
 .content-box {
     position: absolute;
-    left: 250px;
+    left: 220px;
     right: 0;
     top: 70px;
     bottom: 0;
@@ -34,7 +34,7 @@ a {
 
 .content {
     width: auto;
-    padding: 40px;
+    padding: 20px;
 }
 
 .content-collapse {

@@ -1,6 +1,6 @@
 const state = {
     //保存用户登录的基本信息
-    user: sessionStorage.getItem('$user') ? JSON.parse(sessionStorage.getItem('$user')) : {}
+    user: localStorage.getItem('$user') ? JSON.parse(localStorage.getItem('$user')) : {}
 }
 
 const getters = {
@@ -20,12 +20,12 @@ const mutations = {
     //保存登录信息
     setUser(state, item) {
         state.user = item;
-        sessionStorage.setItem('$user', JSON.stringify(item));
+        localStorage.setItem('$user', JSON.stringify(item));
     },
     //注销登录
     clearUser(state) {
         state.user = {};
-        sessionStorage.setItem('$user', '');
+        localStorage.setItem('$user', '');
     }
 }
 

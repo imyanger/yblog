@@ -26,6 +26,9 @@
 			<sign></sign>
 			<div id="dete_line">
 				<h3>时间线</h3>
+				<center>
+					<h5>当前定位：{{essayData.type}}-{{essayData.classify}}</h5>
+				</center>
 				<el-tabs tab-position="left">
 					<el-tab-pane :label="kind.type" v-for="kind in essayData.kinds" :key="kind.index">
 						<ul v-for="child in kind.children" :key="child.index">
@@ -47,14 +50,16 @@
 </template>
 
 <script>
-	import autor from '../common/Autor';
-	import sign from '../common/Sign'; //用户信息展示
+	import autor from '@/components/blog/Autor';
+	import sign from '@/components/blog/Sign'; //用户信息展示
 	export default {
 		data() {
 			return {
 				essayData: {
 					essayPage: {
-					}
+					},
+					type: '',
+					classify: ''
 				}
 			};
 		},
@@ -71,9 +76,11 @@
         },
 		methods: {
 			handleCurrentChange(val) {
-				this.getPage(val);
+				this.getPage(val, this.essayData.type, this.essayData.classify);
 			},
 			queryClassify(type, classify) {
+				this.essayData.type = type;
+				this.essayData.classify = classify;
 				this.getPage(1, type, classify);
 			},
 			//获取页码数据
@@ -109,7 +116,7 @@
 		margin-top: -20px;
 		width: 700px;
 		max-height: 933px;
-		min-height: 723px;
+		min-height: 764px;
 		background-color: #f9f6a9;
 	}
 	#content_left {
@@ -224,6 +231,11 @@
 	}
 	#note_hot ul li a {
 		color: #72afd2;
+	}
+	#dete_line h5 {
+		font-size: 13px;
+		font-weight: 300;
+		margin-bottom: 10px;
 	}
 </style>
 

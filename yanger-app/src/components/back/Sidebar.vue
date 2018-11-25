@@ -36,23 +36,13 @@
                         title: '系统首页'
                     },
                     {
-                        icon: 'el-icon-tickets',
-                        index: 'table',
-                        title: '基础表格'
-                    },
-                    {
-                        icon: 'el-icon-message',
-                        index: 'tabs',
-                        title: 'tab选项卡'
-                    },
-                    {
                         icon: 'el-icon-date',
-                        index: '3',
-                        title: '表单相关',
+                        index: '1',
+                        title: '文章管理',
                         subs: [
                             {
                                 index: 'form',
-                                title: '基本表单'
+                                title: '查询列表'
                             },
                             {
                                 index: 'editor',
@@ -67,26 +57,6 @@
                                 title: '文件上传'
                             }
                         ]
-                    },
-                    {
-                        icon: 'el-icon-star-on',
-                        index: 'charts',
-                        title: 'schart图表'
-                    },
-                    {
-                        icon: 'el-icon-rank',
-                        index: 'drag',
-                        title: '拖拽列表'
-                    },
-                    {
-                        icon: 'el-icon-warning',
-                        index: 'permission',
-                        title: '权限测试'
-                    },
-                    {
-                        icon: 'el-icon-error',
-                        index: '404',
-                        title: '404页面'
                     }
                 ]
             }
@@ -118,7 +88,7 @@
         width: 0;
     }
     .sidebar-el-menu:not(.el-menu--collapse){
-        width: 250px;
+        width: 220px;
     }
     .sidebar > ul {
         height:100%;

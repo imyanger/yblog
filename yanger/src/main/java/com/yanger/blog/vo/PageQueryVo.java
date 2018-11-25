@@ -24,5 +24,8 @@ public class PageQueryVo implements Serializable {
 	
 	//文章模块
 	private String module;
+
+	//文章id
+	private Integer articleId;
 	
 }

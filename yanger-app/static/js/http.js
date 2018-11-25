@@ -7,14 +7,18 @@ axios.defaults.baseURL = '/api/core';
 //http request 拦截器
 axios.interceptors.request.use(
     config => {
-        const token = sessionStorage.getItem('$token');
+        const token = localStorage.getItem('$token');
         config.data = JSON.stringify(config.data);
         config.headers = {
             /* 'Content-Type': 'application/x-www-form-urlencoded' */
             'Content-Type': 'application/json'
         }
         if(token){
-          config.params = {'token': token}
+            if(config.params){
+                config.params.token = token;
+            }else {
+                config.params = {'token': token};
+            }
         }
         return config;
     },
@@ -35,7 +39,7 @@ axios.interceptors.response.use(
                 } //从哪个页面跳转
             })
         }else if(response.data.token){ //有token则更新token
-            sessionStorage.setItem('$token', response.data.token);
+            localStorage.setItem('$token', response.data.token);
         }
         console.log(response.data);
         return response;

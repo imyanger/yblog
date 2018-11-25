@@ -42,9 +42,9 @@
 </template>
 
 <script>
-    import UE from '../common/ueditor'; //ueditor富文本编辑器
-    import aboutMe from '../common/AboutMe';
-    import sign from '../common/Sign'; //用户信息展示
+    import UE from '@/components/blog/ueditor'; //ueditor富文本编辑器
+    import aboutMe from '@/components/blog/AboutMe';
+    import sign from '@/components/blog/Sign'; //用户信息展示
     import { formatDate } from 'static/js/date'; //date格式化
     import { mapGetters } from 'vuex'; //vuex组件
     export default {
@@ -131,6 +131,7 @@
                         //发送留言信息
                         let _this = this;
                         this.$post("/blog/leaveMsg", {
+                            type: '02',
                             content: msg
                         })
                         .then(function (response) {

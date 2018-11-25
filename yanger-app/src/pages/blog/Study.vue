@@ -53,8 +53,8 @@
 </template>
 
 <script>
-	import autor from '../common/Autor'; //文章列表底部展示
-	import sign from '../common/Sign'; //用户信息展示
+	import autor from '@/components/blog/Autor'; //文章列表底部展示
+	import sign from '@/components/blog/Sign'; //用户信息展示
 	export default {
 		data() {
 			return {

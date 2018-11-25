@@ -1,46 +1,26 @@
 package com.yanger.blog.service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
+import com.yanger.blog.dao.*;
+import com.yanger.blog.po.*;
+import com.yanger.blog.vo.*;
+import com.yanger.common.util.ConstantUtils;
+import com.yanger.common.util.EncryptUtils;
+import com.yanger.common.util.ParamUtils;
+import com.yanger.common.vo.TokenMsg;
+import com.yanger.mybatis.paginator.Page;
+import com.yanger.mybatis.paginator.PageParam;
+import com.yanger.mybatis.util.Pages;
+import com.yanger.mybatis.util.ResultPage;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.yanger.blog.dao.ArticleDao;
-import com.yanger.blog.dao.ArticleKindDao;
-import com.yanger.blog.dao.BlogUserDao;
-import com.yanger.blog.dao.LeavingMsgDao;
-import com.yanger.blog.dao.OuterLinkDao;
-import com.yanger.blog.po.Article;
-import com.yanger.blog.po.ArticleKind;
-import com.yanger.blog.po.BlogUser;
-import com.yanger.blog.po.LeavingMsg;
-import com.yanger.blog.po.OuterLink;
-import com.yanger.blog.vo.ArticleKindVo;
-import com.yanger.blog.vo.ArticleVo;
-import com.yanger.blog.vo.BlogUserVo;
-import com.yanger.blog.vo.BoardDataVo;
-import com.yanger.blog.vo.EssayDataVo;
-import com.yanger.blog.vo.HomeDataVo;
-import com.yanger.blog.vo.LeavingMsgVo;
-import com.yanger.blog.vo.OuterLinkVo;
-import com.yanger.blog.vo.PageQueryVo;
-import com.yanger.blog.vo.StudyDataVo;
-import com.yanger.blog.vo.ViewDataVo;
-import com.yanger.common.util.ConstantUtils;
-import com.yanger.common.util.EncryptUtils;
-import com.yanger.common.util.ParamUtils;
-import com.yanger.common.vo.TokenMsg;
-import com.yanger.mybatis.paginator.MybatisApiUtils;
-import com.yanger.mybatis.paginator.Page;
-import com.yanger.mybatis.paginator.PageParam;
-import com.yanger.mybatis.util.Pages;
-import com.yanger.mybatis.util.ResultPage;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Service(value = "blogService")
 public class BlogService {
@@ -89,7 +69,7 @@ public class BlogService {
 	 * @author YangHao  
 	 * @date 2018年9月4日-上午12:21:07
 	 * @param size
-	 * @param type
+	 * @param module
 	 * @return
 	 */
 	private List<ArticleVo> findArticles(int page, int size, String module, String order) throws Exception {
@@ -109,7 +89,7 @@ public class BlogService {
 	 * @author YangHao  
 	 * @date 2018年9月4日-上午12:21:07
 	 * @param size
-	 * @param type
+	 * @param module
 	 * @return
 	 */
 	private List<ArticleVo> findArticlesByModule(int size, String module) throws Exception {
@@ -121,7 +101,7 @@ public class BlogService {
 	 * @author YangHao  
 	 * @date 2018年9月4日-上午12:21:07
 	 * @param size
-	 * @param type
+	 * @param page
 	 * @return
 	 */
 	private List<LeavingMsgVo> findMsgs(int page, int size) throws Exception {
@@ -158,8 +138,8 @@ public class BlogService {
 	 * <p>Description: 根据类型查询连接，根据order排序 </p>  
 	 * @author YangHao  
 	 * @date 2018年9月4日-下午10:21:49
-	 * @param i
-	 * @param string
+	 * @param size
+	 * @param type
 	 * @return
 	 * @throws Exception
 	 */
@@ -199,7 +179,7 @@ public class BlogService {
 	 * @author YangHao  
 	 * @date 2018年9月4日-上午12:21:07
 	 * @param size
-	 * @param type
+	 * @param module
 	 * @return
 	 */
 	private ResultPage<ArticleVo> findArticlePageByModule(int page, int size, String module) throws Exception {
@@ -217,8 +197,7 @@ public class BlogService {
 	 * <p>Description: 获取文章分类数据 </p>  
 	 * @author YangHao  
 	 * @date 2018年9月4日-上午12:21:07
-	 * @param size
-	 * @param type
+	 * @param module
 	 * @return
 	 */
 	private List<ArticleKindVo> findArticleKinds(String module) throws Exception {
@@ -398,12 +377,25 @@ public class BlogService {
 		entity.setUserNickName(user.getName());
 		entity.setUserImgPath(user.getPath());
 		//留言类型
-		entity.setType(ConstantUtils.MSG_TYPE_BOARD);
+		String type = msgVo.getType();
+		entity.setType(type);
+		//文章留言
+		if(ConstantUtils.MSG_TYPE_ARTICLE.equals(type)){
+			entity.setArticleId(msgVo.getArticleId());
+			entity.setArticleTitle(msgVo.getArticleTitle());
+			entity.setArtImgPath(msgVo.getArtImgPath());
+		}
 		entity.setInsertTime(new Date());
 		entity.setStatus(ConstantUtils.STATUS_VALID);
 		leavingMsgDao.insert(entity);
 		//查询新的第一页数据
-		return findMsgPage(1, 6);
+		ResultPage<LeavingMsgVo> page = null;
+		if(ConstantUtils.MSG_TYPE_ARTICLE.equals(type)) {
+			page = findArticleMsgPage(msgVo.getArticleId(), 1, 6);
+		}else if(ConstantUtils.MSG_TYPE_BOARD.equals(type)) {
+			page = findMsgPage(1, 6);
+		}
+		return page;
 	}
 
 	/**
@@ -448,5 +440,15 @@ public class BlogService {
 		Page<LeavingMsg> msgsPage = leavingMsgDao.selectPage(pageParam, entry);
 		return Pages.convert(pageParam, msgsPage, LeavingMsgVo.class);
 	}
-	
+
+	/**
+	 * <p>Description: 获取文章留言分页信息 </p>
+	 * @author YangHao
+	 * @date 2018年11月11日-下午10:44:17
+	 * @param pageQueryVo
+	 * @return
+     */
+	public ResultPage<LeavingMsgVo> getArtMsgPageData(PageQueryVo pageQueryVo) throws Exception {
+		return findArticleMsgPage(pageQueryVo.getArticleId(), pageQueryVo.getPageNo(), 6);
+	}
 }

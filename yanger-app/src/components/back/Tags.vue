@@ -23,7 +23,7 @@
 </template>
 
 <script>
-    import bus from './bus';
+    import bus from '../common/bus';
     export default {
         data() {
             return {
@@ -86,7 +86,6 @@
             this.setTags(this.$route);
         }
     }
-
 </script>
 
 
@@ -98,13 +97,11 @@
         background: #fff;
         padding-right: 120px;
     }
-
     .tags ul {
         box-sizing: border-box;
         width: 100%;
         height: 100%;
     }
-
     .tags-li {
         float: left;
         margin: 3px 5px 2px 3px;
@@ -123,15 +120,12 @@
         -moz-transition: all .3s ease-in;
         transition: all .3s ease-in;
     }
-
     .tags-li:not(.active):hover {
         background: #f8f8f8;
     }
-
     .tags-li.active {
         color: #fff;
     }
-
     .tags-li-title {
         float: left;
         max-width: 80px;
@@ -141,11 +135,9 @@
         margin-right: 5px;
         color: #666;
     }
-
     .tags-li.active .tags-li-title {
         color: #fff;
     }
-
     .tags-close-box {
         position: absolute;
         right: 0;
@@ -159,5 +151,4 @@
         box-shadow: -3px 0 15px 3px rgba(0, 0, 0, .1);
         z-index: 10;
     }
-
 </style>

@@ -9,53 +9,58 @@ export default new Router({
             path: '/',
             redirect: '/blog/home'
         },
+        //blog前台展示部分
         {
             path: '/blog',
-            component: resolve => require(['../components/blog/common/Layout.vue'], resolve),
+            component: resolve => require(['@/components/blog/Layout.vue'], resolve),
             children: [
                 {
                     path: '/blog/home',
-                    component: resolve => require(['../components/blog/page/Home.vue'], resolve)
+                    component: resolve => require(['../pages/blog/Home.vue'], resolve)
                 },
                 {
                     path: '/blog/study',
-                    component: resolve => require(['../components/blog/page/Study.vue'], resolve)
+                    component: resolve => require(['../pages/blog/Study.vue'], resolve)
                 },
                 {
                     path: '/blog/essay',
-                    component: resolve => require(['../components/blog/page/Essay.vue'], resolve)
+                    component: resolve => require(['../pages/blog/Essay.vue'], resolve)
                 },
                 {
                     path: '/blog/func',
-                    component: resolve => require(['../components/blog/page/Func.vue'], resolve)
+                    component: resolve => require(['../pages/blog/Func.vue'], resolve)
                 },
                 {
                     path: '/blog/board',
-                    component: resolve => require(['../components/blog/page/Board.vue'], resolve)
+                    component: resolve => require(['../pages/blog/Board.vue'], resolve)
                 },
                 {
                     path: '/blog/about',
-                    component: resolve => require(['../components/blog/page/About.vue'], resolve)
+                    component: resolve => require(['../pages/blog/About.vue'], resolve)
                 },
             ]
         },
+        //文章浏览部分
         {
             path: '/view/:id',
-            component: resolve => require(['../components/blog/page/View.vue'], resolve),
+            component: resolve => require(['../pages/blog/View.vue'], resolve),
             meta: { title: '文章浏览' }
         },
+        //后台管理系统
         {
             path: '/back',
-            component: resolve => require(['../components/back/common/Layout.vue'], resolve),
+            component: resolve => require(['@/components/back/Layout.vue'], resolve),
             meta: { title: '自述文件' },
             children:[
                 {
-                    path: '/back/dashboard',
-                    component: resolve => require(['../components/page/Dashboard.vue'], resolve),
+                    path: '/back/home',
+                    component: resolve => require(['@/pages/back/Home.vue'], resolve),
                     meta: { title: '系统首页' }
                 }
             ]
         },
+
+
         {
             path: '/',
             component: resolve => require(['../components/common/Home.vue'], resolve),

@@ -131,7 +131,7 @@
         },
         created(){
             console.log(this.getUser())
-            //从sessionStorage获取登录信息
+            //获取登录信息
             let user = this.getUser();
             if(user.userNickName){
                 this.sginData.user = user;
@@ -167,7 +167,6 @@
             clearUserInfo(){
                 this.sginData.user = {};
                 this.clearUser();
-                sessionStorage.setItem('$token', '');
             },
             //接受滑动解锁成功的回调
             dealDragOk(dragRes) {

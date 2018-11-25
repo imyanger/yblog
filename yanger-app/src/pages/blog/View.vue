@@ -94,11 +94,12 @@
 </template>
 
 <script>
-	import bFooter from '../common/Footer';
-	import UE from '../common/ueditor'; //ueditor富文本编辑器
+	import bFooter from '@/components/blog/Footer';
+	import UE from '@/components/blog/ueditor'; //ueditor富文本编辑器
 	import { formatDate } from 'static/js/date'; //date格式化
-	import aboutMe from '../common/AboutMe';
-    import sign from '../common/Sign'; //用户信息展示
+	import aboutMe from '@/components/blog/AboutMe';
+	import sign from '@/components/blog/Sign'; //用户信息展示
+	import { mapGetters } from 'vuex'; //vuex组件
     export default {
         data() {
             return {
@@ -127,14 +128,52 @@
         computed:{
         },
         methods:{
+			...mapGetters(['getUser']),
 			//发表评论
 			leaveMsg(){
-
+				let user = this.getUser();
+                if(user.userId){
+                    let msg = this.$refs.ue.getContent();
+                    if(msg){
+                        //发送留言信息
+                        let _this = this;
+                        this.$post("/blog/leaveMsg", {
+                            type: '01',
+							content: msg,
+							articleId: _this.viewData.article.articleId,
+							articleTitle: _this.viewData.article.title,
+							artImgPath: _this.viewData.article.artImgPath
+                        })
+                        .then(function (response) {
+                            _this.viewData.msgPage = response.data;
+                            //清空内容
+                            _this.$refs.ue.clear();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    }else {
+                        this.$alert("请输入留言内容", "提示");
+                    }
+                }else {
+                    this.$alert("登录后可使用留言功能，请先登录", "提示");
+                }
 			},
 			//页码改变
 			handleCurrentChange(val) {
-				this.getPage(val);
+				let _this = this;
+				this.$post("/blog/artMsgPage", {
+					articleId: _this.viewData.article.articleId,
+					pageNo: val
+				})
+				.then(function (response) {
+                    _this.viewData.msgPage = response.data;
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
 			},
+			
         },
         mounted(){
 		},

@@ -225,7 +225,7 @@ public class BlogApi {
 	}
 	
 	/**
-	 * <p>Description: 查询文章分页数据 </p>  
+	 * <p>Description: 查询留言分页数据 </p>
 	 * @author YangHao  
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
@@ -243,7 +243,33 @@ public class BlogApi {
 		}
 		return api;
 	}
-	
+
+	/**
+	 * <p>Description: 查询文章留言分页数据 </p>
+	 * @author YangHao
+	 * @date 2018年9月6日-下午11:07:41
+	 * @return
+	 */
+	@ApiOperation(value = "查询文章留言分页数据", notes = "")
+	@PostMapping("/artMsgPage")
+	public ApiResponse<ResultPage<LeavingMsgVo>> artMsgPage(@RequestBody PageQueryVo pageQueryVo){
+		ApiResponse<ResultPage<LeavingMsgVo>> api = new ApiResponse<>();
+		try {
+			ResultPage<LeavingMsgVo> page = blogService.getArtMsgPageData(pageQueryVo);
+			api.setData(page);
+		} catch (Exception e) {
+			api.error("加载文章留言分页数据失败");
+			e.printStackTrace();
+		}
+		return api;
+	}
+
+	/**
+	 * <p>Description: 发表留言 </p>
+	 * @author YangHao
+	 * @date 2018年9月6日-下午11:07:41
+	 * @return
+	 */
 	@ApiOperation(value = "发表留言", notes = "")
 	@PostMapping("/leaveMsg")
 	@Token
@@ -259,7 +285,13 @@ public class BlogApi {
 		}
 		return api;
 	}
-	
+
+	/**
+	 * <p>Description: 文章浏览界面 </p>
+	 * @author YangHao
+	 * @date 2018年9月6日-下午11:07:41
+	 * @return
+	 */
 	@ApiOperation(value = "文章浏览界面", notes = "")
 	@GetMapping("/view")
 	public ApiResponse<ViewDataVo> view(@RequestParam(value="id") Integer id){
