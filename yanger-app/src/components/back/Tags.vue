@@ -47,7 +47,7 @@
             // 关闭全部标签
             closeAll(){
                 this.tagsList = [];
-                this.$router.push('/');
+                this.$router.push('/back/home');
             },
             // 关闭其他标签
             closeOther(){

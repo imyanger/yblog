@@ -50,13 +50,33 @@ export default new Router({
         {
             path: '/back',
             component: resolve => require(['@/components/back/Layout.vue'], resolve),
-            meta: { title: '自述文件' },
+            meta: { title: '后台管理' },
             children:[
                 {
                     path: '/back/home',
                     component: resolve => require(['@/pages/back/Home.vue'], resolve),
                     meta: { title: '系统首页' }
-                }
+                },
+                {
+                    path: '/back/art/list',
+                    component: resolve => require(['@/pages/back/ArtList.vue'], resolve),
+                    meta: { title: '文章列表' }
+                },
+                {
+                    path: '/back/art/add',
+                    component: resolve => require(['@/pages/back/ArtAdd.vue'], resolve),
+                    meta: { title: '新增文章' }
+                },
+                {
+                    path: '/back/art/count',
+                    component: resolve => require(['@/pages/back/ArtAdd.vue'], resolve),
+                    meta: { title: '文章统计' }
+                },
+                {
+                    path: '/back/sys/const',
+                    component: resolve => require(['@/pages/back/SysConst.vue'], resolve),
+                    meta: { title: '常量维护' }
+                },
             ]
         },
 

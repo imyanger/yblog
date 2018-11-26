@@ -9,7 +9,7 @@
                             <i :class="item.icon"></i><span slot="title">{{ item.title }}</span>
                         </template>
                         <el-menu-item v-for="(subItem,i) in item.subs" :key="i" :index="subItem.index">
-                            {{ subItem.title }}
+                            &nbsp;&nbsp;&nbsp;{{ subItem.title }}
                         </el-menu-item>
                     </el-submenu>
                 </template>
@@ -32,7 +32,7 @@
                 items: [
                     {
                         icon: 'el-icon-setting',
-                        index: 'dashboard',
+                        index: '/back/home',
                         title: '系统首页'
                     },
                     {
@@ -41,20 +41,27 @@
                         title: '文章管理',
                         subs: [
                             {
-                                index: 'form',
+                                index: '/back/art/list',
                                 title: '查询列表'
                             },
                             {
-                                index: 'editor',
-                                title: '富文本编辑器'
+                                index: '/back/art/add',
+                                title: '新增文章'
                             },
                             {
-                                index: 'markdown',
-                                title: 'markdown编辑器'
-                            },
+                                index: '/back/art/count',
+                                title: '文章统计'
+                            }
+                        ]
+                    },
+                    {
+                        icon: 'el-icon-date',
+                        index: '2',
+                        title: '系统管理',
+                        subs: [
                             {
-                                index: 'upload',
-                                title: '文件上传'
+                                index: '/back/sys/const',
+                                title: '常量维护'
                             }
                         ]
                     }
@@ -63,7 +70,8 @@
         },
         computed:{
             onRoutes(){
-                return this.$route.path.replace('/','');
+                //路由变化时重定位路由
+                return this.$route.path;
             }
         },
         created(){

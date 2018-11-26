@@ -124,3 +124,13 @@
         height:100%;
     }
 </style>
+
+<style>
+    .el-submenu .el-menu-item {
+        height: 50px;
+        line-height: 50px;
+        padding: 0 70px !important;
+        min-width: 200px;
+    }
+</style>
+
