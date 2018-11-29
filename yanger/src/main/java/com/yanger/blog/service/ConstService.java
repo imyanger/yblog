@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.yanger.blog.dao.ArticleDao;
+import com.yanger.blog.dao.ConstDao;
 import com.yanger.blog.po.Article;
+import com.yanger.blog.po.Const;
 import com.yanger.blog.vo.ArticleVo;
+import com.yanger.blog.vo.ConstVo;
 import com.yanger.blog.vo.PageQueryVo;
 import com.yanger.common.util.ParamUtils;
 import com.yanger.mybatis.paginator.Page;
@@ -16,41 +18,34 @@ import com.yanger.mybatis.paginator.PageParam;
 import com.yanger.mybatis.util.Pages;
 import com.yanger.mybatis.util.ResultPage;
 
-@Service(value = "articleService")
+@Service
 @Transactional
-public class ArticleService {
+public class ConstService {
 	
 	@Autowired
-	ArticleDao articleDao;
+	ConstDao constDao;
 
 	/**
-	 * <p>Description: 分页查询文章 </p>  
+	 * <p>Description: 获取常量表分页数据 </p>  
 	 * @author YangHao  
-	 * @date 2018年11月27日-下午10:58:25
+	 * @date 2018年11月29日-下午9:44:45
 	 * @param pageQueryVo
 	 * @return
 	 * @throws Exception
 	 */
-	public ResultPage<ArticleVo> getPageData(PageQueryVo pageQueryVo) throws Exception {
+	public ResultPage<ConstVo> getPageData(PageQueryVo pageQueryVo) throws Exception {
 		int pageNo = pageQueryVo.getPageNo();
 		int size = pageQueryVo.getPageSize();
 		PageParam pageParam = ParamUtils.getDescPageParam(pageNo, size > 0 ? size : 10, "update_time");
-		Article entry = new Article();
+		Const entry = new Const();
 		//搜索条件
 		if(StringUtils.isNotBlank(pageQueryVo.getQueryValue())){
-			//关键字的模糊匹配
-			entry.setQueryValue(pageQueryVo.getQueryValue());
+			//描述的模糊匹配
+			entry.setDepict(pageQueryVo.getQueryValue());
 		}
-		//类型的匹配
-		if(StringUtils.isNotBlank(pageQueryVo.getType())){
-			entry.setType(pageQueryVo.getType());
-		}
-		if(StringUtils.isNotBlank(pageQueryVo.getClassify())){
-			entry.setClassify(pageQueryVo.getClassify());
-		}
-		Page<Article> page = articleDao.selectPage(pageParam, entry);
+		Page<Const> page = constDao.selectPage(pageParam, entry);
 		//分页数据
-		return Pages.convert(pageParam, page, ArticleVo.class);
+		return Pages.convert(pageParam, page, ConstVo.class);
 	}
 
 	/**
@@ -60,10 +55,10 @@ public class ArticleService {
 	 * @param articleVo
 	 * @throws Exception
 	 */
-	public void addArticle(ArticleVo articleVo) throws Exception {
-		Article entity = new Article();
-		BeanUtils.copyProperties(entity, articleVo);
-		articleDao.insert(entity);
+	public void addArticle(ConstVo constVo) throws Exception {
+		Const entity = new Const();
+		BeanUtils.copyProperties(entity, constVo);
+		constDao.insert(entity);
 	}
-
+	
 }

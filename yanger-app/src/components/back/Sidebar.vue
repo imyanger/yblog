@@ -31,7 +31,7 @@
                 collapse: false,
                 items: [
                     {
-                        icon: 'el-icon-setting',
+                        icon: 'el-icon-star-on',
                         index: '/back/home',
                         title: '系统首页'
                     },
@@ -55,13 +55,17 @@
                         ]
                     },
                     {
-                        icon: 'el-icon-date',
+                        icon: 'el-icon-setting',
                         index: '2',
                         title: '系统管理',
                         subs: [
                             {
                                 index: '/back/sys/const',
-                                title: '常量维护'
+                                title: '常量查询'
+                            },
+                            {
+                                index: '/back/sys/user',
+                                title: '用户查询'
                             }
                         ]
                     }

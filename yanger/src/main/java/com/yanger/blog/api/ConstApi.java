@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.yanger.blog.service.ArticleService;
+import com.yanger.blog.service.ConstService;
 import com.yanger.blog.vo.ArticleVo;
+import com.yanger.blog.vo.ConstVo;
 import com.yanger.blog.vo.PageQueryVo;
 import com.yanger.common.vo.ApiResponse;
 import com.yanger.mybatis.util.ResultPage;
@@ -19,50 +20,50 @@ import io.swagger.annotations.ApiOperation;
 @Api
 //@Token
 @RestController
-@RequestMapping("/art")
-public class ArticleApi {
+@RequestMapping("/const")
+public class ConstApi {
 	
 	@Autowired
-	ArticleService articleService;
+	ConstService constService;
 	
 	/**
-	 * <p>Description: 查询文章分页数据 </p>  
+	 * <p>Description: 查询常量表分页数据 </p>  
 	 * @author YangHao  
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
 	 */
-	@ApiOperation(value = "查询文章分页数据", notes = "")
+	@ApiOperation(value = "查询常量表分页数据", notes = "")
 	@PostMapping("/list")
-	public ApiResponse<ResultPage<ArticleVo>> articleList(@RequestBody PageQueryVo pageQueryVo){
-		ApiResponse<ResultPage<ArticleVo>> api = new ApiResponse<>();
+	public ApiResponse<ResultPage<ConstVo>> articleList(@RequestBody PageQueryVo pageQueryVo){
+		ApiResponse<ResultPage<ConstVo>> api = new ApiResponse<>();
 		try {
-			ResultPage<ArticleVo> page = articleService.getPageData(pageQueryVo);
+			ResultPage<ConstVo> page = constService.getPageData(pageQueryVo);
 			api.setData(page);
 		} catch (Exception e) {
-			api.error("加载文章分页数据失败");
+			api.error("加载常量表分页失败");
 			e.printStackTrace();
 		}
 		return api;
 	}
-
+	
 	/**
-	 * <p>Description: 新增文章 </p>  
+	 * <p>Description: 新增常量 </p>  
 	 * @author YangHao  
 	 * @date 2018年11月29日-下午10:02:38
 	 * @param articleVo
 	 * @return
 	 */
-	@ApiOperation(value = "新增文章", notes = "")
+	@ApiOperation(value = "新增常量", notes = "")
 	@PutMapping("/add")
-	public ApiResponse<String> articleAdd(@RequestBody ArticleVo articleVo){
+	public ApiResponse<String> articleAdd(@RequestBody ConstVo constVo){
 		ApiResponse<String> api = new ApiResponse<>();
 		try {
-			articleService.addArticle(articleVo);
+			constService.addArticle(constVo);
 		} catch (Exception e) {
-			api.error("新增文章处理失败");
+			api.error("新增常量处理失败");
 			e.printStackTrace();
 		}
 		return api;
 	}
-	
+
 }

@@ -41,7 +41,7 @@
                 <el-table-column prop="views" label="浏览" sortable></el-table-column>
                 <el-table-column prop="commons" label="评论" sortable></el-table-column>
                 <el-table-column prop="updateTime" label="编辑时间" :formatter="dateFormatter" sortable width="130%"></el-table-column>
-                <el-table-column prop="status" label="状态" sortable width="70%"></el-table-column>
+                <el-table-column prop="status" label="状态" sortable :formatter="statusFormatter" width="70%"></el-table-column>
                 <el-table-column label="操作">
                    
                 </el-table-column>
@@ -108,6 +108,9 @@
             dateFormatter(row, column) {
                 var date = new Date(row.updateTime);
                 return formatDate(date, 'yyyy-MM-dd hh:mm');
+            },
+            statusFormatter(row, column){ 
+                return row.status === "1" ? '有效' : '无效';
             }
         }
     }

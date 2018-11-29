@@ -75,7 +75,12 @@ export default new Router({
                 {
                     path: '/back/sys/const',
                     component: resolve => require(['@/pages/back/SysConst.vue'], resolve),
-                    meta: { title: '常量维护' }
+                    meta: { title: '常量查询' }
+                },
+                {
+                    path: '/back/sys/user',
+                    component: resolve => require(['@/pages/back/UserList.vue'], resolve),
+                    meta: { title: '用户查询' }
                 },
             ]
         },
