@@ -5,4 +5,12 @@
 <!-- ============================================================== -->
 <mapper namespace="com.yanger.blog.dao.ConstDao">
 
+	<!-- 根据描述depict查询 -->
+	<select id="findAllByDepict" resultMap="BaseResultMap" parameterType="map">
+		select
+			<include refid="Base_Column_List" />
+		from const
+		where depict = #{param1}
+	</select>
+
 </mapper>

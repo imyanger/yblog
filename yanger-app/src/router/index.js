@@ -60,12 +60,12 @@ export default new Router({
                 {
                     path: '/back/art/list',
                     component: resolve => require(['@/pages/back/ArtList.vue'], resolve),
-                    meta: { title: '文章列表' }
+                    meta: { title: '文章查询' }
                 },
                 {
                     path: '/back/art/add',
                     component: resolve => require(['@/pages/back/ArtAdd.vue'], resolve),
-                    meta: { title: '新增文章' }
+                    meta: { title: '文章新增' }
                 },
                 {
                     path: '/back/art/count',
@@ -73,14 +73,14 @@ export default new Router({
                     meta: { title: '文章统计' }
                 },
                 {
+                    path: '/back/user/list',
+                    component: resolve => require(['@/pages/back/UserList.vue'], resolve),
+                    meta: { title: '用户查询' }
+                },
+                {
                     path: '/back/sys/const',
                     component: resolve => require(['@/pages/back/SysConst.vue'], resolve),
                     meta: { title: '常量查询' }
-                },
-                {
-                    path: '/back/sys/user',
-                    component: resolve => require(['@/pages/back/UserList.vue'], resolve),
-                    meta: { title: '用户查询' }
                 },
             ]
         },

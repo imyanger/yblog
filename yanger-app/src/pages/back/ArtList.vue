@@ -2,13 +2,14 @@
     <div class="table">
         <div class="container">
             <div class="handle-box">
-                <el-select v-model="artList.type" placeholder="文章类型" class="handle-select mr10">
-                    <el-option key="1" label="2017年" value="2017"></el-option>
-                    <el-option key="2" label="java相关" value="java"></el-option>
+                <el-select v-model="artList.type" placeholder="文章类型" class="handle-select mr10"
+                    @change="typeChange(artList.type)">
+                    <el-option v-for="(type, index) in artList.types" :key="index" 
+                        :label="type.val" :value="type.code"></el-option>
                 </el-select>
                 <el-select v-model="artList.classify" placeholder="文章分类" class="handle-select mr10">
-                    <el-option key="1" label="随笔" value="1"></el-option>
-                    <el-option key="2" label="春" value="spring"></el-option>
+                    <el-option v-for="(classify, index) in artList.classifys" :key="index" 
+                        :label="classify.val" :value="classify.code"></el-option>
                 </el-select>
                 <el-input v-model="artList.queryValue" placeholder="筛选关键词" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="search" @click="search">搜索</el-button>
@@ -66,12 +67,23 @@
                     page: {},
                     queryValue: '',
                     type: '',
-                    classify: ''
+                    classify: '',
+                    types: [],
+                    classifys: []
                 }
             }
         },
         created() {
+            let _this = this;
             this.getPage(1);
+            //获取下拉选项的值
+            this.$get("/const/artTypes")
+            .then(function (response) {
+                _this.artList.types = response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         },
         computed: {
         },
@@ -111,6 +123,15 @@
             },
             statusFormatter(row, column){ 
                 return row.status === "1" ? '有效' : '无效';
+            },
+            typeChange(val){
+                let _this = this;
+                this.artList.types.forEach(type => {
+                    if(val === type.code){
+                        _this.artList.classify = "";
+                        _this.artList.classifys = type.children;
+                    }
+                });
             }
         }
     }

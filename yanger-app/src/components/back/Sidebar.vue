@@ -42,11 +42,11 @@
                         subs: [
                             {
                                 index: '/back/art/list',
-                                title: '查询列表'
+                                title: '文章查询'
                             },
                             {
                                 index: '/back/art/add',
-                                title: '新增文章'
+                                title: '文章新增'
                             },
                             {
                                 index: '/back/art/count',
@@ -55,18 +55,25 @@
                         ]
                     },
                     {
-                        icon: 'el-icon-setting',
+                        icon: 'el-icon-mobile-phone',
                         index: '2',
+                        title: '用户管理',
+                        subs: [
+                            {
+                                index: '/back/user/list',
+                                title: '用户查询'
+                            },
+                        ]
+                    },
+                    {
+                        icon: 'el-icon-setting',
+                        index: '3',
                         title: '系统管理',
                         subs: [
                             {
                                 index: '/back/sys/const',
-                                title: '常量查询'
+                                title: '常量维护'
                             },
-                            {
-                                index: '/back/sys/user',
-                                title: '用户查询'
-                            }
                         ]
                     }
                 ]

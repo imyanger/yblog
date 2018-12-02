@@ -1,7 +1,9 @@
 package com.yanger.blog.vo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -35,5 +37,6 @@ public class ConstVo implements Serializable {
 	/** 对应字段：update_time,备注：更新时间 */
 	private Date updateTime;
 
+	private List<ConstVo> children = new ArrayList<>(0);
 
 }

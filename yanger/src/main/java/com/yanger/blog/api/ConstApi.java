@@ -1,6 +1,9 @@
 package com.yanger.blog.api;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yanger.blog.service.ConstService;
-import com.yanger.blog.vo.ArticleVo;
 import com.yanger.blog.vo.ConstVo;
 import com.yanger.blog.vo.PageQueryVo;
 import com.yanger.common.vo.ApiResponse;
@@ -61,6 +63,27 @@ public class ConstApi {
 			constService.addArticle(constVo);
 		} catch (Exception e) {
 			api.error("新增常量处理失败");
+			e.printStackTrace();
+		}
+		return api;
+	}
+	
+	/**
+	 * <p>Description: 获取文章类型和分类 </p>  
+	 * @author YangHao  
+	 * @date 2018年11月29日-下午10:02:38
+	 * @param articleVo
+	 * @return
+	 */
+	@ApiOperation(value = "获取文章类型和分类", notes = "")
+	@GetMapping("/artTypes")
+	public ApiResponse<List<ConstVo>> artTypes(){
+		ApiResponse<List<ConstVo>> api = new ApiResponse<>();
+		try {
+			List<ConstVo> types = constService.addArticleTypes();
+			api.setData(types);
+		} catch (Exception e) {
+			api.error("获取文章类型和分类");
 			e.printStackTrace();
 		}
 		return api;

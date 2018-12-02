@@ -1,5 +1,8 @@
 package com.yanger.blog.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yanger.blog.dao.ConstDao;
-import com.yanger.blog.po.Article;
 import com.yanger.blog.po.Const;
-import com.yanger.blog.vo.ArticleVo;
 import com.yanger.blog.vo.ConstVo;
 import com.yanger.blog.vo.PageQueryVo;
 import com.yanger.common.util.ParamUtils;
@@ -59,6 +60,44 @@ public class ConstService {
 		Const entity = new Const();
 		BeanUtils.copyProperties(entity, constVo);
 		constDao.insert(entity);
+	}
+
+	/**
+	 * <p>Description: 获取文章类型和分类 </p>  
+	 * @author YangHao  
+	 * @date 2018年11月29日-下午10:02:38
+	 * @param articleVo
+	 * @return
+	 */
+	public List<ConstVo> addArticleTypes()  throws Exception {
+		List<ConstVo> typeVos = new ArrayList<>(0);
+		//获取模块
+		List<Const> modules = constDao.findAllByDepict("文章类型");
+		for (Const module : modules) {
+			//类型
+			List<Const> types = constDao.findAllByDepict(module.getVal());
+			if(types.isEmpty()){ //没有子类型，则添加模块
+				ConstVo moduleVo = new ConstVo();
+				BeanUtils.copyProperties(moduleVo, module);
+				typeVos.add(moduleVo);
+			}else {
+				for (Const type : types) {
+					ConstVo typeVo = new ConstVo();
+					BeanUtils.copyProperties(typeVo, type);
+					//分类
+					List<Const> classifys = constDao.findAllByDepict(type.getVal());
+					List<ConstVo> classifyVos = new ArrayList<>(0);
+					for (Const classify : classifys) {
+						ConstVo classifyVo = new ConstVo();
+						BeanUtils.copyProperties(classifyVo, classify);
+						classifyVos.add(classifyVo);
+					}
+					typeVo.setChildren(classifyVos);
+					typeVos.add(typeVo);
+				}
+			}
+		}
+		return typeVos;
 	}
 	
 }
