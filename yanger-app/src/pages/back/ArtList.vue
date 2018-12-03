@@ -175,7 +175,4 @@
         word-break: break-all;
         line-height: 16px;
     }
-    .el-form-item--small .el-form-item__content, .el-form-item--small .el-form-item__label {
-        line-height: 18px;
-    }
 </style>

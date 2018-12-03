@@ -1,6 +1,7 @@
 <template>
     <div class="table">
         <div class="container">
+            <el-button type="primary" icon="search" calss="add" @click="addConst">新增常量</el-button>
             <div class="handle-box">
                 <el-input v-model="constList.queryValue" placeholder="描述搜索" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="search" @click="search">搜索</el-button>
@@ -14,7 +15,12 @@
                 <el-table-column prop="views" label="更新时间" sortable :formatter="dateFormatter"></el-table-column>
                 <el-table-column prop="status" label="状态" :formatter="statusFormatter"></el-table-column>
                 <el-table-column label="操作">
-                   
+                    <template slot-scope="scope">
+                        <div class="operate">
+                            <i class="el-icon-edit" title="修改" @click="editConst(scope.$index, scope.row)"></i>
+                            <i class="el-icon-delete" title="删除"></i>
+                        </div>
+                    </template>
                 </el-table-column>
             </el-table>
             <div class="pagination">
@@ -24,6 +30,30 @@
                 </el-pagination>
             </div>
         </div>
+
+        <!-- 编辑弹出框 -->
+        <el-dialog :title="title" :visible.sync="editVisible" width="30%">
+            <el-form ref="form" :model="constData" label-width="30%">
+                <el-form-item label="常量描述">
+                    <el-input v-model="constData.depict" class="handle-input mr10"></el-input>
+                </el-form-item>
+                <el-form-item label="常量代码">
+                    <el-input v-model="constData.code" class="handle-input mr10"></el-input>
+                </el-form-item>
+                <el-form-item label="常量值">
+                    <el-input v-model="constData.val" class="handle-input mr10"></el-input>
+                </el-form-item>
+                <el-form-item label="状态">
+                    <el-select placeholder="状态" v-model="constData.status"  class="handle-input mr10">
+                        <el-option key="1" label="有效" value="1"></el-option>
+                        <el-option key="2" label="无效" value="0"></el-option>
+                    </el-select>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="saveConst">提交</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
@@ -36,7 +66,10 @@
                 constList: {
                     page: {},
                     queryValue: ''
-                }
+                },
+                editVisible: false,
+                title: '',
+                constData: {}
             }
         },
         created() {
@@ -78,6 +111,22 @@
             },
             statusFormatter(row, column){ 
                 return row.status === "1" ? '有效' : '无效';
+            },
+            addConst(){
+                this.title = '常量新增',
+                this.constData = {};
+                this.constData.status = "1";
+                this.editVisible = true;
+            },
+            //编辑
+            editConst(index, row){
+                this.title = '常量修改',
+                this.constData = row;
+                this.editVisible = true;
+            },
+            //新增或者修改提交
+            saveConst(){
+
             }
         }
     }
@@ -111,6 +160,11 @@
     .summary {
         line-height: 20px;
     }
+    .operate i {
+        font-size: 14px;
+        cursor: pointer;
+        margin-left: 15px;
+    }
 </style>
 
 <style>
@@ -120,8 +174,5 @@
         white-space: normal;
         word-break: break-all;
         line-height: 16px;
-    }
-    .el-form-item--small .el-form-item__content, .el-form-item--small .el-form-item__label {
-        line-height: 18px;
     }
 </style>
