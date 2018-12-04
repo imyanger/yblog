@@ -3,7 +3,9 @@ package com.yanger.blog.api;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -84,6 +86,26 @@ public class ConstApi {
 			api.setData(types);
 		} catch (Exception e) {
 			api.error("获取文章类型和分类");
+			e.printStackTrace();
+		}
+		return api;
+	}
+	
+	/**
+	 * <p>Description: 根据id删除常量 </p>  
+	 * @author YangHao  
+	 * @date 2018年11月29日-下午10:02:38
+	 * @param articleVo
+	 * @return
+	 */
+	@ApiOperation(value = "根据id删除常量", notes = "")
+	@DeleteMapping("/{id}")
+	public ApiResponse<String> delConst(@PathVariable Integer id){
+		ApiResponse<String> api = new ApiResponse<>();
+		try {
+			constService.delConst(id);
+		} catch (Exception e) {
+			api.error("删除常量失败");
 			e.printStackTrace();
 		}
 		return api;

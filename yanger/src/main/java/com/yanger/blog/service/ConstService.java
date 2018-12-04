@@ -59,7 +59,11 @@ public class ConstService {
 	public void addArticle(ConstVo constVo) throws Exception {
 		Const entity = new Const();
 		BeanUtils.copyProperties(entity, constVo);
-		constDao.insert(entity);
+		if(entity.getId() != null){
+			constDao.updateById(entity);
+		}else {
+			constDao.insert(entity);
+		}
 	}
 
 	/**
@@ -69,7 +73,7 @@ public class ConstService {
 	 * @param articleVo
 	 * @return
 	 */
-	public List<ConstVo> addArticleTypes()  throws Exception {
+	public List<ConstVo> addArticleTypes() throws Exception {
 		List<ConstVo> typeVos = new ArrayList<>(0);
 		//获取模块
 		List<Const> modules = constDao.findAllByDepict("文章类型");
@@ -98,6 +102,10 @@ public class ConstService {
 			}
 		}
 		return typeVos;
+	}
+
+	public void delConst(Integer id) throws Exception {
+		constDao.deleteById(id);
 	}
 	
 }

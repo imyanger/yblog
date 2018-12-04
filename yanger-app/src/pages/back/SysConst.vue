@@ -18,7 +18,7 @@
                     <template slot-scope="scope">
                         <div class="operate">
                             <i class="el-icon-edit" title="修改" @click="editConst(scope.$index, scope.row)"></i>
-                            <i class="el-icon-delete" title="删除"></i>
+                            <i class="el-icon-delete" title="删除" @click="delConst(scope.$index, scope.row)"></i>
                         </div>
                     </template>
                 </el-table-column>
@@ -60,7 +60,6 @@
 <script>
     import { formatDate } from 'static/js/date'; //date格式化
     export default {
-        name: 'basetable',
         data() {
             return {
                 constList: {
@@ -126,7 +125,33 @@
             },
             //新增或者修改提交
             saveConst(){
-
+                let _this = this;
+                if(!_this.constData.depict || !_this.constData.code || !_this.constData.val){
+                    _this.$alert("请填写完整", "提示");
+                    return;
+                }
+				this.$put("/const/add", _this.constData)
+				.then(function (response) {
+                    _this.$alert("提交成功", "提示");
+                    _this.editVisible = false;
+                    //刷新列表
+                    _this.getPage(1, _this.constList.page.pageSize);
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
+            },
+            delConst(index, row){
+                let _this = this;
+				this.$del("/const/" + row.id)
+				.then(function (response) {
+                    _this.$alert("删除成功", "提示");
+                    //刷新列表
+                    _this.getPage(1, _this.constList.page.pageSize);
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
             }
         }
     }

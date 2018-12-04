@@ -11,7 +11,7 @@ import '../static/ueditor/ueditor.all.min.js';
 import '../static/ueditor/lang/zh-cn/zh-cn.js';
 import '../static/ueditor/ueditor.parse.min.js';
 //axios的封装
-import { post, get, patch, put } from '../static/js/http';
+import { post, get, patch, put, del } from '../static/js/http';
 //vuex
 import store from './store';
 
@@ -20,6 +20,7 @@ Vue.prototype.$post = post;
 Vue.prototype.$get = get;
 Vue.prototype.$patch = patch;
 Vue.prototype.$put = put;
+Vue.prototype.$del = del;
 
 Vue.use(ElementUI, { size: 'small' });
 Vue.prototype.$axios = axios;

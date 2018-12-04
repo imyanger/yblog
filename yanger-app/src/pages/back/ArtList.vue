@@ -60,7 +60,6 @@
 <script>
     import { formatDate } from 'static/js/date'; //date格式化
     export default {
-        name: 'basetable',
         data() {
             return {
                 artList: {
