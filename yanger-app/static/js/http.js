@@ -8,10 +8,10 @@ axios.defaults.baseURL = '/api/core';
 axios.interceptors.request.use(
     config => {
         const token = localStorage.getItem('$token');
-        config.data = JSON.stringify(config.data);
+        //config.data = JSON.stringify(config.data);
         config.headers = {
             /* 'Content-Type': 'application/x-www-form-urlencoded' */
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/x-www-form-urlencoded'
         }
         if(token){
             if(config.params){

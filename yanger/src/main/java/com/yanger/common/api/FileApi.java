@@ -3,6 +3,7 @@ package com.yanger.common.api;
 import static java.nio.file.StandardOpenOption.READ;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.yanger.common.util.ConstantUtils;
 
@@ -42,6 +44,38 @@ import net.coobird.thumbnailator.geometry.Positions;
 @Controller
 @RequestMapping("/file")
 public class FileApi {
+	
+	/**
+     * 实现文件上传
+     * */
+    @RequestMapping("fileUpload")
+    @ResponseBody 
+    public String fileUpload(@RequestParam("fileData") MultipartFile file){
+        if(file.isEmpty()){
+            return "false";
+        }
+        String fileName = file.getOriginalFilename();
+        int size = (int) file.getSize();
+        System.out.println(fileName + "-->" + size);
+        
+        String path = "D:/test" ;
+        File dest = new File(path + "/" + fileName);
+        if(!dest.getParentFile().exists()){ //判断文件父目录是否存在
+            dest.getParentFile().mkdir();
+        }
+        try {
+            file.transferTo(dest); //保存文件
+            return "true";
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return "false";
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return "false";
+        }
+    }
 	
 	/**
 	 * <p>Description: 显示原文件（图片）</p>  
@@ -86,14 +120,13 @@ public class FileApi {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "path", value = "服务器图片路径", required = true, dataType = "String"),
 		@ApiImplicitParam(name = "wh", value = "想要获取图片的宽高 格式：100-100", required = false, dataType = "String")
-
 	})
 	@GetMapping(value="/thumbImg")
 	public void thumbImg(String path,String wh,HttpServletResponse response){
 		
 		//缩略图
 		BufferedImage thumbnail = null;
-		//需要压缩的尺寸，默认20*20
+		//需要压缩的尺寸，默认
 		Integer width = 100;  
 		Integer height = 100;
 		//组织完整的文件路径
@@ -168,7 +201,6 @@ public class FileApi {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "path", value = "服务器图片路径", required = true, dataType = "String"),
 		@ApiImplicitParam(name = "wh", value = "想要获取图片的宽高 格式：100-100", required = false, dataType = "String")
-
 	})
 	@GetMapping(value="/cutImg")
 	public void cutImg(String path,String wh,HttpServletResponse response){
@@ -248,7 +280,7 @@ public class FileApi {
 	@ApiOperation(value = "获取视频流", notes = "")
 	@ApiImplicitParam(name = "path", value = "服务器视频路径", required = true, dataType = "String")
 	@GetMapping("/getVideo")
-	public void validProjectName(HttpServletRequest request, HttpServletResponse response, @RequestParam String path) {
+	public void getVideo(HttpServletRequest request, HttpServletResponse response, @RequestParam String path) {
 		
 		final int buffLength = 1024 * 16;
 		final long expireTime = 1000 * 60 * 60 * 24;

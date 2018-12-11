@@ -95,7 +95,7 @@
 
 <script>
 	import bFooter from '@/components/blog/Footer';
-	import UE from '@/components/blog/ueditor'; //ueditor富文本编辑器
+	import UE from '@/components/common/ueditor'; //ueditor富文本编辑器
 	import { formatDate } from 'static/js/date'; //date格式化
 	import aboutMe from '@/components/blog/AboutMe';
 	import sign from '@/components/blog/Sign'; //用户信息展示
