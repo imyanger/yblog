@@ -27,10 +27,9 @@ import com.yanger.mybatis.dialect.SybaseDialect;
 import lombok.extern.slf4j.Slf4j;
 
 /**
-* <p>Title: MybatisConfig.java</p>  
-* <p>Description: 配置文件类 </p>  
-* @author 杨号  
-* @date 2018年9月14日
+ * @description 配置文件类
+ * @author 杨号
+ * @date 2018年9月14日
  */
 @Configuration
 @EnableTransactionManagement
@@ -61,7 +60,7 @@ public class MybatisConfig implements TransactionManagementConfigurer {
 			} else if (dbName.contains("hsql")) {
 				offsetLimitInterceptor.setDialectClass(HSQLDialect.class.getName());
 			} else if (dbName.contains("sybase")) {
-				offsetLimitInterceptor.setDialectClass(SybaseDialect.class.getName()); 
+				offsetLimitInterceptor.setDialectClass(SybaseDialect.class.getName());
 			} else if (dbName.indexOf("sinoregal") != -1) {
 				// sinoregal dynamic server,sinodb
 				offsetLimitInterceptor.setDialectClass(InformixDialect.class.getName());
@@ -70,10 +69,10 @@ public class MybatisConfig implements TransactionManagementConfigurer {
 				offsetLimitInterceptor.setDialectClass(InformixDialect.class.getName());
 			} else if (dbName.indexOf("ibm informix") != -1) {
 				// ibm informix dynamic server南大
-				offsetLimitInterceptor.setDialectClass(InformixDialect.class.getName()); 
+				offsetLimitInterceptor.setDialectClass(InformixDialect.class.getName());
 			} else if (dbName.indexOf("informix") != -1) {
 				// Informix Dynamic Server
-				offsetLimitInterceptor.setDialectClass(InformixDialect.class.getName()); 
+				offsetLimitInterceptor.setDialectClass(InformixDialect.class.getName());
 			} else {
 				throw new IllegalArgumentException("Unsupport Database [" + databaseProductName + "]");
 			}

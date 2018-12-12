@@ -14,8 +14,8 @@ import com.yanger.generator.dao.MybatisBaseDao;
 public interface ArticleKindDao extends MybatisBaseDao<ArticleKind, Integer> {
 
 	/**
-	 * <p>Description: 产寻所有文章分类 </p>  
-	 * @author YangHao  
+	 * @description 产寻所有文章分类
+	 * @author YangHao
 	 * @date 2018年9月10日-下午11:46:30
 	 * @return
 	 */

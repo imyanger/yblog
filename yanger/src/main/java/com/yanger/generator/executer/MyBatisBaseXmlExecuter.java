@@ -19,23 +19,22 @@ import com.yanger.generator.util.GeneratorUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
-* <p>Title: MyBatisBaseXmlExecuter.java</p>  
-* <p>Description: 公共mapper映射文件 </p>  
-* @author 杨号  
-* @date 2018年9月14日
+ * @description 公共mapper映射文件
+ * @author 杨号
+ * @date 2018年9月14日
  */
 @Slf4j
-public class MyBatisBaseXmlExecuter extends BaseExecuter { 
-	
+public class MyBatisBaseXmlExecuter extends BaseExecuter {
+
 	private GenFileInfo baseMapperXmlInfo;
-	
+
 	private GenFileInfo daoInfo;
-	
+
 	private GenFileInfo poInfo;
 
 	public MyBatisBaseXmlExecuter(GenConfig genConfig, GenFileInfo baseMapperXmlInfo, GenFileInfo daoInfo,
 			GenFileInfo poInfo) {
-		super(genConfig); 
+		super(genConfig);
 		this.baseMapperXmlInfo = baseMapperXmlInfo;
 		this.daoInfo = daoInfo;
 		this.poInfo = poInfo;
@@ -87,7 +86,7 @@ public class MyBatisBaseXmlExecuter extends BaseExecuter {
 			buildBaseDaoUpdateByPrimaryKey(bw, table, primaryKey, columns);
 
 			bw.write("</mapper>");
-			bw.flush(); 
+			bw.flush();
 		}
 		log.info("Generate BaseXml file " + mapperXmlFile.getAbsolutePath());
 	}
@@ -136,7 +135,7 @@ public class MyBatisBaseXmlExecuter extends BaseExecuter {
 		bw.write("\t\t");
 		for (int i = 0; i < size; i++) {
 			Column column = columns.get(i);
-			bw.write(" " + getName(column.getName())); 
+			bw.write(" " + getName(column.getName()));
 			if (i != size - 1) {
 				bw.write(",");
 			}
@@ -400,12 +399,12 @@ public class MyBatisBaseXmlExecuter extends BaseExecuter {
 		bw.write("\t<!-- 完整插入一条记录-->");
 		bw.newLine();
 		bw.write("\t<insert id=\"insert\"");
-		String keyProperty =  GeneratorUtils.getKeyProperty(table);
-		if(StringUtils.isNotBlank(keyProperty)) { 
+		String keyProperty = GeneratorUtils.getKeyProperty(table);
+		if (StringUtils.isNotBlank(keyProperty)) {
 			bw.write(" useGeneratedKeys=\"true\" keyProperty=\"" + keyProperty + "\"");
 		}
 		bw.write(" parameterType=\"" + poInfo.getPackageName() + "." + poInfo.getName() + "\">");
-		
+
 		bw.newLine();
 		bw.write("\t\tinsert into " + getName(table.getName()) + " (");
 
@@ -470,12 +469,12 @@ public class MyBatisBaseXmlExecuter extends BaseExecuter {
 		int size = columns.size();
 		bw.write("\t<!-- 插入一条记录(为空的字段不操作) -->");
 		bw.newLine();
-		
+
 		bw.write("\t<insert id=\"insertVal\"");
-		String keyProperty =  GeneratorUtils.getKeyProperty(table);
-		if(StringUtils.isNotBlank(keyProperty)) { 
+		String keyProperty = GeneratorUtils.getKeyProperty(table);
+		if (StringUtils.isNotBlank(keyProperty)) {
 			bw.write(" useGeneratedKeys=\"true\" keyProperty=\"" + keyProperty + "\"");
-		} 		
+		}
 		bw.write(" parameterType=\"" + poInfo.getPackageName() + "." + poInfo.getName() + "\">");
 		bw.newLine();
 		bw.write("\t\tinsert into " + getName(table.getName()) + "");
@@ -522,7 +521,8 @@ public class MyBatisBaseXmlExecuter extends BaseExecuter {
 			} else if (genConfig.getVersionName().equalsIgnoreCase(getObjectName(column.getName()))) {
 				bw.write("\t\t\t1,");
 				bw.newLine();
-			} else if (genConfig.isDeletedFlagMode() && "deletedFlag".equalsIgnoreCase(getObjectName(column.getName()))) {
+			} else if (genConfig.isDeletedFlagMode()
+					&& "deletedFlag".equalsIgnoreCase(getObjectName(column.getName()))) {
 				bw.write("\t\t\t'0',");
 				bw.newLine();
 			} else if (genConfig.getOperateTimeForHisName().equalsIgnoreCase(getObjectName(column.getName()))
@@ -552,13 +552,13 @@ public class MyBatisBaseXmlExecuter extends BaseExecuter {
 		int size = columns.size();
 		bw.write("\t<!-- 更新一条记录(为空的字段不操作) -->");
 		bw.newLine();
-		bw.write("\t<update id=\"updateValById\""); 
-		String keyProperty =  GeneratorUtils.getKeyProperty(table);
-		if(StringUtils.isNotBlank(keyProperty)) { 
+		bw.write("\t<update id=\"updateValById\"");
+		String keyProperty = GeneratorUtils.getKeyProperty(table);
+		if (StringUtils.isNotBlank(keyProperty)) {
 			bw.write(" useGeneratedKeys=\"true\" keyProperty=\"" + keyProperty + "\"");
-		} 		
+		}
 		bw.write(" parameterType=\"" + poInfo.getPackageName() + "." + poInfo.getName() + "\">");
-		
+
 		bw.newLine();
 		bw.write("\t\tupdate " + getName(table.getName()));
 		bw.newLine();
@@ -613,13 +613,13 @@ public class MyBatisBaseXmlExecuter extends BaseExecuter {
 			List<Column> columns) throws IOException {
 		int size = columns.size();
 		bw.write("\t<!-- 完整更新一条记录 -->");
-		bw.newLine(); 
-		bw.write("\t<update id=\"updateById\""); 
-		String keyProperty =  GeneratorUtils.getKeyProperty(table);
-		if(StringUtils.isNotBlank(keyProperty)) { 
+		bw.newLine();
+		bw.write("\t<update id=\"updateById\"");
+		String keyProperty = GeneratorUtils.getKeyProperty(table);
+		if (StringUtils.isNotBlank(keyProperty)) {
 			bw.write(" useGeneratedKeys=\"true\" keyProperty=\"" + keyProperty + "\"");
-		} 		
-		bw.write(" parameterType=\"" + poInfo.getPackageName() + "." + poInfo.getName() + "\">");		
+		}
+		bw.write(" parameterType=\"" + poInfo.getPackageName() + "." + poInfo.getName() + "\">");
 		bw.newLine();
 		bw.write("\t\tupdate " + getName(table.getName()));
 		bw.newLine();

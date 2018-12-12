@@ -7,13 +7,21 @@ import org.apache.commons.codec.binary.Base64;
 
 /**
  * 加密工具类
+ * 
  * @author YangHao
  */
 public class EncryptUtils {
-	
+
+	private static final String KEY_AES = "AES";
+
 	/**
-	 * <p>Description: MD5加密 </p>  
-	 * @author YangHao  
+	 * 字符编码
+	 */
+	public final static String ENCODING = "UTF-8";
+
+	/**
+	 * @description MD5加密
+	 * @author YangHao
 	 * @date 2018年9月18日-上午12:03:25
 	 * @param source
 	 * @return
@@ -23,8 +31,8 @@ public class EncryptUtils {
 	}
 
 	/**
-	 * <p>Description: MD5加密 </p>  
-	 * @author YangHao  
+	 * @description MD5加密
+	 * @author YangHao
 	 * @date 2018年9月18日-上午12:03:25
 	 * @param source
 	 * @return
@@ -57,12 +65,10 @@ public class EncryptUtils {
 		}
 		return s;
 	}
-	
-	private static final String KEY_AES = "AES";
-	
+
 	/**
-	 * <p>Description: AES加密 </p>  
-	 * @author YangHao  
+	 * @description AES加密
+	 * @author YangHao
 	 * @date 2018年9月18日-上午12:03:25
 	 * @param source
 	 * @return
@@ -70,7 +76,7 @@ public class EncryptUtils {
 	public static String AESEncrypt(String src, String key) throws Exception {
 		if (key == null || key.length() != 16) {
 			throw new Exception("key不满足条件");
-		} 
+		}
 		byte[] raw = key.getBytes();
 		SecretKeySpec skeySpec = new SecretKeySpec(raw, KEY_AES);
 		Cipher cipher = Cipher.getInstance(KEY_AES);
@@ -78,10 +84,10 @@ public class EncryptUtils {
 		byte[] encrypted = cipher.doFinal(src.getBytes());
 		return byte2hex(encrypted);
 	}
- 
+
 	/**
-	 * <p>Description: AES解密 </p>  
-	 * @author YangHao  
+	 * @description AES解密
+	 * @author YangHao
 	 * @date 2018年9月18日-上午12:03:25
 	 * @param source
 	 * @return
@@ -99,7 +105,7 @@ public class EncryptUtils {
 		String originalString = new String(original);
 		return originalString;
 	}
- 
+
 	private static byte[] hex2byte(String strhex) {
 		if (strhex == null) {
 			return null;
@@ -110,12 +116,11 @@ public class EncryptUtils {
 		}
 		byte[] b = new byte[l / 2];
 		for (int i = 0; i != l / 2; i++) {
-			b[i] = (byte) Integer.parseInt(strhex.substring(i * 2, i * 2 + 2),
-					16);
+			b[i] = (byte) Integer.parseInt(strhex.substring(i * 2, i * 2 + 2), 16);
 		}
 		return b;
 	}
- 
+
 	private static String byte2hex(byte[] b) {
 		String hs = "";
 		String stmp = "";
@@ -131,15 +136,9 @@ public class EncryptUtils {
 	}
 
 	/**
-	 * 字符编码
-	 */
-	public final static String ENCODING = "UTF-8";
- 
-	/**
-	 * Base64编码
-	 * 
-	 * @param data 待编码数据
-	 * @return String 编码数据
+	 * @description Base64编码
+	 * @param data：待编码数据
+	 * @return String-编码数据
 	 * @throws Exception
 	 */
 	public static String encode(String data) throws Exception {
@@ -147,15 +146,11 @@ public class EncryptUtils {
 		byte[] b = Base64.encodeBase64(data.getBytes(ENCODING));
 		return new String(b, ENCODING);
 	}
- 
+
 	/**
-	 * Base64安全编码<br>
-	 * 遵循RFC 2045实现
-	 * 
-	 * @param data
-	 *            待编码数据
-	 * @return String 编码数据
-	 * 
+	 * @description Base64安全编码，遵循RFC 2045实现
+	 * @param data：待编码数据
+	 * @return String：编码数据
 	 * @throws Exception
 	 */
 	public static String encodeSafe(String data) throws Exception {
@@ -163,11 +158,11 @@ public class EncryptUtils {
 		byte[] b = Base64.encodeBase64(data.getBytes(ENCODING), true);
 		return new String(b, ENCODING);
 	}
- 
+
 	/**
-	 * Base64解码
-	 * @param data 待解码数据
-	 * @return String 解码数据
+	 * @description Base64解码
+	 * @param data：待解码数据
+	 * @return String：解码数据
 	 * @throws Exception
 	 */
 	public static String decode(String data) throws Exception {
@@ -175,5 +170,5 @@ public class EncryptUtils {
 		byte[] b = Base64.decodeBase64(data.getBytes(ENCODING));
 		return new String(b, ENCODING);
 	}
-	
+
 }

@@ -3,11 +3,11 @@ package com.yanger.mybatis.util;
 import java.io.Serializable;
 
 /**
- * 分页器，根据page,limit,totalCount用于页面上分页显示多项内容，计算页码和当前页的偏移量，方便页面分页使用.
+ * @description 分页器，根据page,limit,totalCount用于页面上分页显示多项内容，计算页码和当前页的偏移量，方便页面分页使用.
  *
  */
 public class Paginator implements Serializable {
-	
+
 	private static final long serialVersionUID = -2429864663690465105L;
 
 	private static final int DEFAULT_SLIDERS_COUNT = 10;
@@ -33,8 +33,7 @@ public class Paginator implements Serializable {
 	}
 
 	/**
-	 * 取得当前页号。
-	 * 
+	 * @description 取得当前页号。
 	 * @return 当前页号
 	 */
 	public int getPage() {
@@ -46,8 +45,7 @@ public class Paginator implements Serializable {
 	}
 
 	/**
-	 * 取得总项数。
-	 *
+	 * @description 取得总项数。
 	 * @return 总项数
 	 */
 	public int getTotalCount() {
@@ -55,8 +53,7 @@ public class Paginator implements Serializable {
 	}
 
 	/**
-	 * 是否是首页（第一页），第一页页码为1
-	 *
+	 * @description 是否是首页（第一页），第一页页码为1
 	 * @return 首页标识
 	 */
 	public boolean isFirstPage() {
@@ -64,8 +61,7 @@ public class Paginator implements Serializable {
 	}
 
 	/**
-	 * 是否是最后一页
-	 *
+	 * @description 是否是最后一页
 	 * @return 末页标识
 	 */
 	public boolean isLastPage() {
@@ -89,10 +85,8 @@ public class Paginator implements Serializable {
 	}
 
 	/**
-	 * 判断指定页码是否被禁止，也就是说指定页码超出了范围或等于当前页码。
-	 *
-	 * @param page
-	 *            页码
+	 * @description 判断指定页码是否被禁止，也就是说指定页码超出了范围或等于当前页码
+	 * @param page-页码
 	 * @return boolean 是否为禁止的页码
 	 */
 	public boolean isDisabledPage(int page) {
@@ -100,8 +94,7 @@ public class Paginator implements Serializable {
 	}
 
 	/**
-	 * 是否有上一页
-	 *
+	 * @description 是否有上一页
 	 * @return 上一页标识
 	 */
 	public boolean isHasPrePage() {
@@ -109,8 +102,7 @@ public class Paginator implements Serializable {
 	}
 
 	/**
-	 * 是否有下一页
-	 *
+	 * @description 是否有下一页
 	 * @return 下一页标识
 	 */
 	public boolean isHasNextPage() {
@@ -118,8 +110,7 @@ public class Paginator implements Serializable {
 	}
 
 	/**
-	 * 开始行，可以用于oracle分页使用 (1-based)。
-	 * 
+	 * @description 开始行，可以用于oracle分页使用 (1-based)。
 	 * @return 开始行
 	 */
 	public int getStartRow() {
@@ -129,8 +120,7 @@ public class Paginator implements Serializable {
 	}
 
 	/**
-	 * 结束行，可以用于oracle分页使用 (1-based)。
-	 * 
+	 * @description 结束行，可以用于oracle分页使用 (1-based)。
 	 * @return 结束行
 	 */
 	public int getEndRow() {
@@ -138,8 +128,7 @@ public class Paginator implements Serializable {
 	}
 
 	/**
-	 * offset，计数从0开始，可以用于mysql分页使用(0-based)
-	 * 
+	 * @description offset，计数从0开始，可以用于mysql分页使用(0-based)
 	 * @return 偏移量
 	 */
 	public int getOffset() {
@@ -147,8 +136,7 @@ public class Paginator implements Serializable {
 	}
 
 	/**
-	 * 得到 总页数
-	 *
+	 * @description 得到 总页数
 	 * @return 总页数
 	 */
 	public int getTotalPages() {
@@ -171,8 +159,7 @@ public class Paginator implements Serializable {
 	}
 
 	/**
-	 * 页码滑动窗口，并将当前页尽可能地放在滑动窗口的中间部位。
-	 *
+	 * @description 页码滑动窗口，并将当前页尽可能地放在滑动窗口的中间部位。
 	 * @return Slider
 	 */
 	public Integer[] getSlider() {
@@ -180,11 +167,9 @@ public class Paginator implements Serializable {
 	}
 
 	/**
-	 * 页码滑动窗口，并将当前页尽可能地放在滑动窗口的中间部位。 注意:不可以使用 getSlider(1)方法名称，因为在JSP中会与
-	 * getSlider()方法冲突，报exception
-	 * 
-	 * @param slidersCount
-	 *            窗口数量
+	 * @description 页码滑动窗口，并将当前页尽可能地放在滑动窗口的中间部位。 注意:不可以使用
+	 *              getSlider(1)方法名称，因为在JSP中会与getSlider()方法冲突，报exception
+	 * @param slidersCount-窗口数量
 	 * @return 页码滑动窗口
 	 */
 	public Integer[] slider(int slidersCount) {
@@ -206,7 +191,8 @@ public class Paginator implements Serializable {
 		if (page <= 1) {
 			return 1;
 		}
-		if (Integer.MAX_VALUE == page || page > computeLastPageNumber(totalItems, pageSize)) { // last page
+		if (Integer.MAX_VALUE == page || page > computeLastPageNumber(totalItems, pageSize)) {
+			// last page
 			return computeLastPageNumber(totalItems, pageSize);
 		}
 		return page;
@@ -231,7 +217,7 @@ public class Paginator implements Serializable {
 				startPageNumber = 1;
 			}
 		}
-		
+
 		java.util.List<Integer> result = new java.util.ArrayList<>();
 		for (int i = startPageNumber; i <= endPageNumber; i++) {
 			result.add(i);
@@ -249,5 +235,5 @@ public class Paginator implements Serializable {
 		sb.append('}');
 		return sb.toString();
 	}
-	
+
 }

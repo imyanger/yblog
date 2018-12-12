@@ -17,22 +17,21 @@ import com.yanger.generator.schema.Table;
 import lombok.extern.slf4j.Slf4j;
 
 /**
-* <p>Title: DatabaseUtils.java</p>  
-* <p>Description: 数据库元数据解析工具类 </p>  
-* @author 杨号  
-* @date 2018年9月14日
+ * @description 数据库元数据解析工具类
+ * @author 杨号
+ * @date 2018年9月14日
  */
-@Slf4j 
+@Slf4j
 public class DatabaseUtils {
-	
+
 	private Connection conn = null;
-	
+
 	private String schema;
-	
+
 	Database database = null;
 
 	/**
-	 * 禁止实例化
+	 * @description 禁止实例化
 	 */
 	private DatabaseUtils() {
 
@@ -49,7 +48,7 @@ public class DatabaseUtils {
 			obj.database = database;
 			obj.schema = schema;
 		} catch (Exception e) {
-			log.warn("{}",e);
+			log.warn("{}", e);
 		}
 		return obj;
 	}
@@ -65,12 +64,12 @@ public class DatabaseUtils {
 				result.put(tableName.toLowerCase(), tableName);
 			}
 			rs.close();
-		} catch (SQLException e) { 
-			log.warn("{}",e);
+		} catch (SQLException e) {
+			log.warn("{}", e);
 		}
 		return result;
 	}
- 
+
 	public Table getTableInfo(String tableName) {
 		Table table = new Table();
 		table.setName(tableName);
@@ -86,14 +85,14 @@ public class DatabaseUtils {
 			rs.close();
 
 		} catch (SQLException e) {
-			log.warn("{}",e);
+			log.warn("{}", e);
 		}
 		table.setColumns(getTableColumns(tableName));
 		table.setPrimaryKeys(getTablePrimaryKeys(tableName));
 		return table;
 	}
 
-	private List<Column> getTableColumns(String tableName) { 
+	private List<Column> getTableColumns(String tableName) {
 		List<Column> columns = new ArrayList<>();
 
 		ResultSet rs = null;
@@ -105,18 +104,18 @@ public class DatabaseUtils {
 				Column column = new Column();
 				column.setName(rs.getString("COLUMN_NAME"));
 				column.setType(rs.getString("TYPE_NAME"));
-				column.setSize(rs.getInt("COLUMN_SIZE")); 
+				column.setSize(rs.getInt("COLUMN_SIZE"));
 				column.setComment(rs.getString("REMARKS"));
 				column.setNullable(rs.getBoolean("NULLABLE"));
 				column.setDefaultValue(rs.getString("COLUMN_DEF"));
 				column.setAutoIncrement(rs.getBoolean("IS_AUTOINCREMENT"));
-				//column.setGeneratedColumn(rs.getBoolean("IS_GENERATEDCOLUMN"));JTDS不支持
+				// column.setGeneratedColumn(rs.getBoolean("IS_GENERATEDCOLUMN"));JTDS不支持
 				columns.add(column);
 			}
 			rs.close();
 
 		} catch (SQLException e) {
-			log.warn("{}",e);
+			log.warn("{}", e);
 		}
 
 		return columns;
@@ -140,10 +139,10 @@ public class DatabaseUtils {
 			rs.close();
 
 		} catch (SQLException e) {
-			log.warn("{}",e);
+			log.warn("{}", e);
 		}
 
 		return primaryKeys;
 	}
-	
+
 }

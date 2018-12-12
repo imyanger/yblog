@@ -22,23 +22,23 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @Api
-//@Token
+// @Token
 @RestController
 @RequestMapping("/const")
 public class ConstApi {
-	
+
 	@Autowired
 	ConstService constService;
-	
+
 	/**
-	 * <p>Description: 查询常量表分页数据 </p>  
-	 * @author YangHao  
+	 * @description 查询常量表分页数据
+	 * @author YangHao
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
 	 */
 	@ApiOperation(value = "查询常量表分页数据", notes = "")
 	@PostMapping("/list")
-	public ApiResponse<ResultPage<ConstVo>> articleList(@RequestBody PageQueryVo pageQueryVo){
+	public ApiResponse<ResultPage<ConstVo>> articleList(@RequestBody PageQueryVo pageQueryVo) {
 		ApiResponse<ResultPage<ConstVo>> api = new ApiResponse<>();
 		try {
 			ResultPage<ConstVo> page = constService.getPageData(pageQueryVo);
@@ -49,17 +49,17 @@ public class ConstApi {
 		}
 		return api;
 	}
-	
+
 	/**
-	 * <p>Description: 新增常量 </p>  
-	 * @author YangHao  
+	 * @description 新增常量
+	 * @author YangHao
 	 * @date 2018年11月29日-下午10:02:38
 	 * @param articleVo
 	 * @return
 	 */
 	@ApiOperation(value = "新增常量", notes = "")
 	@PutMapping("/add")
-	public ApiResponse<String> articleAdd(@RequestBody ConstVo constVo){
+	public ApiResponse<String> articleAdd(@RequestBody ConstVo constVo) {
 		ApiResponse<String> api = new ApiResponse<>();
 		try {
 			constService.addArticle(constVo);
@@ -69,20 +69,20 @@ public class ConstApi {
 		}
 		return api;
 	}
-	
+
 	/**
-	 * <p>Description: 获取文章类型和分类 </p>  
-	 * @author YangHao  
+	 * @description获取文章类型和分类
+	 * @author YangHao
 	 * @date 2018年11月29日-下午10:02:38
 	 * @param articleVo
 	 * @return
 	 */
 	@ApiOperation(value = "获取文章类型和分类", notes = "")
 	@GetMapping("/artTypes")
-	public ApiResponse<List<ConstVo>> artTypes(){
+	public ApiResponse<List<ConstVo>> artTypes() {
 		ApiResponse<List<ConstVo>> api = new ApiResponse<>();
 		try {
-			List<ConstVo> types = constService.addArticleTypes();
+			List<ConstVo> types = constService.getArticleTypes();
 			api.setData(types);
 		} catch (Exception e) {
 			api.error("获取文章类型和分类");
@@ -90,17 +90,38 @@ public class ConstApi {
 		}
 		return api;
 	}
-	
+
 	/**
-	 * <p>Description: 根据id删除常量 </p>  
-	 * @author YangHao  
+	 * @description 获取文章类型和分类
+	 * @author YangHao
+	 * @date 2018年11月29日-下午10:02:38
+	 * @param articleVo
+	 * @return
+	 */
+	@ApiOperation(value = "获取文章类型和分类", notes = "")
+	@GetMapping("/allTypes")
+	public ApiResponse<List<ConstVo>> allTypes() {
+		ApiResponse<List<ConstVo>> api = new ApiResponse<>();
+		try {
+			List<ConstVo> types = constService.getAllArticleTypes();
+			api.setData(types);
+		} catch (Exception e) {
+			api.error("获取文章类型和分类");
+			e.printStackTrace();
+		}
+		return api;
+	}
+
+	/**
+	 * @description 根据id删除常量
+	 * @author YangHao
 	 * @date 2018年11月29日-下午10:02:38
 	 * @param articleVo
 	 * @return
 	 */
 	@ApiOperation(value = "根据id删除常量", notes = "")
 	@DeleteMapping("/{id}")
-	public ApiResponse<String> delConst(@PathVariable Integer id){
+	public ApiResponse<String> delConst(@PathVariable Integer id) {
 		ApiResponse<String> api = new ApiResponse<>();
 		try {
 			constService.delConst(id);

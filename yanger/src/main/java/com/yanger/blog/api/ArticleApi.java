@@ -26,7 +26,7 @@ public class ArticleApi {
 	ArticleService articleService;
 	
 	/**
-	 * <p>Description: 查询文章分页数据 </p>  
+	 * @description 查询文章分页数据  
 	 * @author YangHao  
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
@@ -46,7 +46,7 @@ public class ArticleApi {
 	}
 
 	/**
-	 * <p>Description: 新增文章 </p>  
+	 * @description 新增文章  
 	 * @author YangHao  
 	 * @date 2018年11月29日-下午10:02:38
 	 * @param articleVo

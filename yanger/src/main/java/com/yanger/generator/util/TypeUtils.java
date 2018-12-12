@@ -1,13 +1,12 @@
 package com.yanger.generator.util;
 
 /**
-* <p>Title: TypeUtils.java</p>  
-* <p>Description: 数据库类型工具类 </p>  
-* @author 杨号  
-* @date 2018年9月14日
+ * @description 数据库类型工具类
+ * @author 杨号
+ * @date 2018年9月14日
  */
 public class TypeUtils {
-	
+
 	private TypeUtils() {
 
 	}
@@ -112,5 +111,5 @@ public class TypeUtils {
 		}
 		return result;
 	}
-	
+
 }

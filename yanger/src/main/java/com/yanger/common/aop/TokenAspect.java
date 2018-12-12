@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
 /**
- * 操作日志处理类
+ * token处理切面
  * @time 2018年6月22日 下午4:38:38
  */
 @Slf4j

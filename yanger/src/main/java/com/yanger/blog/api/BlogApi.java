@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,37 +31,42 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @Api
-//@Token
+// @Token
 @RestController
 @RequestMapping("/blog")
 public class BlogApi {
-	
+
 	@Autowired
 	private BlogService blogService;
-	
+
 	@Autowired
 	private RedisMagger RedisMagger;
-	
+
+	/**
+	 * @description 测试redis
+	 * @author YangHao
+	 * @time 2018年12月12日-下午10:06:27
+	 */
 	@GetMapping("t")
-	public void t(){
-		if(RedisMagger.hasKey("r")){
+	public void t() {
+		if (RedisMagger.hasKey("r")) {
 			String v = (String) RedisMagger.get("r");
 			System.out.println(v);
-		}else {
+		} else {
 			RedisMagger.set("r", "123测试缓存");
-			
+
 		}
 	}
-	
+
 	/**
-	 * <p>Description: 博客首页数据初始化 </p>  
-	 * @author YangHao  
+	 * @description 博客首页数据初始化
+	 * @author YangHao
 	 * @date 2018年9月3日-下午10:51:50
 	 * @return
 	 */
 	@ApiOperation(value = "博客首页数据初始化", notes = "")
 	@GetMapping("/homeInit")
-	public ApiResponse<HomeDataVo> homeInit(){
+	public ApiResponse<HomeDataVo> homeInit() {
 		ApiResponse<HomeDataVo> api = new ApiResponse<>();
 		try {
 			HomeDataVo homeData = blogService.getHomeData();
@@ -75,14 +79,14 @@ public class BlogApi {
 	}
 
 	/**
-	 * <p>Description: 学习笔记页面数据初始化 </p>  
-	 * @author YangHao  
+	 * @description 学习笔记页面数据初始化
+	 * @author YangHao
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
 	 */
 	@ApiOperation(value = "学习笔记页面数据初始化", notes = "")
 	@GetMapping("/studyInit")
-	public ApiResponse<StudyDataVo> studyInit(){
+	public ApiResponse<StudyDataVo> studyInit() {
 		ApiResponse<StudyDataVo> api = new ApiResponse<>();
 		try {
 			StudyDataVo studyDataVo = blogService.getStudyData();
@@ -93,16 +97,16 @@ public class BlogApi {
 		}
 		return api;
 	}
-	
+
 	/**
-	 * <p>Description: 学习笔记页面数据初始化 </p>  
-	 * @author YangHao  
+	 * @description 学习笔记页面数据初始化
+	 * @author YangHao
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
 	 */
 	@ApiOperation(value = "心情随笔页面数据初始化", notes = "")
 	@GetMapping("/essayInit")
-	public ApiResponse<EssayDataVo> essayInit(){
+	public ApiResponse<EssayDataVo> essayInit() {
 		ApiResponse<EssayDataVo> api = new ApiResponse<>();
 		try {
 			EssayDataVo essayDataVo = blogService.getEssayData();
@@ -113,16 +117,16 @@ public class BlogApi {
 		}
 		return api;
 	}
-	
+
 	/**
-	 * <p>Description: 查询文章分页数据 </p>  
-	 * @author YangHao  
+	 * @description 查询文章分页数据
+	 * @author YangHao
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
 	 */
 	@ApiOperation(value = "查询文章分页数据", notes = "")
 	@PostMapping("/articlePage")
-	public ApiResponse<ResultPage<ArticleVo>> articlePage(@RequestBody PageQueryVo pageQueryVo){
+	public ApiResponse<ResultPage<ArticleVo>> articlePage(@RequestBody PageQueryVo pageQueryVo) {
 		ApiResponse<ResultPage<ArticleVo>> api = new ApiResponse<>();
 		try {
 			ResultPage<ArticleVo> page = blogService.getPageData(pageQueryVo);
@@ -133,16 +137,16 @@ public class BlogApi {
 		}
 		return api;
 	}
-	
+
 	/**
-	 * <p>Description: 用户注册 </p>  
-	 * @author YangHao  
+	 * @description 用户注册
+	 * @author YangHao
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
 	 */
 	@ApiOperation(value = "用户注册", notes = "")
 	@PostMapping("/register")
-	public ApiResponse<String> register(@RequestBody BlogUserVo blogUserVo){
+	public ApiResponse<String> register(@RequestBody BlogUserVo blogUserVo) {
 		ApiResponse<String> api = new ApiResponse<>();
 		try {
 			blogService.userRegister(blogUserVo);
@@ -153,25 +157,25 @@ public class BlogApi {
 		}
 		return api;
 	}
-	
+
 	/**
-	 * <p>Description: 用户登录 </p>  
-	 * @author YangHao  
+	 * @description 用户登录
+	 * @author YangHao
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
 	 */
 	@ApiOperation(value = "用户登录", notes = "")
 	@PostMapping("/login")
-	public ApiResponse<BlogUserVo> login(@RequestBody BlogUserVo blogUserVo){
+	public ApiResponse<BlogUserVo> login(@RequestBody BlogUserVo blogUserVo) {
 		ApiResponse<BlogUserVo> api = new ApiResponse<>();
 		try {
 			BlogUserVo user = blogService.userLogin(blogUserVo);
-			if(user != null){
+			if (user != null) {
 				api.setData(user);
-				//添加token
+				// 添加token
 				String token = JwtUtils.sign(new TokenMsg().setInfo(user));
 				api.setToken(token);
-			}else {
+			} else {
 				api.error("输入的账号不存在或密码错误");
 			}
 		} catch (Exception e) {
@@ -180,21 +184,20 @@ public class BlogApi {
 		}
 		return api;
 	}
-	
-	
+
 	/**
-	 * <p>Description: 校验用户名是否被使用 </p>  
-	 * @author YangHao  
+	 * @description 校验用户名是否被使用
+	 * @author YangHao
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
 	 */
 	@ApiOperation(value = "校验用户名是否被使用 ", notes = "")
 	@GetMapping("/checkCode")
-	public ApiResponse<String> checkCode(@RequestParam(value="code") String code){
+	public ApiResponse<String> checkCode(@RequestParam(value = "code") String code) {
 		ApiResponse<String> api = new ApiResponse<>();
 		try {
 			Boolean exist = blogService.checkUserCode(code);
-			if(exist){
+			if (exist) {
 				api.error("已经被使用");
 			}
 		} catch (Exception e) {
@@ -203,16 +206,16 @@ public class BlogApi {
 		}
 		return api;
 	}
-	
+
 	/**
-	 * <p>Description: 留言板页面数据初始化 </p>  
-	 * @author YangHao  
+	 * @description 留言板页面数据初始化
+	 * @author YangHao
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
 	 */
 	@ApiOperation(value = "留言板页面数据初始化", notes = "")
 	@GetMapping("/boardInit")
-	public ApiResponse<BoardDataVo> boardInit(){
+	public ApiResponse<BoardDataVo> boardInit() {
 		ApiResponse<BoardDataVo> api = new ApiResponse<>();
 		try {
 			BoardDataVo boardDataVo = blogService.getBoardData();
@@ -223,16 +226,16 @@ public class BlogApi {
 		}
 		return api;
 	}
-	
+
 	/**
-	 * <p>Description: 查询留言分页数据 </p>
-	 * @author YangHao  
+	 * @description 查询留言分页数据
+	 * @author YangHao
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
 	 */
 	@ApiOperation(value = "查询留言分页数据", notes = "")
 	@PostMapping("/msgPage")
-	public ApiResponse<ResultPage<LeavingMsgVo>> msgPage(@RequestBody PageQueryVo pageQueryVo){
+	public ApiResponse<ResultPage<LeavingMsgVo>> msgPage(@RequestBody PageQueryVo pageQueryVo) {
 		ApiResponse<ResultPage<LeavingMsgVo>> api = new ApiResponse<>();
 		try {
 			ResultPage<LeavingMsgVo> page = blogService.getMsgPageData(pageQueryVo);
@@ -245,14 +248,14 @@ public class BlogApi {
 	}
 
 	/**
-	 * <p>Description: 查询文章留言分页数据 </p>
+	 * @description 查询文章留言分页数据
 	 * @author YangHao
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
 	 */
 	@ApiOperation(value = "查询文章留言分页数据", notes = "")
 	@PostMapping("/artMsgPage")
-	public ApiResponse<ResultPage<LeavingMsgVo>> artMsgPage(@RequestBody PageQueryVo pageQueryVo){
+	public ApiResponse<ResultPage<LeavingMsgVo>> artMsgPage(@RequestBody PageQueryVo pageQueryVo) {
 		ApiResponse<ResultPage<LeavingMsgVo>> api = new ApiResponse<>();
 		try {
 			ResultPage<LeavingMsgVo> page = blogService.getArtMsgPageData(pageQueryVo);
@@ -265,7 +268,7 @@ public class BlogApi {
 	}
 
 	/**
-	 * <p>Description: 发表留言 </p>
+	 * @description 发表留言
 	 * @author YangHao
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
@@ -273,7 +276,7 @@ public class BlogApi {
 	@ApiOperation(value = "发表留言", notes = "")
 	@PostMapping("/leaveMsg")
 	@Token
-	public ApiResponse<ResultPage<LeavingMsgVo>> msgPage(@RequestBody LeavingMsgVo msgVo, HttpServletRequest request){
+	public ApiResponse<ResultPage<LeavingMsgVo>> msgPage(@RequestBody LeavingMsgVo msgVo, HttpServletRequest request) {
 		ApiResponse<ResultPage<LeavingMsgVo>> api = new ApiResponse<>();
 		TokenMsg user = (TokenMsg) request.getAttribute("user");
 		try {
@@ -287,14 +290,14 @@ public class BlogApi {
 	}
 
 	/**
-	 * <p>Description: 文章浏览界面 </p>
+	 * @description 文章浏览界面
 	 * @author YangHao
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
 	 */
 	@ApiOperation(value = "文章浏览界面", notes = "")
 	@GetMapping("/view")
-	public ApiResponse<ViewDataVo> view(@RequestParam(value="id") Integer id){
+	public ApiResponse<ViewDataVo> view(@RequestParam(value = "id") Integer id) {
 		ApiResponse<ViewDataVo> api = new ApiResponse<>();
 		try {
 			ViewDataVo viewDataVo = blogService.view(id);
@@ -305,6 +308,5 @@ public class BlogApi {
 		}
 		return api;
 	}
-	
-	
+
 }

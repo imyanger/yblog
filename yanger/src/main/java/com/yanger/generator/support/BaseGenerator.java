@@ -17,22 +17,21 @@ import com.yanger.generator.util.WordFileUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
-* <p>Title: BaseGenerator.java</p>  
-* <p>Description: 映射文件自动生成类 </p>  
-* @author 杨号  
-* @date 2018年9月14日
+ * @description 映射文件自动生成类
+ * @author 杨号
+ * @date 2018年9月14日
  */
 @Slf4j
 abstract class BaseGenerator {
 
 	protected static final String JAVA_SUFFIX = ".java";
-	
+
 	protected static final String XML_SUFFIX = ".xml";
 
 	protected GenConfig genConfig;
-	
+
 	protected List<GenParam> paramList;
-	
+
 	protected Database database;
 
 	protected boolean fileOvervide = false;
@@ -51,8 +50,7 @@ abstract class BaseGenerator {
 	}
 
 	/**
-	 * 根据包名转换成具体路径
-	 *
+	 * @description 根据包名转换成具体路径
 	 * @param packageName
 	 * @return
 	 */
@@ -64,10 +62,8 @@ abstract class BaseGenerator {
 	}
 
 	/**
-	 * 生成文件地址
-	 *
-	 * @param segment
-	 *            文件地址片段
+	 * @description 生成文件地址
+	 * @param segment-文件地址片段
 	 * @return
 	 */
 	protected static String getFilePath(String savePath, String segment) {
@@ -88,7 +84,7 @@ abstract class BaseGenerator {
 	}
 
 	/**
-	 * 生成映射文件
+	 * @description 生成映射文件
 	 */
 	public void generate() {
 		WordFileUtils.initWordMap();
@@ -205,8 +201,7 @@ abstract class BaseGenerator {
 	}
 
 	/**
-	 * 根据是否覆盖标志决定是否覆盖当前已存在的文件
-	 *
+	 * @description 根据是否覆盖标志决定是否覆盖当前已存在的文件
 	 * @param dirPath
 	 * @param beanName
 	 * @param suffix
@@ -217,13 +212,12 @@ abstract class BaseGenerator {
 		return !file.exists() || fileOvervide;
 	}
 
+	/**
+	 * @description 自动打开生成文件的目录，根据 osName 执行相应命
+	 * @author YangHao
+	 * @time 2018年12月12日-下午11:08:35
+	 */
 	protected void openDir() {
-		/**
-		 * 自动打开生成文件的目录
-		 * <p>
-		 * 根据 osName 执行相应命令
-		 * </p>
-		 */
 		try {
 			String osName = System.getProperty("os.name");
 			if (osName != null) {
@@ -239,5 +233,5 @@ abstract class BaseGenerator {
 			log.warn("{}", e);
 		}
 	}
-	
+
 }

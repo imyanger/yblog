@@ -15,10 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yanger.ueditor.ActionEnter;
 
 @RestController
-//@CrossOrigin
+// @CrossOrigin
 @RequestMapping("/ueditor")
 public class UeditorApi {
 
+	/**
+	 * @description ueditor插件加载图片
+	 * @author YangHao
+	 * @time 2018年12月12日-下午10:29:48
+	 * @param request
+	 * @param response
+	 */
 	@RequestMapping("/img")
 	@ResponseBody
 	public void getConfigInfo(HttpServletRequest request, HttpServletResponse response) {

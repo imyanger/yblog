@@ -15,10 +15,10 @@ import org.apache.commons.beanutils.MethodUtils;
 public class SimpleCopier {
 
 	@SuppressWarnings("rawtypes")
-	private static final Map<Class,Map<Class,FastCopier>> COPIERS_CASESENSITIVE_MAP = new WeakHashMap<>();
+	private static final Map<Class, Map<Class, FastCopier>> COPIERS_CASESENSITIVE_MAP = new WeakHashMap<>();
 
 	@SuppressWarnings("rawtypes")
-	private static final Map<Class,Map<Class,FastCopier>> COPIERS_CASEINSENSITIVE_MAP = new WeakHashMap<>();
+	private static final Map<Class, Map<Class, FastCopier>> COPIERS_CASEINSENSITIVE_MAP = new WeakHashMap<>();
 
 	/**
 	 * 包含字段
@@ -31,48 +31,47 @@ public class SimpleCopier {
 	private Set<String> excludes;
 
 	/**
-	 * 是否大小写敏感，默认否
+	 * @description 是否大小写敏感，默认否
 	 * @return
 	 */
 	private boolean caseSensitive = true;
 
 	/**
-	 * 是否包含null值属性
+	 * @description 是否包含null值属性
 	 * @return
 	 */
 	private boolean includeNull = true;
 
 	/**
-	 * 是否包含null值属性
+	 * @description 是否包含null值属性
 	 * @return
 	 */
 	private boolean includeEmpty = true;
 
 	/**
-	 * 是否包含基类型的0
+	 * @description 是否包含基类型的0
 	 * @return
 	 */
 	private boolean includePrimitiveZero = true;
 
 	/**
-	 * 是否包含基类型的false
+	 * @description 是否包含基类型的false
 	 * @return
 	 */
 	private boolean includePrimitiveFalse = true;
 
 	/**
-	 * 数据来源的bean
+	 * @description 数据来源的bean
 	 */
 	private Object from;
 
 	/**
-	 * 数据目标bean
+	 * @description 数据目标bean
 	 */
 	private List<Object> toList;
 
 	/**
-	 * 包含null字段<br>
-	 * copier.includeNull();
+	 * @description 包含null字段，copier.includeNull();
 	 * @return 复印机对象本身
 	 */
 	public SimpleCopier includeNull() {
@@ -81,8 +80,7 @@ public class SimpleCopier {
 	}
 
 	/**
-	 * 排除null字段<br>
-	 * copier.excludeNull();
+	 * @description 排除null字段，copier.excludeNull();
 	 * @return 复印机对象本身
 	 */
 	public SimpleCopier excludeNull() {
@@ -91,8 +89,7 @@ public class SimpleCopier {
 	}
 
 	/**
-	 * 排除空对象字段<br>
-	 * copier.includeEmpty();
+	 * @description 排除空对象字段，copier.includeEmpty();
 	 * @return 复印机对象本身
 	 */
 	public SimpleCopier includeEmpty() {
@@ -101,8 +98,7 @@ public class SimpleCopier {
 	}
 
 	/**
-	 * 排除空对象字段<br>
-	 * copier.excludeEmpty();
+	 * @description 排除空对象字段，copier.excludeEmpty();
 	 * @return 复印机对象本身
 	 */
 	public SimpleCopier excludeEmpty() {
@@ -111,7 +107,7 @@ public class SimpleCopier {
 	}
 
 	/**
-	 * 包含基类型的false
+	 * @description 包含基类型的false
 	 * @return
 	 */
 	public SimpleCopier includePrimitiveFalse() {
@@ -120,7 +116,7 @@ public class SimpleCopier {
 	}
 
 	/**
-	 * 排除基类型的false
+	 * @description 排除基类型的false
 	 * @return
 	 */
 	public SimpleCopier excludePrimitiveFalse() {
@@ -129,7 +125,7 @@ public class SimpleCopier {
 	}
 
 	/**
-	 * 包含基类型的0
+	 * @description 包含基类型的0
 	 * @return
 	 */
 	public SimpleCopier includePrimitiveZero() {
@@ -138,7 +134,7 @@ public class SimpleCopier {
 	}
 
 	/**
-	 * 排除基类型的0
+	 * @description 排除基类型的0
 	 * @return
 	 */
 	public SimpleCopier excludePrimitiveZero() {
@@ -147,7 +143,7 @@ public class SimpleCopier {
 	}
 
 	/**
-	 * 字段名大小写敏感
+	 * @description 字段名大小写敏感
 	 * @return
 	 */
 	public SimpleCopier caseSensitive() {
@@ -156,7 +152,7 @@ public class SimpleCopier {
 	}
 
 	/**
-	 * 字段名忽略大小写
+	 * @description 字段名忽略大小写
 	 * @return
 	 */
 	public SimpleCopier caseInsensitive() {
@@ -165,22 +161,18 @@ public class SimpleCopier {
 	}
 
 	/**
-	 * 指定包含的字段名称<br>
-	 * 
-	 * <pre>
-	 * SimpleCopier copier = Lang.newCopier();
-	 * copier.includes(&quot;name&quot;);
-	 * </pre>
-	 * @param names 字段名
+	 * @description 指定包含的字段名称，SimpleCopier copier =
+	 *              Lang.newCopier();copier.includes(&quot;name&quot;);
+	 * @param names-字段名
 	 * @return 复印机对象本身
 	 */
 	public SimpleCopier includes(String... names) {
-		for(String name:names){
-			if(name==null){
+		for (String name : names) {
+			if (name == null) {
 				continue;
 			}
 			name = name.trim();
-			if(this.includes==null){
+			if (this.includes == null) {
 				includes = new HashSet<>();
 			}
 			this.includes.add(name);
@@ -189,22 +181,18 @@ public class SimpleCopier {
 	}
 
 	/**
-	 * 指定排除的字段名称<br>
-	 * 
-	 * <pre>
-	 * SimpleCopier copier = Lang.newCopier();
-	 * copier.excludes(&quot;name&quot;);
-	 * </pre>
-	 * @param names 字段名
+	 * @description 指定排除的字段名称，SimpleCopier copier =
+	 *              Lang.newCopier();copier.excludes(&quot;name&quot;);
+	 * @param names-字段名
 	 * @return 复印机对象本身
 	 */
 	public SimpleCopier excludes(String... names) {
-		for(String name:names){
-			if(name==null){
+		for (String name : names) {
+			if (name == null) {
 				continue;
 			}
 			name = name.trim();
-			if(this.excludes==null){
+			if (this.excludes == null) {
 				excludes = new HashSet<>();
 			}
 			this.excludes.add(name);
@@ -220,8 +208,8 @@ public class SimpleCopier {
 
 	public SimpleCopier to(Object... tos) {
 		toList = new ArrayList<>(tos.length);
-		for(Object to:tos){
-			if(to!=null){
+		for (Object to : tos) {
+			if (to != null) {
 				toList.add(to);
 			}
 		}
@@ -230,7 +218,7 @@ public class SimpleCopier {
 	}
 
 	/**
-	 * 清除内含对象，必须重新调用from和to方法才能再次拷贝数据
+	 * @description 清除内含对象，必须重新调用from和to方法才能再次拷贝数据
 	 * @return
 	 */
 	public SimpleCopier clear() {
@@ -240,10 +228,10 @@ public class SimpleCopier {
 	}
 
 	/**
-	 * 完成拷贝
+	 * @description 完成拷贝
 	 */
 	private void done() {
-		if(from==null||toList==null||toList.isEmpty()){
+		if (from == null || toList == null || toList.isEmpty()) {
 			return;
 		}
 		fastCopy();
@@ -251,78 +239,79 @@ public class SimpleCopier {
 
 	@SuppressWarnings("rawtypes")
 	private boolean isEmpty(Object obj) {
-		if(obj==null){
+		if (obj == null) {
 			return true;
 		}
-		if(obj instanceof Map){
-			return ( (Map)obj ).isEmpty();
+		if (obj instanceof Map) {
+			return ((Map) obj).isEmpty();
 		}
-		if(obj instanceof Collection){
-			return ( (Collection)obj ).isEmpty();
+		if (obj instanceof Collection) {
+			return ((Collection) obj).isEmpty();
 		}
-		if(obj.getClass().isArray()){
-			return Array.getLength(obj)==0;
+		if (obj.getClass().isArray()) {
+			return Array.getLength(obj) == 0;
 		}
 		return false;
 	}
 
 	@SuppressWarnings("rawtypes")
 	private void fastCopy() {
-		for(Object to:toList){
-			if(to==null){
+		for (Object to : toList) {
+			if (to == null) {
 				continue;
 			}
 			Class fromClass = from.getClass();
 			Class toClass = to.getClass();
 
-			Map<Class,FastCopier> copierMap = caseSensitive ? COPIERS_CASESENSITIVE_MAP.get(fromClass) : COPIERS_CASEINSENSITIVE_MAP
-					.get(fromClass);
-			if(copierMap==null){
+			Map<Class, FastCopier> copierMap = caseSensitive ? COPIERS_CASESENSITIVE_MAP.get(fromClass)
+					: COPIERS_CASEINSENSITIVE_MAP.get(fromClass);
+			if (copierMap == null) {
 				copierMap = new HashMap<>();
-				if(caseSensitive){
-					COPIERS_CASESENSITIVE_MAP.put(fromClass,copierMap);
-				}else{
-					COPIERS_CASEINSENSITIVE_MAP.put(fromClass,copierMap);
+				if (caseSensitive) {
+					COPIERS_CASESENSITIVE_MAP.put(fromClass, copierMap);
+				} else {
+					COPIERS_CASEINSENSITIVE_MAP.put(fromClass, copierMap);
 				}
 			}
 
 			FastCopier cglibCopier = copierMap.get(toClass);
-			if(cglibCopier==null){
-				cglibCopier = FastCopier.create(fromClass,toClass,true,caseSensitive);
-				copierMap.put(toClass,cglibCopier);
+			if (cglibCopier == null) {
+				cglibCopier = FastCopier.create(fromClass, toClass, true, caseSensitive);
+				copierMap.put(toClass, cglibCopier);
 			}
 
-			cglibCopier.copy(from,to,new FastCopierConverter() {
+			cglibCopier.copy(from, to, new FastCopierConverter() {
 
 				@SuppressWarnings({})
 				@Override
-				public Object convert(Object fromValue,Object target,Class sourceClass,Class targetClass,Object context) {
-					if( !getWrapper(targetClass).isAssignableFrom(getWrapper(sourceClass))){
+				public Object convert(Object fromValue, Object target, Class sourceClass, Class targetClass,
+						Object context) {
+					if (!getWrapper(targetClass).isAssignableFrom(getWrapper(sourceClass))) {
 						return target;
 					}
-					if(sourceClass.equals(List.class)){// 刘平 2015-12-9 list对象不复制
+					if (sourceClass.equals(List.class)) {// 刘平 2015-12-9
+															// list对象不复制
 						return target;
 					}
-					if(includes!=null&& !includes.contains(context)){
+					if (includes != null && !includes.contains(context)) {
 						return target;
 					}
-					if(excludes!=null&&excludes.contains(context)){
+					if (excludes != null && excludes.contains(context)) {
 						return target;
 					}
-					if( !includeNull&&fromValue==null){
+					if (!includeNull && fromValue == null) {
 						return target;
 					}
-					if( !includeEmpty&&fromValue!=null&&isEmpty(fromValue)){
+					if (!includeEmpty && fromValue != null && isEmpty(fromValue)) {
 						return target;
 					}
-					if(fromValue!=null){
-						if( !includePrimitiveFalse&&sourceClass.equals(boolean.class)&&SimpleCopier.valueEquals(
-								fromValue,
-								false)){
+					if (fromValue != null) {
+						if (!includePrimitiveFalse && sourceClass.equals(boolean.class)
+								&& SimpleCopier.valueEquals(fromValue, false)) {
 							return target;
 						}
-						if( !includePrimitiveZero&&sourceClass.isPrimitive()&&fromValue instanceof Number&&SimpleCopier
-								.valueEquals(fromValue,0)){
+						if (!includePrimitiveZero && sourceClass.isPrimitive() && fromValue instanceof Number
+								&& SimpleCopier.valueEquals(fromValue, 0)) {
 							return target;
 						}
 					}
@@ -331,7 +320,7 @@ public class SimpleCopier {
 
 				private Class<?> getWrapper(Class<?> type) {
 
-					if(type.isPrimitive()){
+					if (type.isPrimitive()) {
 						return MethodUtils.getPrimitiveWrapper(type);
 					}
 					return type;
@@ -340,21 +329,22 @@ public class SimpleCopier {
 		}
 	}
 
-	@SuppressWarnings({"rawtypes","unchecked"})
-	private static boolean valueEquals(Object a,Object b) {
-		if(a==b){
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private static boolean valueEquals(Object a, Object b) {
+		if (a == b) {
 			return true;
 		}
-		if(a==null||b==null){
+		if (a == null || b == null) {
 			return false;
 		}
-		if(a.equals(b)){
+		if (a.equals(b)) {
 			return true;
 		}
 		// 比较
-		if(a instanceof Comparable&&b instanceof Comparable){
-			return ( (Comparable)a ).compareTo((Comparable)b)!=0;
+		if (a instanceof Comparable && b instanceof Comparable) {
+			return ((Comparable) a).compareTo((Comparable) b) != 0;
 		}
 		return false;
 	}
+
 }

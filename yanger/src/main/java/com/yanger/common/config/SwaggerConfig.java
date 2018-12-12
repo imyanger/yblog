@@ -13,36 +13,30 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
-* <p>Title: SwaggerConfig.java</p>  
-* <p>Description: Swagger插件 </p>  
-* @author 杨号  
-* @date 2018年9月14日
+ * @description Swagger插件
+ * @author 杨号
+ * @date 2018年9月14日
  */
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
 
-    @Bean
-    public Docket createRestApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .select()
-                //当前包路径
-                .apis(RequestHandlerSelectors.basePackage("com.yanger"))
-                .paths(PathSelectors.any())
-                .build();
-    }
+	@Bean
+	public Docket createRestApi() {
+		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select()
+				// 当前包路径
+				.apis(RequestHandlerSelectors.basePackage("com.yanger"))
+				.paths(PathSelectors.any()).build();
+	}
 
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-        		//页面标题
-                .title("yblog Swagger2 API接口")
-                .description("yblog API接口文档")
-                .termsOfServiceUrl("https://github.com/imyanger")
-                //创建人
-                .contact(new Contact("yanger", "https://github.com/imyanger/", "550799932@qq.com"))
-                .version("1.0")
-                .build();
-    }
-    
+	private ApiInfo apiInfo() {
+		return new ApiInfoBuilder()
+				// 页面标题
+				.title("yblog Swagger2 API接口").description("yblog API接口文档")
+				.termsOfServiceUrl("https://github.com/imyanger")
+				// 创建人
+				.contact(new Contact("yanger", "https://github.com/imyanger/", "550799932@qq.com")).version("1.0")
+				.build();
+	}
+
 }

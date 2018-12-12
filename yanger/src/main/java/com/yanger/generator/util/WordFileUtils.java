@@ -8,21 +8,20 @@ import org.apache.commons.lang3.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
-* <p>Title: WordFileUtils.java</p>  
-* <p>Description: 词义翻译工具类 </p>  
-* @author 杨号  
-* @date 2018年9月14日
+ * @description 词义翻译工具类
+ * @author 杨号
+ * @date 2018年9月14日
  */
 @Slf4j
 public class WordFileUtils {
-	
+
 	private static Map<String, Word> wordMap = new HashMap<>();
-	
-	public static boolean hasShowHelp = false; 
+
+	public static boolean hasShowHelp = false;
 
 	private WordFileUtils() {
 
-	} 
+	}
 
 	public synchronized static void initWordMap() {
 		if (!hasShowHelp) {
@@ -49,17 +48,18 @@ public class WordFileUtils {
 	}
 
 	/**
-	 * 得到对象名，首字母大写。其他规则如下：
-	 * <ol>
-	 * <li>包含下划线的，每个下划线后面的第1字符大写，删除下划线后连接作为Name
-	 * <li>否则：传入内容包含大写和小写的，传入内容作为Name
-	 * <li>否则：传入内容全部小写作为Name
-	 * </ol>
-	 * @param name 传入名称（表名或字段名）
+	 * @description 得到对象名，首字母大写。其他规则如下：
+	 *              <ol>
+	 *              <li>包含下划线的，每个下划线后面的第1字符大写，删除下划线后连接作为Name
+	 *              <li>否则：传入内容包含大写和小写的，传入内容作为Name
+	 *              <li>否则：传入内容全部小写作为Name
+	 *              </ol>
+	 * 
+	 * @param name-传入名称（表名或字段名）
 	 * @return 类实例名或属性名
 	 */
 	public static String getBeautyObjectName(String name) {
-		if(name==null || name.isEmpty()) {
+		if (name == null || name.isEmpty()) {
 			throw new IllegalArgumentException("name must have value.");
 		}
 		String key = name.toLowerCase();
@@ -90,13 +90,14 @@ public class WordFileUtils {
 	}
 
 	/**
-	 * 得到实例名，如果第前两个字符均为大写，则直接返回，否则返回首字母小写的内容 。其他规则如下：
-	 * <ol>
-	 * <li>包含下划线的，每个下划线后面的第1字符大写，删除下划线后连接作为Name
-	 * <li>否则：传入内容包含大写和小写的，传入内容作为Name
-	 * <li>否则：传入内容全部小写作为Name
-	 * </ol>
-	 * @param name 传入名称（表名或字段名）
+	 * @description 得到实例名，如果第前两个字符均为大写，则直接返回，否则返回首字母小写的内容 。其他规则如下：
+	 *              <ol>
+	 *              <li>包含下划线的，每个下划线后面的第1字符大写，删除下划线后连接作为Name
+	 *              <li>否则：传入内容包含大写和小写的，传入内容作为Name
+	 *              <li>否则：传入内容全部小写作为Name
+	 *              </ol>
+	 * 
+	 * @param name-传入名称（表名或字段名）
 	 * @return 类实例名或属性名
 	 */
 	public static String getBeautyInstanceName(String name) {
@@ -124,11 +125,10 @@ public class WordFileUtils {
 	}
 
 	/**
-	 * 将字符串的第一个字符小写. <br>
-	 * <br>
-	 * <b>示例 </b> <br>
-	 * StringUtils.lowerCaseFirstChar(&quot;ABc&quot;) 返回 &quot;aBc&quot;
-	 * @param iString 传入字符串
+	 * @description 将字符串的第一个字符小写 <b>示例 </b> <br>
+	 *              StringUtils.lowerCaseFirstChar(&quot;ABc&quot;) 返回
+	 *              &quot;aBc&quot;
+	 * @param iString-传入字符串
 	 * @return 传出字符串
 	 */
 	public static String lowerCaseFirstChar(String iString) {
@@ -138,11 +138,13 @@ public class WordFileUtils {
 	}
 
 	/**
-	 * 将字符串的第一个字符大写. <br>
-	 * <br>
-	 * <b>示例 </b> <br>
-	 * StringUtils.upperCaseFirstChar(&quot;aBc&quot;) 返回 &quot;ABc&quot;
-	 * @param iString 传入字符串
+	 * @description 将字符串的第一个字符大写. <br>
+	 *              <br>
+	 *              <b>示例 </b> <br>
+	 *              StringUtils.upperCaseFirstChar(&quot;aBc&quot;) 返回
+	 *              &quot;ABc&quot;
+	 * 
+	 * @param iString-传入字符串
 	 * @return 传出字符串
 	 */
 	public static String upperCaseFirstChar(String iString) {
@@ -171,11 +173,11 @@ public class WordFileUtils {
 			log.warn("{}", e);
 		}
 	}
-	
+
 }
 
 class Word {
-	
+
 	private String key = "";
 
 	private String name = "";
@@ -220,5 +222,5 @@ class Word {
 	public String toString() {
 		return "key=" + key + ",name=" + name + ",desc=" + desc;
 	}
-	
+
 }

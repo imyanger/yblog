@@ -16,14 +16,13 @@ import com.yanger.generator.util.GeneratorUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
-* <p>Title: VoExecuter.java</p>  
-* <p>Description: VO生成程序 </p>  
-* @author 杨号  
-* @date 2018年9月14日
+ * @description VO生成程序
+ * @author 杨号
+ * @date 2018年9月14日
  */
 @Slf4j
 public class VoExecuter extends BaseExecuter {
-	
+
 	private GenFileInfo voInfo;
 
 	public VoExecuter(GenConfig genConfig, GenFileInfo voInfo) {
@@ -63,8 +62,7 @@ public class VoExecuter extends BaseExecuter {
 			classComment = classComment + ",备注：" + table.getComment().trim();
 		}
 
-		buildClassComment(bw,
-				String.format("表%s的%s,通过com.yanger.generator包代码工具自动生成", getName(table.getName()), info),
+		buildClassComment(bw, String.format("表%s的%s,通过com.yanger.generator包代码工具自动生成", getName(table.getName()), info),
 				classComment);
 
 		bw.newLine();

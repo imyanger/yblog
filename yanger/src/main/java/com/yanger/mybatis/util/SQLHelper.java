@@ -19,14 +19,13 @@ import com.yanger.mybatis.dialect.Dialect;
 import lombok.extern.slf4j.Slf4j;
 
 /**
-* <p>Title: SQLHelper.java</p>  
-* <p>Description: mybatis-paginator查询count </p>  
-* @author 杨号  
-* @date 2018年9月14日
+ * @description mybatis-paginator查询count
+ * @author 杨号
+ * @date 2018年9月14日
  */
 @Slf4j
 public class SQLHelper {
-	
+
 	private SQLHelper() {
 
 	}
@@ -34,19 +33,13 @@ public class SQLHelper {
 	/**
 	 * 查询总纪录数
 	 *
-	 * @param mappedStatement
-	 *            mapped
-	 * @param transaction
-	 *            transaction
-	 * @param parameterObject
-	 *            参数
-	 * @param boundSql
-	 *            boundSql
-	 * @param dialect
-	 *            database dialect
+	 * @param mappedStatement-mapped
+	 * @param transaction-transaction
+	 * @param parameterObject-参数
+	 * @param boundSql-boundSql
+	 * @param dialect-方言
 	 * @return 总记录数
-	 * @throws java.sql.SQLException
-	 *             sql查询错误
+	 * @throws java.sql.SQLException-sql查询错误
 	 */
 	public static int getCount(final MappedStatement mappedStatement, final Transaction transaction,
 			final Object parameterObject, final BoundSql boundSql, Dialect dialect) throws SQLException {
@@ -70,10 +63,8 @@ public class SQLHelper {
 	}
 
 	/**
-	 * 去除hql的orderby 子句，用于pagedQuery.
-	 * 
-	 * @param sql
-	 *            sql语句
+	 * @description 去除hql的orderby 子句，用于pagedQuery.
+	 * @param sql-sql语句
 	 * @return 去掉order后的sql语句
 	 */
 	public static String removeOrders(String sql) {
@@ -89,10 +80,8 @@ public class SQLHelper {
 	}
 
 	/**
-	 * 是否包含Distinct
-	 * 
-	 * @param sql
-	 *            sql语句
+	 * @description 是否包含Distinct
+	 * @param sql-sql语句
 	 * @return 包含Distinct返回true，否则返回false
 	 */
 	public static boolean isIncludeDistinct(String sql) {

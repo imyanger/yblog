@@ -51,9 +51,12 @@ public abstract class FastCopier {
 	}
 
 	public static class Generator extends AbstractClassGenerator {
+		
 		private static final Source SOURCE = new Source(FastCopier.class.getName());
+		
 		@SuppressWarnings("rawtypes")
 		private Class source;
+		
 		@SuppressWarnings("rawtypes")
 		private Class target;
 		/**
@@ -217,4 +220,5 @@ public abstract class FastCopier {
 			return instance;
 		}
 	}
+	
 }

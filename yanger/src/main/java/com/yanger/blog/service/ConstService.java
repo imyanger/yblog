@@ -22,13 +22,13 @@ import com.yanger.mybatis.util.ResultPage;
 @Service
 @Transactional
 public class ConstService {
-	
+
 	@Autowired
 	ConstDao constDao;
 
 	/**
-	 * <p>Description: 获取常量表分页数据 </p>  
-	 * @author YangHao  
+	 * @description 获取常量表分页数据
+	 * @author YangHao
 	 * @date 2018年11月29日-下午9:44:45
 	 * @param pageQueryVo
 	 * @return
@@ -39,19 +39,19 @@ public class ConstService {
 		int size = pageQueryVo.getPageSize();
 		PageParam pageParam = ParamUtils.getDescPageParam(pageNo, size > 0 ? size : 10, "update_time");
 		Const entry = new Const();
-		//搜索条件
-		if(StringUtils.isNotBlank(pageQueryVo.getQueryValue())){
-			//描述的模糊匹配
+		// 搜索条件
+		if (StringUtils.isNotBlank(pageQueryVo.getQueryValue())) {
+			// 描述的模糊匹配
 			entry.setDepict(pageQueryVo.getQueryValue());
 		}
 		Page<Const> page = constDao.selectPage(pageParam, entry);
-		//分页数据
+		// 分页数据
 		return Pages.convert(pageParam, page, ConstVo.class);
 	}
 
 	/**
-	 * <p>Description: 新增文章 </p>  
-	 * @author YangHao  
+	 * @description 新增文章
+	 * @author YangHao
 	 * @date 2018年11月27日-下午11:00:21
 	 * @param articleVo
 	 * @throws Exception
@@ -59,36 +59,36 @@ public class ConstService {
 	public void addArticle(ConstVo constVo) throws Exception {
 		Const entity = new Const();
 		BeanUtils.copyProperties(entity, constVo);
-		if(entity.getId() != null){
+		if (entity.getId() != null) {
 			constDao.updateById(entity);
-		}else {
+		} else {
 			constDao.insert(entity);
 		}
 	}
 
 	/**
-	 * <p>Description: 获取文章类型和分类 </p>  
-	 * @author YangHao  
+	 * @description 获取文章类型和分类
+	 * @author YangHao
 	 * @date 2018年11月29日-下午10:02:38
 	 * @param articleVo
 	 * @return
 	 */
-	public List<ConstVo> addArticleTypes() throws Exception {
+	public List<ConstVo> getArticleTypes() throws Exception {
 		List<ConstVo> typeVos = new ArrayList<>(0);
-		//获取模块
+		// 获取模块
 		List<Const> modules = constDao.findAllByDepict("文章类型");
 		for (Const module : modules) {
-			//类型
+			// 类型
 			List<Const> types = constDao.findAllByDepict(module.getVal());
-			if(types.isEmpty()){ //没有子类型，则添加模块
+			if (types.isEmpty()) { // 没有子类型，则添加模块
 				ConstVo moduleVo = new ConstVo();
 				BeanUtils.copyProperties(moduleVo, module);
 				typeVos.add(moduleVo);
-			}else {
+			} else {
 				for (Const type : types) {
 					ConstVo typeVo = new ConstVo();
 					BeanUtils.copyProperties(typeVo, type);
-					//分类
+					// 分类
 					List<Const> classifys = constDao.findAllByDepict(type.getVal());
 					List<ConstVo> classifyVos = new ArrayList<>(0);
 					for (Const classify : classifys) {
@@ -104,8 +104,26 @@ public class ConstService {
 		return typeVos;
 	}
 
+	/**
+	 * @description 删除常量
+	 * @author YangHao
+	 * @time 2018年12月12日-下午9:56:37
+	 * @param id
+	 * @throws Exception
+	 */
 	public void delConst(Integer id) throws Exception {
 		constDao.deleteById(id);
 	}
-	
+
+	/**
+	 * @description 获取全部文章类型
+	 * @author YangHao
+	 * @time 2018年12月12日-下午10:03:37
+	 * @return
+	 */
+	public List<ConstVo> getAllArticleTypes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

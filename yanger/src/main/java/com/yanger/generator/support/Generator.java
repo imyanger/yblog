@@ -13,22 +13,21 @@ import com.yanger.generator.util.GeneratorUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
-* <p>Title: Generator.java</p>  
-* <p>Description: 代码生成工具 </p>  
-* @author 杨号  
-* @date 2018年9月14日
+ * @description 代码生成工具
+ * @author 杨号
+ * @date 2018年9月14日
  */
 @Slf4j
 public class Generator extends BaseGenerator {
-	
+
 	private GenFileInfo voInfo;
-	
+
 	private GenFileInfo poInfo;
-	
+
 	private GenFileInfo daoInfo;
-	
+
 	private GenFileInfo baseMapperXmlInfo;
-	
+
 	private GenFileInfo mapperXmlInfo;
 
 	private String assemblePackage(String module, String catalog) {
@@ -109,12 +108,12 @@ public class Generator extends BaseGenerator {
 
 		fileOvervide = false;
 		if (containsGenType(GenType.VO) && validFile(voInfo.getPath(), voInfo.getName(), JAVA_SUFFIX)) {
-			 new VoExecuter(genConfig, voInfo).build(table);
+			new VoExecuter(genConfig, voInfo).build(table);
 		}
 
 		fileOvervide = true;
 		if (containsGenType(GenType.PO) && validFile(poInfo.getPath(), poInfo.getName(), JAVA_SUFFIX)) {
-			 new PoExecuter(genConfig, poInfo).build(table);
+			new PoExecuter(genConfig, poInfo).build(table);
 		}
 
 		if (table.getPrimaryKeys().size() > 1) {
@@ -127,15 +126,15 @@ public class Generator extends BaseGenerator {
 		}
 		fileOvervide = true;
 		if (containsGenType(GenType.BASE_MAPPER_XML)
-				&& validFile(baseMapperXmlInfo.getPath(), baseMapperXmlInfo.getName(), XML_SUFFIX)) { 
-			new MyBatisBaseXmlExecuter( genConfig, baseMapperXmlInfo, daoInfo,poInfo).build(table);
+				&& validFile(baseMapperXmlInfo.getPath(), baseMapperXmlInfo.getName(), XML_SUFFIX)) {
+			new MyBatisBaseXmlExecuter(genConfig, baseMapperXmlInfo, daoInfo, poInfo).build(table);
 		}
 		fileOvervide = false;
 		if (containsGenType(GenType.MAPPER_XML)
 				&& validFile(mapperXmlInfo.getPath(), mapperXmlInfo.getName(), XML_SUFFIX)) {
-			new MyBatisCustomXmlExecuter( genConfig, mapperXmlInfo, daoInfo).build(table);
+			new MyBatisCustomXmlExecuter(genConfig, mapperXmlInfo, daoInfo).build(table);
 		}
 
 	}
-	 
+
 }

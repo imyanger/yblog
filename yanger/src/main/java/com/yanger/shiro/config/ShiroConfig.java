@@ -22,18 +22,18 @@ import com.yanger.shiro.util.ShiroCacheManager;
 @SuppressWarnings({ "rawtypes" })
 @Configuration
 public class ShiroConfig {
-	
+
 	@Value("${spring.redis.host}")
-    private String host;
-	
-    @Value("${spring.redis.port}")
-    private int port;
-    
-    @Value("${spring.redis.timeout}")
-    private int timeout;
-    
-    @Value("${spring.redis.password}")
-    private String password;
+	private String host;
+
+	@Value("${spring.redis.port}")
+	private int port;
+
+	@Value("${spring.redis.timeout}")
+	private int timeout;
+
+	@Value("${spring.redis.password}")
+	private String password;
 
 	@Bean
 	public ShiroCacheManager shiroCacheManager(RedisTemplate redisTemplate) {
@@ -51,14 +51,14 @@ public class ShiroConfig {
 		// 注意过滤器配置顺序 不能颠倒
 		// 配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了，登出后跳转配置的loginUrl
 		filterChainDefinitionMap.put("/logout", "logout");
-		
+
 		// 配置不会被拦截的链接 顺序判断
 		filterChainDefinitionMap.put("/static/**", "anon");
 		filterChainDefinitionMap.put("/login", "anon");
-		
-		//拦截的路径
-//		filterChainDefinitionMap.put("/**", "authc");
-		
+
+		// 拦截的路径
+		// filterChainDefinitionMap.put("/**", "authc");
+
 		// 配置shiro默认登录界面地址，前后端分离中登录界面跳转应由前端路由控制，后台仅返回json数据
 		shiroFilterFactoryBean.setLoginUrl("/unauth");
 		// 登录成功后要跳转的链接
@@ -70,8 +70,7 @@ public class ShiroConfig {
 	}
 
 	/**
-	 * 凭证匹配器 （由于我们的密码校验交给Shiro的SimpleAuthenticationInfo进行处理了 ）
-	 *
+	 * @description 凭证匹配器 （由于我们的密码校验交给Shiro的SimpleAuthenticationInfo进行处理了 ）
 	 * @return
 	 */
 	@Bean
@@ -100,7 +99,7 @@ public class ShiroConfig {
 		shiroRealm.setAuthorizationCachingEnabled(false);
 		return shiroRealm;
 	}
-	
+
 	@Bean
 	public SecurityManager securityManager(RedisTemplate redisTemplate) {
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -112,34 +111,34 @@ public class ShiroConfig {
 		return securityManager;
 	}
 
-	 //自定义sessionManager
-    @Bean
-    public SessionManager sessionManager() {
-        SessionManager essionManager = new SessionManager();
-        essionManager.setSessionDAO(redisSessionDAO());
-        return essionManager;
-    }
+	// 自定义sessionManager
+	@Bean
+	public SessionManager sessionManager() {
+		SessionManager essionManager = new SessionManager();
+		essionManager.setSessionDAO(redisSessionDAO());
+		return essionManager;
+	}
 
-    /**
-     * RedisSessionDAO shiro sessionDao层的实现 通过redis
-     * 使用的是shiro-redis开源插件
-     */
-    @Bean
-    public RedisSessionDAO redisSessionDAO() {
-        RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
-        RedisManager redisManager = new RedisManager();
-        redisManager.setHost(host);
-        redisManager.setPort(port);
-        // 配置缓存过期时间
-        redisManager.setExpire(1800);
-        redisManager.setTimeout(timeout);
-        redisManager.setPassword(password);
-        redisSessionDAO.setRedisManager(redisManager);
-        return redisSessionDAO;
-    }
-    
 	/**
-	 * 开启shiro aop注解支持. 使用代理方式;所以需要开启代码支持
+	 * @description RedisSessionDAO shiro sessionDao层的实现
+	 *              通过redis，使用的是shiro-redis开源插件
+	 */
+	@Bean
+	public RedisSessionDAO redisSessionDAO() {
+		RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
+		RedisManager redisManager = new RedisManager();
+		redisManager.setHost(host);
+		redisManager.setPort(port);
+		// 配置缓存过期时间
+		redisManager.setExpire(1800);
+		redisManager.setTimeout(timeout);
+		redisManager.setPassword(password);
+		redisSessionDAO.setRedisManager(redisManager);
+		return redisSessionDAO;
+	}
+
+	/**
+	 * @description 开启shiro aop注解支持. 使用代理方式;所以需要开启代码支持
 	 * @param securityManager
 	 * @return
 	 */

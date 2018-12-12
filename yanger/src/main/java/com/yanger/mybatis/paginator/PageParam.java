@@ -8,28 +8,27 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 
 /**
-* <p>Title: PageParam.java</p>  
-* <p>Description: 分页信息 </p>  
-* @author 杨号  
-* @date 2018年9月14日
+ * @description 分页信息
+ * @author 杨号
+ * @date 2018年9月14日
  */
 public class PageParam extends RowBounds implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private int totalCount;
-	
+
 	public static final int NO_PAGE = 1;
-	
+
 	/** 页号 */
 	protected int page = NO_PAGE;
-	
+
 	/** 分页大小 */
 	protected int limit = NO_ROW_LIMIT;
-	
+
 	/** 分页排序信息 */
 	private List<Order> orders = new ArrayList<>();
-	
+
 	/** 结果集是否包含TotalCount */
 	private boolean containsTotalCount;
 
@@ -52,9 +51,8 @@ public class PageParam extends RowBounds implements Serializable {
 	}
 
 	/**
-	 * Query TOP N, default containsTotalCount = false
-	 * 
-	 * @param limit 限制条数
+	 * @description Query TOP N, default containsTotalCount = false
+	 * @param limit-限制条数
 	 */
 	public PageParam(int limit) {
 		this.limit = limit;
@@ -70,18 +68,16 @@ public class PageParam extends RowBounds implements Serializable {
 	}
 
 	/**
-	 * Just sorting, default containsTotalCount = false
-	 * 
-	 * @param orders 排序
+	 * @description Just sorting, default containsTotalCount = false
+	 * @param orders-排序
 	 */
 	public PageParam(List<Order> orders) {
 		this(NO_PAGE, NO_ROW_LIMIT, orders, false);
 	}
 
 	/**
-	 * Just sorting, default containsTotalCount = false
-	 * 
-	 * @param order 排序
+	 * @description Just sorting, default containsTotalCount = false
+	 * @param order-排序
 	 */
 	public PageParam(Order... order) {
 		this(NO_PAGE, NO_ROW_LIMIT, order);
@@ -163,5 +159,5 @@ public class PageParam extends RowBounds implements Serializable {
 		sb.append('}');
 		return sb.toString();
 	}
-	
+
 }

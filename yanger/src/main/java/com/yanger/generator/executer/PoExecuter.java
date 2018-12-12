@@ -16,14 +16,13 @@ import com.yanger.generator.util.GeneratorUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
-* <p>Title: PoExecuter.java</p>  
-* <p>Description: PO生成程序 </p>  
-* @author 杨号  
-* @date 2018年9月14日
+ * @description PO生成程序
+ * @author 杨号
+ * @date 2018年9月14日
  */
 @Slf4j
 public class PoExecuter extends BaseExecuter {
-	
+
 	private GenFileInfo poInfo;
 
 	public PoExecuter(GenConfig genConfig, GenFileInfo poInfo) {
@@ -62,8 +61,7 @@ public class PoExecuter extends BaseExecuter {
 		if (table.getComment() != null && table.getComment().trim().length() > 0) {
 			classComment = classComment + ",备注：" + table.getComment().trim();
 		}
-		buildClassComment(bw,
-				String.format("表%s的%s，通过com.yanger.generator包代码工具自动生成", getName(table.getName()), info),
+		buildClassComment(bw, String.format("表%s的%s，通过com.yanger.generator包代码工具自动生成", getName(table.getName()), info),
 				classComment);
 		bw.newLine();
 		bw.write("@Data");
@@ -94,7 +92,7 @@ public class PoExecuter extends BaseExecuter {
 		List<String> types = GeneratorUtils.getTableColumnTypes(table);
 		File beanFile = new File(poInfo.getPath(), poInfo.getName() + JAVA_SUFFIX);
 		try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(beanFile)))) {
-			buildClassHeader(bw, table, types, poInfo.getName(), "PO对象"); 
+			buildClassHeader(bw, table, types, poInfo.getName(), "PO对象");
 			List<Column> columns = table.getColumns();
 			int size = columns.size();
 			for (int i = 0; i < size; i++) {
@@ -112,8 +110,8 @@ public class PoExecuter extends BaseExecuter {
 		List<String> types = GeneratorUtils.getTablePrimaryKeysTypes(table);
 		String keyPoName = poInfo.getName() + "Key";
 		File beanFile = new File(poInfo.getPath(), keyPoName + JAVA_SUFFIX);
-		try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(beanFile)))) { 
-			buildClassHeader(bw, table, types, keyPoName, "复合主键PO主键对象"); 
+		try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(beanFile)))) {
+			buildClassHeader(bw, table, types, keyPoName, "复合主键PO主键对象");
 			List<Column> columns = GeneratorUtils.getTablePrimaryKeysColumns(table);
 			int size = columns.size();
 			for (int i = 0; i < size; i++) {

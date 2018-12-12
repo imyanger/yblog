@@ -3,27 +3,26 @@ package com.yanger.common.vo;
 import java.io.Serializable;
 
 /**
-* <p>Title: ApiResponse.java</p>  
-* <p>Description: 通用请求响应VO </p>  
-* @author 杨号  
-* @date 2018年9月14日
+ * @description 通用请求响应VO
+ * @author 杨号
+ * @date 2018年9月14日
  */
 public class ApiResponse<T> implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final int SUCCESS = 0;
-	
+
 	public static final int ERROR = 1;
-	
+
 	public static final int ERROR_TOKEN = 2;
-	
+
 	public static final int BUSY = -100;
 
 	public static final String SUCCESS_TEXT = "Success";
-	
+
 	public static final String BUSY_TEXT = "Service is busy now";
-	
+
 	/**
 	 * 响应状态
 	 */
@@ -87,8 +86,8 @@ public class ApiResponse<T> implements Serializable {
 
 	public void setData(T data) {
 		this.data = data;
-	} 
-	
+	}
+
 	public String getToken() {
 		return token;
 	}
@@ -98,17 +97,17 @@ public class ApiResponse<T> implements Serializable {
 	}
 
 	/**
-	 * 错误信息
+	 * @description 错误信息
 	 * @param msg
 	 */
-	public void error(String msg){
+	public void error(String msg) {
 		this.msg = msg;
 		this.status = ERROR;
 	}
-	
-	public void errorToken(){
+
+	public void errorToken() {
 		this.msg = "token不合法";
 		this.status = ERROR_TOKEN;
 	}
-	
+
 }

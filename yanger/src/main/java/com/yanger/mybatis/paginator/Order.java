@@ -7,19 +7,18 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 /**
-* <p>Title: Order.java</p>  
-* <p>Description: 排序信息类 </p>  
-* @author 杨号  
-* @date 2018年9月14日
+ * @description 排序信息类
+ * @author 杨号
+ * @date 2018年9月14日
  */
 public class Order implements Serializable {
-	
+
 	private static final long serialVersionUID = 8138022018100161833L;
-	
+
 	private Direction direction;
-	
+
 	private String property;
-	
+
 	private String orderExpr;
 
 	private static final String INJECTION_REGEX = "[A-Za-z0-9\\_\\-\\+\\.]+";
@@ -80,11 +79,10 @@ public class Order implements Serializable {
 	}
 
 	/**
-	 * @param orderSegment
-	 *            ex: "id.asc,code.desc" or "code.desc"
+	 * @param orderSegment-ex:
+	 *            "id.asc,code.desc" or "code.desc"
 	 * 
-	 * @param orderExpr
-	 *            orderExpr
+	 * @param orderExpr-orderExpr
 	 * @return Order列表
 	 */
 	public static List<Order> formString(String orderSegment, String orderExpr) {
@@ -125,14 +123,11 @@ public class Order implements Serializable {
 	}
 
 	/**
-	 *
 	 * @param property
-	 *            property
 	 * @param direction
-	 *            direction
-	 * @param orderExpr
-	 *            placeholder is "?", in oracle like: "nlssort( ?
-	 *            ,'NLS_SORT=SCHINESE_PINYIN_M')". Warning: you must prevent
+	 * @param orderExpr-placeholder
+	 *            is "?", in oracle like: "nlssort(
+	 *            ?,'NLS_SORT=SCHINESE_PINYIN_M')". Warning: you must prevent
 	 *            orderExpr SQL injection.
 	 * @return Order
 	 */
@@ -141,8 +136,8 @@ public class Order implements Serializable {
 	}
 
 	/**
-	 * PropertyPath implements the pairing of an {@link Direction} and a property.
-	 * It is used to provide input for
+	 * PropertyPath implements the pairing of an {@link Direction} and a
+	 * property. It is used to provide input for
 	 *
 	 */
 	public enum Direction {
@@ -155,4 +150,5 @@ public class Order implements Serializable {
 			}
 		}
 	}
+	
 }

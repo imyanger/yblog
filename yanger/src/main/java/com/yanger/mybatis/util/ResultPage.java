@@ -104,4 +104,5 @@ public class ResultPage<T> implements Serializable {
 
 	public ResultPage() {
 	}
+	
 }
