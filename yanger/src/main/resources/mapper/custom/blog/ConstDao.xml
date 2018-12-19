@@ -12,5 +12,22 @@
 		from const
 		where depict = #{param1}
 	</select>
+	
+	<!-- 按对象查询一页记录（多条记录） -->
+	<select id="selectPageByVo" resultMap="BaseResultMap" parameterType="com.yanger.blog.vo.ConstVo">
+		select
+			<include refid="Base_Column_List" />
+		from const
+		<where>
+			<include refid="Base_Select_By_Entity_Where" />
+			<include refid="Entity_Where_queryValue" />
+		</where>
+	</select>
+	
+	<sql id="Entity_Where_queryValue">
+		<if test="queryValue != null" >
+			and (depict like "%"#{queryValue}"%" or code like "%"#{queryValue}"%" or val like "%"#{queryValue}"%")
+		</if>
+	</sql>
 
 </mapper>

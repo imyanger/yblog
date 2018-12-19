@@ -271,7 +271,7 @@ public class BlogService {
 			size = 5;
 		}
 		PageParam pageParam = ParamUtils.getDescPageParam(page, size, "update_time");
-		Article entry = new Article();
+		ArticleVo entry = new ArticleVo();
 		entry.setModule(pageQueryVo.getModule());
 		// 有效
 		entry.setStatus(ConstantUtils.STATUS_VALID);
@@ -285,7 +285,7 @@ public class BlogService {
 			entry.setType(pageQueryVo.getType());
 			entry.setClassify(pageQueryVo.getClassify());
 		}
-		Page<Article> studysPage = articleDao.selectPage(pageParam, entry);
+		Page<Article> studysPage = articleDao.selectPageByVo(pageParam, entry);
 		// 分页数据
 		return Pages.convert(pageParam, studysPage, ArticleVo.class);
 	}

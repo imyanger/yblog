@@ -38,13 +38,13 @@ public class ConstService {
 		int pageNo = pageQueryVo.getPageNo();
 		int size = pageQueryVo.getPageSize();
 		PageParam pageParam = ParamUtils.getDescPageParam(pageNo, size > 0 ? size : 10, "update_time");
-		Const entry = new Const();
+		ConstVo entry = new ConstVo();
 		// 搜索条件
 		if (StringUtils.isNotBlank(pageQueryVo.getQueryValue())) {
 			// 描述的模糊匹配
-			entry.setDepict(pageQueryVo.getQueryValue());
+			entry.setQueryValue(pageQueryVo.getQueryValue());
 		}
-		Page<Const> page = constDao.selectPage(pageParam, entry);
+		Page<Const> page = constDao.selectPageByVo(pageParam, entry);
 		// 分页数据
 		return Pages.convert(pageParam, page, ConstVo.class);
 	}

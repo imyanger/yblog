@@ -35,7 +35,7 @@ public class ArticleService {
 		int pageNo = pageQueryVo.getPageNo();
 		int size = pageQueryVo.getPageSize();
 		PageParam pageParam = ParamUtils.getDescPageParam(pageNo, size > 0 ? size : 10, "update_time");
-		Article entry = new Article();
+		ArticleVo entry = new ArticleVo();
 		// 搜索条件
 		if (StringUtils.isNotBlank(pageQueryVo.getQueryValue())) {
 			// 关键字的模糊匹配
@@ -48,7 +48,7 @@ public class ArticleService {
 		if (StringUtils.isNotBlank(pageQueryVo.getClassify())) {
 			entry.setClassify(pageQueryVo.getClassify());
 		}
-		Page<Article> page = articleDao.selectPage(pageParam, entry);
+		Page<Article> page = articleDao.selectPageByVo(pageParam, entry);
 		// 分页数据
 		return Pages.convert(pageParam, page, ArticleVo.class);
 	}

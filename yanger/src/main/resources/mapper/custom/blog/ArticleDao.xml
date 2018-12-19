@@ -5,5 +5,21 @@
 <!-- ============================================================== -->
 <mapper namespace="com.yanger.blog.dao.ArticleDao">
  
+  	<!-- 根据vo进行查询 -->
+	<select id="selectPageByVo" resultMap="BaseResultMap" parameterType="com.yanger.blog.vo.ArticleVo">
+		select
+			<include refid="Base_Column_List" />
+		from article
+		<where>
+			<include refid="Base_Select_By_Entity_Where" />
+			<include refid="Entity_Where_queryValue" />
+		</where>
+	</select>
+  
+  	<sql id="Entity_Where_queryValue">
+  		<if test="queryValue != null" >
+			and (rux_words like "%"#{queryValue}"%" or title like "%"#{queryValue}"%" or type = #{queryValue} or classify = #{queryValue})
+		</if>
+  	</sql>
   
 </mapper>

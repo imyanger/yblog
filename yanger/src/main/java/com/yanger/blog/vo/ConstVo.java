@@ -36,6 +36,9 @@ public class ConstVo implements Serializable {
 
 	/** 对应字段：update_time,备注：更新时间 */
 	private Date updateTime;
+	
+	/** 检索条件 */
+	private String queryValue;
 
 	private List<ConstVo> children = new ArrayList<>(0);
 

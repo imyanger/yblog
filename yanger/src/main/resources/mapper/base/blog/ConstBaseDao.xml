@@ -29,7 +29,7 @@
 			and id = #{id}
 		</if>
 		<if test="depict != null" >
-			and (depict like "%"#{depict}"%" or code like "%"#{depict}"%" or val like "%"#{depict}"%")
+			and depict = #{depict}
 		</if>
 		<if test="code != null" >
 			and code = #{code}

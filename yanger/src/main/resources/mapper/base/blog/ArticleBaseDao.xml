@@ -88,9 +88,6 @@
 		<if test="updateTime != null" >
 			and update_time = #{updateTime}
 		</if>
-		<if test="queryValue != null" >
-			and (rux_words like "%"#{queryValue}"%" or title like "%"#{queryValue}"%" or type = #{queryValue} or classify = #{queryValue})
-		</if>
 	</sql>
 
 	<!-- 按对象查询记录的SQL部分 -->
