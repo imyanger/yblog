@@ -1,4 +1,4 @@
-# manage-system #
+# yanger-app #
 基于Vue.js 2.x系列 + Element UI 的前端项目。
 
 ## 前言 ##
