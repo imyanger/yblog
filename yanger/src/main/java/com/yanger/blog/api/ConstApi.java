@@ -71,7 +71,7 @@ public class ConstApi {
 	}
 
 	/**
-	 * @description获取文章类型和分类
+	 * @description 获取文章类型和分类，不包含模块选项
 	 * @author YangHao
 	 * @date 2018年11月29日-下午10:02:38
 	 * @param articleVo
@@ -92,7 +92,7 @@ public class ConstApi {
 	}
 
 	/**
-	 * @description 获取文章类型和分类
+	 * @description 获取文章类型和分类，包含模块选项
 	 * @author YangHao
 	 * @date 2018年11月29日-下午10:02:38
 	 * @param articleVo
@@ -103,7 +103,7 @@ public class ConstApi {
 	public ApiResponse<List<ConstVo>> allTypes() {
 		ApiResponse<List<ConstVo>> api = new ApiResponse<>();
 		try {
-			List<ConstVo> types = constService.getAllArticleTypes();
+			List<ConstVo> types = constService.getAllArticleTypes("文章类型");
 			api.setData(types);
 		} catch (Exception e) {
 			api.error("获取文章类型和分类");

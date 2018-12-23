@@ -1,5 +1,6 @@
 package com.yanger.blog.service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,10 +121,37 @@ public class ConstService {
 	 * @author YangHao
 	 * @time 2018年12月12日-下午10:03:37
 	 * @return
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
 	 */
-	public List<ConstVo> getAllArticleTypes() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ConstVo> getAllArticleTypes(String depict) throws IllegalAccessException, InvocationTargetException {
+		List<ConstVo> moduleVos = new ArrayList<>(0);
+		// 获取模块
+		List<Const> modules = constDao.findAllByDepict(depict);
+		for (Const module : modules) {
+			ConstVo moduleVo = new ConstVo();
+			BeanUtils.copyProperties(moduleVo, module);
+			// 类型
+			List<Const> types = constDao.findAllByDepict(module.getVal());
+			List<ConstVo> typeVos = new ArrayList<>(0);
+			for (Const type : types) {
+				ConstVo typeVo = new ConstVo();
+				BeanUtils.copyProperties(typeVo, type);
+				// 分类
+				List<Const> classifys = constDao.findAllByDepict(type.getVal());
+				List<ConstVo> classifyVos = new ArrayList<>(0);
+				for (Const classify : classifys) {
+					ConstVo classifyVo = new ConstVo();
+					BeanUtils.copyProperties(classifyVo, classify);
+					classifyVos.add(classifyVo);
+				}
+				typeVo.setChildren(classifyVos);
+				typeVos.add(typeVo);
+			}
+			moduleVo.setChildren(typeVos);
+			moduleVos.add(moduleVo);
+		}
+		return moduleVos;
 	}
 
 }

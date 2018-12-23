@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="crop-demo">
+        <div class="crop-img">
             <img :src="cropImg" class="pre-img" :width="width" :height="height">
         </div>
         <el-dialog title="裁剪图片" :visible.sync="dialogVisible" width="30%">
@@ -21,7 +21,9 @@
                 imgSrc: '',
                 cropImg: '',
                 dialogVisible: false,
-                fileName: ''
+                fileName: '',
+                // 记录上一次的图片信息
+                lastImg: ''
             }
         },
         props: {
@@ -51,7 +53,7 @@
                 } */
                 //记录上一次图片路径
                 if(this.cropImg){
-                    this.defaultSrc = this.cropImg;
+                    this.lastImg = this.cropImg;
                 }
                 const reader = new FileReader();
                 reader.onload = (event) => {
@@ -68,7 +70,7 @@
             },
             cancelCrop(){
                 this.dialogVisible = false;
-                this.cropImg = this.defaultSrc;
+                this.cropImg = this.lastImg;
             },
             //图片上传
             imageuploaded() {
@@ -109,18 +111,21 @@
             },
         },
         created(){
-            this.cropImg = this.defaultSrc;
+            // 初始化上一个为默认值
+            this.lastImg = this.defaultSrc;
+            this.cropImg = this.lastImg;
         }
     }
 </script>
 
 <style scoped>
-    .pre-img{
+    .pre-img {
+        margin: 0 auto;
         background: #f8f8f8;
         border: 1px solid #eee;
         border-radius: 5px;
     }
-    .crop-demo{
+    .crop-img {
         display: flex;
         align-items: flex-end;
     }

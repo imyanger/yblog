@@ -60,7 +60,7 @@ public class FileApi {
 		if (!file.isEmpty()) {
 			String fileName = file.getOriginalFilename();
 			// 文件名带上时间戳
-			fileName += System.currentTimeMillis();
+			fileName = System.currentTimeMillis() + fileName;
 			int size = (int) file.getSize();
 			// 文件根路径
 			String path = ConstantUtils.FILE_PATH + "/file";

@@ -19,25 +19,27 @@
                         <el-row :gutter="20">
                             <el-col :span="8">
                                 <el-form-item label="模块选择">
-                                    <el-select placeholder="请选择" v-model="artData.module">
-                                        <el-option key="bbk" label="步步高" value="bbk"></el-option>
-                                        <el-option key="xtc" label="小天才" value="xtc"></el-option>
+                                    <el-select placeholder="请选择" v-model="artData.module" 
+                                        @change="typeChange(1, artData.module)">
+                                        <el-option v-for="(type, index) in consts.modules" :key="index" 
+                                            :label="type.val" :value="type.code"></el-option>
                                     </el-select>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="8">
                                 <el-form-item label="所属类型">
-                                    <el-select placeholder="请选择" v-model="artData.module">
-                                        <el-option key="bbk" label="步步高" value="bbk"></el-option>
-                                        <el-option key="xtc" label="小天才" value="xtc"></el-option>
+                                    <el-select placeholder="请选择" v-model="artData.type" 
+                                        @change="typeChange(2, artData.type)">
+                                        <el-option v-for="(type, index) in consts.types" :key="index" 
+                                            :label="type.val" :value="type.code"></el-option>
                                     </el-select>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="8">
                                 <el-form-item label="分类选择">
-                                    <el-select placeholder="请选择" v-model="artData.module">
-                                        <el-option key="bbk" label="步步高" value="bbk"></el-option>
-                                        <el-option key="xtc" label="小天才" value="xtc"></el-option>
+                                    <el-select placeholder="请选择" v-model="artData.classify">
+                                        <el-option v-for="(type, index) in consts.classifys" :key="index" 
+                                            :label="type.val" :value="type.code"></el-option>
                                     </el-select>
                                 </el-form-item>
                             </el-col>
@@ -56,7 +58,7 @@
                         <el-row>
                             <el-col>
                                 <upload ref="upload" :defaultSrc='uploadInfo.defaultSrc' :url="uploadInfo.uploadUrl" 
-                                    width='140' height='140' v-on:loadSuccess='loadSuccess'></upload>
+                                    width='120' height='160' v-on:loadSuccess='loadSuccess'></upload>
                             </el-col>
                         </el-row>
                         <el-row>
@@ -65,17 +67,22 @@
                                     选择图片
                                     <input class="crop-input" type="file" name="image" accept="image/*" @change="setImage"/>
                                 </div>
-                                <button class="btn" @click="uploadFile" type='button'>shang传</button>
                             </el-col>
                         </el-row>
                     </div>
                 </el-col>
-
             </el-row>
         </el-form>
         <el-row :gutter="20">
            <div class="editor-container">
                 <UE :defaultMsg='artData.content' :config='config' ref="ue"></UE>
+            </div>
+        </el-row>
+        <el-row>
+            <div class="art-btn">
+                <el-button type="primary" icon="search">重置</el-button>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <el-button type="primary" icon="search">保存</el-button>
             </div>
         </el-row>
     </div>
@@ -89,24 +96,67 @@
         data() {
             return {
                 config: {
+                    // ueditor默认文本框大小
                     initialFrameHeight: 300,
                 },
                 artData: {
                     content: '',
+                    module: '',
+                    type: '',
+                    classify: ''
                 },
-                qfile: {},
                 imageUrl:'',
                 uploadInfo: {
+                    // 头像选择框默认展示图片
                     defaultSrc: './static/img/img.jpg',
+                    // 头像框图片上传接口
                     uploadUrl: '/api/core/file/fileUpload'
+                },
+                consts: {
+                    modules: [],
+                    types: [],
+                    classifys: []
                 }
             }
+        },
+        created() {
+            let _this = this;
+            //获取下拉选项的值
+            this.$get("/const/allTypes")
+            .then(function (response) {
+                _this.consts.modules = response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         },
         computed: {},
         components: {
             UE, Upload
         },
         methods: {
+            typeChange(type, val){
+                let _this = this;
+                let consts = [];
+                if (1 === type) {
+                    consts = _this.consts.modules;
+                } else if(2 === type) {
+                    consts = _this.consts.types;
+                }
+                consts.forEach(item => {
+                    if(val === item.code){
+                        if (1 === type) {
+                            _this.artData.type = '';
+                            _this.consts.types = item.children;
+                            _this.artData.classify = '';
+                            _this.consts.classifys = [];
+                        } else if(2 === type) {
+                            _this.artData.classify = '';
+                            _this.consts.classifys = item.children;
+                        }
+                    }
+                });
+            },
             //选择图片裁剪
             setImage(e){
                 const file = e.target.files[0];
@@ -135,11 +185,12 @@
     }
     .crop-demo-btn{
         position: relative;
-        width: 100px;
-        height: 40px;
+        width: 120px;
+        height: 35px;
         line-height: 40px;
-        padding: 0 20px;
-        margin-left: 30px;
+        margin: 0 auto;
+        margin-top: 12px;
+        text-align: center;
         background-color: #409eff;
         color: #fff;
         font-size: 14px;
@@ -154,5 +205,12 @@
         top: 0;
         opacity: 0;
         cursor: pointer;
+    }
+    .art-btn {
+        text-align: center;
+        margin-top: 15px;
+    }
+    .art-btn button {
+        width: 80px;
     }
 </style>

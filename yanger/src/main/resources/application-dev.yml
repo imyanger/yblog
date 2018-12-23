@@ -9,3 +9,7 @@ spring:
     port: 6379
     password: 1234
     timeout: 180000
+  servlet:
+    multipart:
+      #设置上传文件根路径
+      location: D:/
