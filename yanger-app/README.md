@@ -65,7 +65,6 @@
 
 ### vue-schart ###
 vue.js封装sChart.js的图表组件。访问地址：[vue-schart](https://www.npmjs.com/package/vue-schart)
-<p><a href="https://www.npmjs.com/package/vue-schart"><img src="https://img.shields.io/npm/dm/vue-schart.svg" alt="Downloads"></a></p>
 
 ### element-ui ###
 一套基于vue.js2.0的桌面组件库。访问地址：[element](http://element.eleme.io/#/zh-CN/component/layout)
