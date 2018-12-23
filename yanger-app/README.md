@@ -24,13 +24,13 @@
 	|-- src                              // 源码目录
 	    |-- components                   // 组件
             |-- back                     // 后台管理系统组件
-            |-- blog           	         // 博客前台展示组件
+            |-- blog                     // 博客前台展示组件
             |-- common                   // 公共组件
 	    |-- pages                        // 主要路由页面
 	        |-- back                     // 后台管理系统页面
             |-- blog                     // 博客前台页面
-        |-- router                   	 // 路由目录
-        |-- store                   	 // vuex目录
+        |-- router                       // 路由目录
+        |-- store                        // vuex目录
 	    |-- App.vue                      // 页面入口文件
 	    |-- main.js                      // 程序入口文件，加载各种公共组件
     |-- static                           // 静态资源目录
