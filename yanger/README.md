@@ -1,66 +1,51 @@
-# manage-system #
-基于Vue.js 2.x系列 + Element UI 的后台管理系统解决方案。
+# yanger #
+基于springboot 2.0.4.RELEASE + mybatis + mysql的后端项目。
 
 ## 前言 ##
-该方案作为一套多功能的后台框架模板，适用于绝大部分的后台管理系统（Web Management System）开发。基于vue.js,使用vue-cli脚手架快速生成项目目录，引用Element UI组件库，方便开发快速简洁好看的组件。分离颜色样式，支持手动切换主题色，而且很方便使用自定义主题色。
+该项目基于springboot,使用maven打包，数据库选择mysql，引入mybatis作为ORM框架，项目引入了lombok插件，并使用swagger2API进行文档支持和接口展示。
 
 ## 功能 ##
-- [x] Element UI
-- [x] 登录/注销
-- [x] Dashboard
-- [x] 表格
-- [x] Tab选项卡
-- [x] 表单
-- [x] 图表 :bar_chart:
-- [x] 富文本编辑器
-- [x] markdown编辑器
-- [x] 图片拖拽/裁剪上传
-- [x] 支持切换主题色 :sparkles:
-- [x] 列表拖拽排序
-- [x] 权限测试
-- [x] 404 / 403
-
+- [x] 部分化restful接口
+- [x] swagger2API文档支持
+- [x] generator代码生成
+- [x] paginator的分页查询
+- [x] redis缓存机制
+- [x] shiro权限
 
 ## 目录结构介绍 ##
 
-	|-- build                            // webpack配置文件
-	|-- config                           // 项目打包路径
-	|-- src                              // 源码目录
-	|   |-- components                   // 组件
-	|       |-- common                   // 公共组件
-	|           |-- bus.js           	 // Event Bus
-	|           |-- Header.vue           // 公共头部
-	|           |-- Home.vue           	 // 公共路由入口
-	|           |-- Sidebar.vue          // 公共左边栏
-	|           |-- Tags.vue           	 // 页面切换标签组件
-	|       |-- page                   	 // 主要路由页面
-	|           |-- 403.vue
-	|           |-- 404.vue
-	|           |-- BaseCharts.vue       // 基础图表
-	|           |-- BaseForm.vue         // 基础表单
-	|           |-- BaseTable.vue        // 基础表格
-	|           |-- DashBoard.vue        // 系统首页
-	|           |-- DragList.vue         // 拖拽列表组件
-	|           |-- Login.vue          	 // 登录
-	|           |-- Markdown.vue         // markdown组件
-	|           |-- Premission.vue       // 权限测试组件
-	|           |-- Upload.vue           // 图片上传
-	|           |-- VueEditor.vue        // 富文本编辑器
-	|   |-- App.vue                      // 页面入口文件
-	|   |-- main.js                      // 程序入口文件，加载各种公共组件
-	|-- .babelrc                         // ES6语法编译配置
-	|-- .editorconfig                    // 代码编写规格
-	|-- .gitignore                       // 忽略的文件
-	|-- index.html                       // 入口html文件
-	|-- package.json                     // 项目及工具的依赖配置文件
-	|-- README.md                        // 说明
-
+	|-- src                                             // 源码目录
+	    |-- main                         
+            |-- java                            
+                |-- com           	          
+                    |-- yanger       
+                        |-- blog                        // 项目后台主要业务代码目录
+                        |-- common                      // 公共类目录
+                        |-- generator                   // generator代码生成程序目录
+                        |-- mybatis                     // mybatis分页实现程序目录
+                        |-- shiro                       // shiro相关目录
+                        |-- ueditor                     // ueditor文件目录
+                        |-- YangerApplication.java      // 项目加载入口类
+	        |-- resources                               // 资源文件目录
+	            |-- mapper                              // mybatis数据库映射文件
+                |-- ueditor                             // ueditor配置文件目录
+                |-- application.yml                     // 项目主配置文件
+                |-- application-dev.yml                 // 开发环境配置文件
+                |-- ehcache.xml                         // ehcache缓存配置文件
+                |-- log4j.properties                    // log4j日志配置
+        |-- test                   	                    // 单元测试目录
+    |-- static                                          // 静态资源目录
+	    |-- css                                         // css样式目录
+	    |-- img                                         // 图片目录
+        |-- js           	             // 公共js目录
+        |-- ueditor                      // 富文本编辑器ueditor目录
+	|-- pom.xml                          // maven项目的pom文件
 
 ## 安装步骤 ##
 
-	git clone https://github.com/lin-xin/vue-manage-system.git      // 把模板下载到本地
-	cd vue-manage-system    // 进入模板目录
-	npm install         // 安装项目依赖，等待安装完成之后
+	git clone https://github.com/imyanger/yblog.git     // 把模板下载到本地
+	cd yblog/yanger-app     // 进入模板目录
+	npm install     // 安装项目依赖，等待安装完成之后
 
 ## 本地开发 ##
 
@@ -75,56 +60,13 @@
 ## 组件使用说明与演示 ##
 
 ### vue-schart ###
-vue.js封装sChart.js的图表组件。访问地址：[vue-schart](https://github.com/linxin/vue-schart)
-<p><a href="https://www.npmjs.com/package/vue-schart"><img src="https://img.shields.io/npm/dm/vue-schart.svg" alt="Downloads"></a></p>
-
-```JavaScript
-<template>
-    <div>
-        <schart :canvasId="canvasId"
-				:type="type"
-				:width="width"
-				:height="height"
-				:data="data"
-				:options="options"
-		></schart>
-    </div>
-</template>
-	
-<script>
-    import Schart from 'vue-schart';        // 导入Schart组件
-    export default {
-        data: function(){
-            return {
-                canvasId: 'myCanvas',       // canvas的id
-                type: 'bar',                // 图表类型
-                width: 500,
-                height: 400,
-                data: [
-                    {name: '2014', value: 1342},
-                    {name: '2015', value: 2123},
-                    {name: '2016', value: 1654},
-                    {name: '2017', value: 1795},
-                ],
-                options: {                  // 图表可选参数
-                    title: 'Total sales of stores in recent years'
-                }
-            }
-        },
-        components: {
-            Schart
-        }
-    }
-</script>
-```
+vue.js封装sChart.js的图表组件。访问地址：[vue-schart](https://www.npmjs.com/package/vue-schart)
 
 ### element-ui ###
 一套基于vue.js2.0的桌面组件库。访问地址：[element](http://element.eleme.io/#/zh-CN/component/layout)
 
-### Vue-Quill-Editor ###
+### Vue-Quill-Editor（IE10及以下不支持） ###
 基于Quill、适用于Vue2的富文本编辑器。访问地址：[vue-quill-editor](https://github.com/surmon-china/vue-quill-editor)
-
-（IE10及以下不支持）
 
 ### mavonEditor ###
 基于Vue的markdown编辑器。访问地址：[mavonEditor](https://github.com/hinesboy/mavonEditor)
@@ -132,34 +74,5 @@ vue.js封装sChart.js的图表组件。访问地址：[vue-schart](https://githu
 ### vue-cropperjs ###
 一个封装了 cropperjs 的 Vue 组件，用于裁剪图片。访问地址：[vue-cropperjs](https://github.com/Agontuk/vue-cropperjs)
 
-## 其他注意事项 ##
-### 一、如果我不想用到上面的某些组件呢，那我怎么在模板中删除掉不影响到其他功能呢？ ###
-
-举个栗子，我不想用 Vue-Quill-Editor 这个组件，那我需要分四步走。
-
-第一步：删除该组件的路由，在目录 src/router/index.js 中，找到引入改组件的路由，删除下面这段代码。
-
-```JavaScript
-{
-    // 富文本编辑器组件
-    path: '/editor',
-    component: resolve => require(['../components/page/VueEditor.vue'], resolve) 
-},
-```
-
-第二步：删除引入该组件的文件。在目录 src/components/page/ 删除 VueEditor.vue 文件。
-
-第三步：删除该页面的入口。在目录 src/components/common/Sidebar.vue 中，找到该入口，删除下面这段代码。
-	
-```js
-{
-	index: 'editor',
-	title: '富文本编辑器'
-},
-```
-
-第四步：卸载该组件。执行以下命令：
-	
-	npm un vue-quill-editor -S
-
-完成。
+### ueditor ###
+百度web前端研发部开发所见即所得富文本web编辑器，轻量，可定制。访问地址：[ueditor](https://ueditor.baidu.com/website/index.html)
