@@ -48,7 +48,7 @@
 ## 使用组件说明 ##
 
 ### swagger2API ###
-swagger提供API接口调用页面，可方便接口查看和测试，项目swagger默认访问地址http://localhost:8888/yanger 。swagger官网地址：[swagger](https://swagger.io/)
+swagger提供API接口调用页面，可方便接口查看和测试。swagger官网地址：[swagger](https://swagger.io/)
 
 ### lombok ###
 lombok插件可使用注解简化一些繁琐的java代码。lombok访问地址：[element](https://projectlombok.org/)
