@@ -14,27 +14,27 @@
 
 ## 目录结构介绍 ##
    
-    |-- src                                             // 源码目录
-	|-- main                         
-            |-- java                            
-                |-- com           	          
-                    |-- yanger       
-                        |-- blog                        // 项目后台主要业务代码目录
-                        |-- common                      // 公共类目录
-                        |-- generator                   // generator代码生成程序目录
-                        |-- mybatis                     // mybatis分页实现程序目录
-                        |-- shiro                       // shiro相关目录
-                        |-- ueditor                     // ueditor文件目录
-                        |-- YangerApplication.java      // 项目加载入口类
-                |-- resources                           // 资源文件目录
-                    |-- mapper                          // mybatis数据库映射文件
-                |-- ueditor                             // ueditor配置文件目录
-                |-- application.yml                     // 项目主配置文件
-                |-- application-dev.yml                 // 开发环境配置文件
-                |-- ehcache.xml                         // ehcache缓存配置文件
-                |-- log4j.properties                    // log4j日志配置
-    |-- test                                            // 单元测试目录
-    |-- pom.xml                                         // maven项目的pom文件
+	|-- src                                       		// 源码目录
+		|-- main                         
+			|-- java                            
+				|-- com           	          
+					|-- yanger       
+						|-- blog                        // 项目后台主要业务代码目录
+						|-- common                      // 公共类目录
+						|-- generator                   // generator代码生成程序目录
+						|-- mybatis                     // mybatis分页实现程序目录
+						|-- shiro                       // shiro相关目录
+						|-- ueditor                     // ueditor文件目录
+						|-- YangerApplication.java      // 项目加载入口类
+			|-- resources                           	// 资源文件目录
+				|-- mapper                          	// mybatis数据库映射文件
+				|-- ueditor                            // ueditor配置文件目录
+				|-- application.yml                    // 项目主配置文件
+				|-- application-dev.yml                // 开发环境配置文件
+				|-- ehcache.xml                        // ehcache缓存配置文件
+				|-- log4j.properties                   // log4j日志配置
+	|-- test                                          // 单元测试目录
+	|-- pom.xml                                       // maven项目的pom文件
 
 ## 安装步骤 ##
 	
