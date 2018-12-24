@@ -1,5 +1,7 @@
 package com.yanger.blog.service;
 
+import java.util.Date;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import com.yanger.blog.dao.ArticleDao;
 import com.yanger.blog.po.Article;
 import com.yanger.blog.vo.ArticleVo;
 import com.yanger.blog.vo.PageQueryVo;
+import com.yanger.common.util.ConstantUtils;
 import com.yanger.common.util.ParamUtils;
 import com.yanger.mybatis.paginator.Page;
 import com.yanger.mybatis.paginator.PageParam;
@@ -63,6 +66,15 @@ public class ArticleService {
 	public void addArticle(ArticleVo articleVo) throws Exception {
 		Article entity = new Article();
 		BeanUtils.copyProperties(entity, articleVo);
+		// 作者
+		entity.setAuthor("yanger");
+		// 有效状态
+		entity.setStatus(ConstantUtils.STATUS_VALID);
+		entity.setLikes(0);
+		entity.setViews(0);
+		entity.setCommons(0);
+		// 插入时间
+		entity.setInsertTime(new Date());
 		articleDao.insert(entity);
 	}
 

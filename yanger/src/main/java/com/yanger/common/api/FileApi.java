@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.yanger.common.util.ConstantUtils;
+import com.yanger.common.vo.ApiResponse;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -56,7 +57,8 @@ public class FileApi {
 	 */
 	@RequestMapping("fileUpload")
 	@ResponseBody
-	public void fileUpload(@RequestParam("fileData") MultipartFile file) {
+	public ApiResponse<String> fileUpload(@RequestParam("fileData") MultipartFile file) {
+		ApiResponse<String> api = new ApiResponse<>();
 		if (!file.isEmpty()) {
 			String fileName = file.getOriginalFilename();
 			// 文件名带上时间戳
@@ -73,14 +75,18 @@ public class FileApi {
 			try {
 				// 保存文件
 				file.transferTo(dest);
+				api.setData(path + "/" + fileName);
 			} catch (IllegalStateException e) {
+				api.error("保存文件报错");
 				log.error("保存文件报错", e);
 				e.printStackTrace();
 			} catch (IOException e) {
+				api.error("保存文件报错");
 				log.error("保存文件报错", e);
 				e.printStackTrace();
 			}
 		}
+		return api;
 	}
 
 	/**

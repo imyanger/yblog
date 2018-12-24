@@ -7,12 +7,12 @@
                         <el-row :gutter="20">
                             <el-col :span="12">
                                 <el-form-item label="文章标题">
-                                    <el-input></el-input>
+                                    <el-input v-model="artData.title"></el-input>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="12">
                                 <el-form-item label="关键字">
-                                    <el-input></el-input>
+                                    <el-input v-model="artData.ruxWords"></el-input>
                                 </el-form-item>
                             </el-col>
                         </el-row>
@@ -47,7 +47,7 @@
                         <el-row>
                             <el-col :span="24">
                                 <el-form-item label="文章简介">
-                                        <el-input type="textarea" rows="5"></el-input>
+                                        <el-input type="textarea" rows="5" v-model="artData.summary"></el-input>
                                 </el-form-item>
                             </el-col>
                         </el-row>
@@ -58,7 +58,7 @@
                         <el-row>
                             <el-col>
                                 <upload ref="upload" :defaultSrc='uploadInfo.defaultSrc' :url="uploadInfo.uploadUrl" 
-                                    width='120' height='160' v-on:loadSuccess='loadSuccess'></upload>
+                                    width='120' height='160' :autoUp=true v-on:loadSuccess='loadSuccess'></upload>
                             </el-col>
                         </el-row>
                         <el-row>
@@ -80,9 +80,9 @@
         </el-row>
         <el-row>
             <div class="art-btn">
-                <el-button type="primary" icon="search">重置</el-button>
+                <el-button type="primary" icon="search" @click="reset">重置</el-button>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <el-button type="primary" icon="search">保存</el-button>
+                <el-button type="primary" icon="search" @click="saveArt">保存</el-button>
             </div>
         </el-row>
     </div>
@@ -110,7 +110,9 @@
                     // 头像选择框默认展示图片
                     defaultSrc: './static/img/img.jpg',
                     // 头像框图片上传接口
-                    uploadUrl: '/api/core/file/fileUpload'
+                    uploadUrl: '/api/core/file/fileUpload',
+                    // 图片上传后的响应信息
+                    response: {}
                 },
                 consts: {
                     modules: [],
@@ -170,9 +172,43 @@
                 this.$refs.upload.imageuploaded();
             },
             //上传成功后回调方法
-            loadSuccess(res){
-                if(1 == res){
-                    alert('上传成功')
+            loadSuccess(response){
+                this.uploadInfo.response = JSON.parse(response);
+            },
+            //重置数据
+            reset(){
+                // 基础数据重置
+                this.artData = {
+                    content: '',
+                    module: '',
+                    type: '',
+                    classify: ''
+                }
+                //ue重置
+                this.$refs.ue.clear();
+                // 重置选择的图片
+                this.$refs.upload.setcropImg(this.uploadInfo.defaultSrc);
+                // 上传成功状态重置
+                this.uploadInfo.response = {};
+            },
+            // 保存文章
+            saveArt(){
+                // 确认图片是否上传
+                if(this.uploadInfo.response.status === 0) {
+                    // 图片路径
+                    this.artData.artImgPath = this.uploadInfo.response.data;
+                    // 文章内容
+                    this.artData.content = this.$refs.ue.getContent();
+                    // 提交文章信息
+                    this.$put("/art/add", this.artData)
+                    .then(function (response) {
+                        alert(ok)
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                }else {
+                    this.$alert("请先上传图片", "提示");
                 }
             }
         }

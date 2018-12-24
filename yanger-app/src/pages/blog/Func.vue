@@ -6,11 +6,13 @@
 				<table>
 					<tr>
 						<td id="book">
-							<span class="resource_table_img">
-								<img alt="" src="static/img/img.jpg">
-							</span>
-							<br>
-							<a>网站后台</a>
+							<a href="#/back/home" target="_blank">
+								<span class="resource_table_img">
+									<img alt="" src="static/img/img.jpg">
+								</span>
+								<br>
+								<a>网站后台</a>
+							</a>
 						</td>
 						<td><a>最新电影资源</a></td>
 						<td><a>软件下载</a></td>

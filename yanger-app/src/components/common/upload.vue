@@ -7,7 +7,7 @@
             <vue-cropper ref='cropper' :src="imgSrc" :ready="cropImage" :zoom="cropImage" :cropmove="cropImage" style="width:100%;height:300px;"></vue-cropper>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="cancelCrop">取 消</el-button>
-                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+                <el-button type="primary" @click="sureCrop">确 定</el-button>
             </span>
         </el-dialog>
     </div>
@@ -27,17 +27,25 @@
             }
         },
         props: {
+            // 上传请求路径
             url: {
                 type: String
             },
+            // 默认展示图片路径
             defaultSrc: {
                 type: String
             },
+            // 宽
             height: {
                  type: String
             },
+            // 高
             width: {
                  type: String
+            },
+            // 是否自动上传
+            autoUp: {
+                type: Boolean
             }
         },
         components: {
@@ -65,14 +73,31 @@
                 //将图片转化为base64
                 reader.readAsDataURL(file);
             },
+            // 展示裁剪图片
             cropImage () {
                 this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
             },
-            cancelCrop(){
+            // 确定裁剪
+            sureCrop() {
                 this.dialogVisible = false;
+                // 自动上传
+                if(this.autoUp){
+                    // 上传图片
+                    this.imageuploaded();
+                }
+            },
+            // 取消裁剪
+            cancelCrop() {
+                this.dialogVisible = false;
+                // 展示上一次裁剪图片
                 this.cropImg = this.lastImg;
             },
-            //图片上传
+            // 设置图片
+            setcropImg(img) {
+                this.cropImg = img;
+                this.lastImg = img;
+            },
+            // 图片上传
             imageuploaded() {
                 let _this = this;
                 //base64转化为file
@@ -93,11 +118,11 @@
                 //xhr.upload.addEventListener("progress", _this.progressFunction, false);
                 xhr.onload = function () {
                     //上传成功
-                    _this.$emit('loadSuccess', 1);
+                    _this.$emit('loadSuccess', xhr.response);
                 };
                 xhr.send(form);
             },
-            //将base64的图片转换为file文件
+            // 将base64的图片转换为file文件
             convertBase64UrlToBlob(urlData) {
                 //去掉url的头，并转换为byte
                 let bytes = window.atob(urlData.split(',')[1]);
