@@ -69,7 +69,7 @@ export default new Router({
                 },
                 {
                     path: '/back/art/count',
-                    component: resolve => require(['@/pages/back/ArtAdd.vue'], resolve),
+                    component: resolve => require(['@/pages/back/ArtCount.vue'], resolve),
                     meta: { title: '文章统计' }
                 },
                 {

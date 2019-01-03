@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://58.87.66.244:3306/yanger?useUnicode=true&amp;characterEncoding=utf-8
+    username: root
+    password: 1234
+  redis:
+    host: 58.87.66.244
+    port: 6379
+    password: 1234
+    timeout: 180000
+  servlet:
+    multipart:
+      #设置上传文件根路径
+      location: /
