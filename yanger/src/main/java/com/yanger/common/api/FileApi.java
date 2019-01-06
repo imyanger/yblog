@@ -194,7 +194,7 @@ public class FileApi {
 			// 输出流
 			OutputStream os = response.getOutputStream();
 			// 将缩略图写入输入流，JPEG格式
-			ImageIO.write(thumbnail, "JPEG", os);
+			ImageIO.write(thumbnail, "png", os);
 			os.flush();
 
 		} catch (IOException e) {
@@ -275,7 +275,7 @@ public class FileApi {
 			// 输出流
 			OutputStream os = response.getOutputStream();
 			// 将缩略图写入输入流，JPEG格式
-			ImageIO.write(thumbnail, "JPEG", os);
+			ImageIO.write(thumbnail, "png", os);
 			os.flush();
 
 		} catch (IOException e) {

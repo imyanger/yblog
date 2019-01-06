@@ -5,7 +5,7 @@
 				<h2 class="title-h2">生活很精彩&nbsp;&nbsp;&nbsp;每一天都值得被记录</h2>
                 <div class="content_study_note"  v-for="(essay, index) in essayData.essayPage.data" :key="essay.index">
                     <div class="note_left">
-                        <img alt="" src="static/img/img.jpg">
+                        <img alt="" :src="essayData.serverPath + '/file/thumbImg?wh=150&path=' + essay.artImgPath">
                     </div>
                     <div class="note_right">
                         <h4><a :href="'#/view/'+ essay.articleId" title="文章标题" target="_blank">{{essay.title}}</a></h4>

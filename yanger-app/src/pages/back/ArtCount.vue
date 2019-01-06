@@ -46,7 +46,6 @@
 <script>
     import Schart from 'vue-schart';
     export default {
-        name: 'basecharts',
         components: {
             Schart
         },

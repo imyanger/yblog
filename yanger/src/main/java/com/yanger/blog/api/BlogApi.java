@@ -3,6 +3,7 @@ package com.yanger.blog.api;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,7 @@ import com.yanger.blog.vo.PageQueryVo;
 import com.yanger.blog.vo.StudyDataVo;
 import com.yanger.blog.vo.ViewDataVo;
 import com.yanger.common.annotation.Token;
+import com.yanger.common.config.ServerConfig;
 import com.yanger.common.util.JwtUtils;
 import com.yanger.common.util.RedisMagger;
 import com.yanger.common.vo.ApiResponse;
@@ -41,6 +43,9 @@ public class BlogApi {
 
 	@Autowired
 	private RedisMagger RedisMagger;
+	
+	@Autowired
+	private ServerConfig serverConfig;
 
 	/**
 	 * @description 测试redis
@@ -70,6 +75,7 @@ public class BlogApi {
 		ApiResponse<HomeDataVo> api = new ApiResponse<>();
 		try {
 			HomeDataVo homeData = blogService.getHomeData();
+			homeData.setServerPath(serverConfig.getUrl());
 			api.setData(homeData);
 		} catch (Exception e) {
 			api.error("加载博客首页数据失败");
@@ -90,6 +96,7 @@ public class BlogApi {
 		ApiResponse<StudyDataVo> api = new ApiResponse<>();
 		try {
 			StudyDataVo studyDataVo = blogService.getStudyData();
+			studyDataVo.setServerPath(serverConfig.getUrl());
 			api.setData(studyDataVo);
 		} catch (Exception e) {
 			api.error("加载学习笔记数据失败");
@@ -110,6 +117,7 @@ public class BlogApi {
 		ApiResponse<EssayDataVo> api = new ApiResponse<>();
 		try {
 			EssayDataVo essayDataVo = blogService.getEssayData();
+			essayDataVo.setServerPath(serverConfig.getUrl());
 			api.setData(essayDataVo);
 		} catch (Exception e) {
 			api.error("加载心情随笔数据失败");

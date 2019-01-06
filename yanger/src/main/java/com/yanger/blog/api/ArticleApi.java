@@ -23,7 +23,7 @@ import io.swagger.annotations.ApiOperation;
 public class ArticleApi {
 	
 	@Autowired
-	ArticleService articleService;
+	private ArticleService articleService;
 	
 	/**
 	 * @description 查询文章分页数据  

@@ -5,7 +5,7 @@
 				<h2 class="title-h2">最新学习笔记</h2>
                 <div class="content_study_note" v-for="(study, index) in homeData.studys" :key="study.index">
                     <div class="note_left">
-                        <img alt="" src="static/img/img.jpg" title="">
+                        <img alt="" :src="homeData.serverPath + '/file/thumbImg?wh=150&path=' + study.artImgPath" title="">
                     </div>
                     <div class="note_right">
                         <h4><a :href="'#/view/'+ study.articleId" title="" target="_blank">{{study.title}}</a></h4>
@@ -18,7 +18,7 @@
 				<h2 class="title-h2">随心情更新的日志</h2>
                 <div class="content_journal_note"  v-for="(essay, index) in homeData.essays" :key="essay.index">
                     <div class="journal_left">
-                        <img alt="" src="static/img/img.jpg" title="">
+                        <img alt="" :src="homeData.serverPath + '/file/thumbImg?wh=150&path=' + essay.artImgPath" title="">
                     </div>
                     <div class="journal_right">
                         <h4><a :href="'#/view/'+ essay.articleId" title="" target="_blank">{{essay.title}}</a></h4>

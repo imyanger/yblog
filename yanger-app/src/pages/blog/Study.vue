@@ -5,7 +5,7 @@
 				<h2 class="title-h2">路漫漫其修远兮&nbsp;&nbsp;&nbsp;吾将上下而求索</h2>
 				<div class="content_study_note" v-for="(study, index) in studyData.studyPage.data" :key="study.index">
 					<div class="note_left">
-						<img alt="" src="static/img/img.jpg">
+						<img alt="" :src="studyData.serverPath + '/file/thumbImg?wh=150&path=' + study.artImgPath">
 					</div>
 					<div class="note_right">
 						<h4><a :href="'#/view/'+ study.articleId" title="文章标题" target="_blank">{{study.title}}</a><span>分类：{{study.classify}}</span></h4>

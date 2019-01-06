@@ -14,12 +14,15 @@ public class EssayDataVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//学习笔记及其分页信息
-	ResultPage<ArticleVo> essayPage;
+	private ResultPage<ArticleVo> essayPage;
 	
 	//热门文章
-	List<ArticleVo> hots = new ArrayList<>(0);
+	private List<ArticleVo> hots = new ArrayList<>(0);
 	
 	//文章分类
-	List<ArticleKindVo> kinds;
+	private List<ArticleKindVo> kinds;
+	
+	//项目服务路径
+	private String serverPath;
 
 }

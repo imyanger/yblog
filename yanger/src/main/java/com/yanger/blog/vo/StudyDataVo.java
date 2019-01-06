@@ -14,12 +14,15 @@ public class StudyDataVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	//学习笔记及其分页信息
-	ResultPage<ArticleVo> studyPage;
+	private ResultPage<ArticleVo> studyPage;
 	
 	//热门文章
-	List<ArticleVo> hots = new ArrayList<>(0);
+	private List<ArticleVo> hots = new ArrayList<>(0);
 	
 	//文章分类
-	List<ArticleKindVo> kinds;
+	private List<ArticleKindVo> kinds;
+	
+	//项目服务路径
+	private String serverPath;
 	
 }

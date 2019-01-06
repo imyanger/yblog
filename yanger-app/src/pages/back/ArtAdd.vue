@@ -193,6 +193,7 @@
             },
             // 保存文章
             saveArt(){
+                let _this = this;
                 // 确认图片是否上传
                 if(this.uploadInfo.response.status === 0) {
                     // 图片路径
@@ -201,8 +202,10 @@
                     this.artData.content = this.$refs.ue.getContent();
                     // 提交文章信息
                     this.$put("/art/add", this.artData)
+
                     .then(function (response) {
-                        alert(ok)
+                        _this.$alert("文章保存成功", "提示");
+                        _this.reset();
                     })
                     .catch(function (error) {
                         console.log(error);

@@ -11,8 +11,8 @@ mybatis:
 #spring配置
 spring:
   profiles:
-    #active: dev
-    active: prod
+    active: dev
+    #active: prod
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     # 连接池配置

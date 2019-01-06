@@ -28,7 +28,7 @@ import io.swagger.annotations.ApiOperation;
 public class ConstApi {
 
 	@Autowired
-	ConstService constService;
+	private ConstService constService;
 
 	/**
 	 * @description 查询常量表分页数据

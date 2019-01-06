@@ -25,7 +25,7 @@ import com.yanger.mybatis.util.ResultPage;
 public class ConstService {
 
 	@Autowired
-	ConstDao constDao;
+	private ConstDao constDao;
 
 	/**
 	 * @description 获取常量表分页数据

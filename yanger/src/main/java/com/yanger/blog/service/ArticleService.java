@@ -24,7 +24,7 @@ import com.yanger.mybatis.util.ResultPage;
 public class ArticleService {
 
 	@Autowired
-	ArticleDao articleDao;
+	private ArticleDao articleDao;
 
 	/**
 	 * @description 分页查询文章
@@ -66,6 +66,8 @@ public class ArticleService {
 	public void addArticle(ArticleVo articleVo) throws Exception {
 		Article entity = new Article();
 		BeanUtils.copyProperties(entity, articleVo);
+		//路径去掉根路径
+		entity.setArtImgPath(entity.getArtImgPath().replace(ConstantUtils.FILE_PATH, ""));
 		// 作者
 		entity.setAuthor("yanger");
 		// 有效状态
