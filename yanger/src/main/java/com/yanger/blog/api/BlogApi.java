@@ -31,11 +31,13 @@ import com.yanger.mybatis.util.ResultPage;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
 @Api
 // @Token
 @RestController
 @RequestMapping("/blog")
+@Slf4j
 public class BlogApi {
 
 	@Autowired
@@ -63,6 +65,12 @@ public class BlogApi {
 		}
 	}
 
+	@GetMapping("log")
+	public void log() {
+		log.info("这是info信息2");
+		log.error("这是error信息");
+	}
+	
 	/**
 	 * @description 博客首页数据初始化
 	 * @author YangHao

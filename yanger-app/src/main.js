@@ -16,7 +16,7 @@ import { post, get, patch, put, del } from '../static/js/http';
 import store from './store';
 
 //lib-flexible屏幕适配
-import  'lib-flexible';
+// import  'lib-flexible';
 
 //定义全局变量
 Vue.prototype.$post = post;

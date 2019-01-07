@@ -4,11 +4,16 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,16 +22,19 @@ import org.springframework.util.ResourceUtils;
 
 import com.yanger.ueditor.define.ActionMap;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 配置管理器
  * 
  * @author hancong03@baidu.com
  *
  */
+@Slf4j
 public final class ConfigManager {
 
 	private final String rootPath;
-	private final String originalPath;
+	//private final String originalPath;
 	private final String contextPath;
 	private static final String configFileName = "config.json";
 	private String parentPath = null;
@@ -45,7 +53,8 @@ public final class ConfigManager {
 
 		this.rootPath = rootPath;
 		this.contextPath = contextPath;
-		this.originalPath = "src/main/resources/ueditor/config.json";
+		//这个地址可能需要修改
+		//this.originalPath = "src/main/resources/ueditor/config.json";
 
 		this.initEnv();
 
@@ -67,6 +76,7 @@ public final class ConfigManager {
 		try {
 			return new ConfigManager(rootPath, contextPath, uri);
 		} catch (Exception e) {
+			log.error("ConfigManager", e);
 			return null;
 		}
 
@@ -170,9 +180,12 @@ public final class ConfigManager {
 		 * String configContent = this.readFile( this.getConfigPath() );
 		 */
 		// 更改获取配置文件的方式
-		String configPath = ResourceUtils.getFile("classpath:ueditor/config.json").getAbsolutePath();
-		String configContent = this.readFile(configPath);
-
+//		String configPath = ResourceUtils.getFile("classpath:ueditor/config.json").getAbsolutePath();
+//		String configContent = this.readFile(configPath);
+		
+		String configContent = getJarConfig(); //this.readFile(this.getJarConfigPath());
+		
+		
 		try {
 			JSONObject jsonConfig = new JSONObject(configContent);
 			this.jsonConfig = jsonConfig;
@@ -229,6 +242,28 @@ public final class ConfigManager {
 
 		return input.replaceAll("/\\*[\\s\\S]*?\\*/", "");
 
+	}
+	
+	//更改获取配置文件的方式，jar包使用
+	private String getJarConfig() throws IOException {
+        StringBuilder builder = new StringBuilder();
+		try {
+			InputStreamReader reader = new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("ueditor/config.json"), "UTF-8");
+			BufferedReader bfReader = new BufferedReader(reader);
+
+			String tmpContent = null;
+
+			while ((tmpContent = bfReader.readLine()) != null) {
+				builder.append(tmpContent);
+			}
+
+			bfReader.close();
+
+		} catch (UnsupportedEncodingException e) {
+			// 忽略
+		}
+
+		return this.filter(builder.toString());
 	}
 
 }
