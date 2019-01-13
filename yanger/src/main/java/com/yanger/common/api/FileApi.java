@@ -56,6 +56,7 @@ public class FileApi {
 	 * @return
 	 */
 	@RequestMapping("fileUpload")
+	@ApiOperation(value = "图片上传接口", notes = "")
 	@ResponseBody
 	public ApiResponse<String> fileUpload(@RequestParam("fileData") MultipartFile file) {
 		ApiResponse<String> api = new ApiResponse<>();
