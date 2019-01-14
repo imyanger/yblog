@@ -2,7 +2,7 @@
 SQLyog Ultimate v11.24 (32 bit)
 MySQL - 5.5.58 : Database - yanger
 *********************************************************************
-*/
+*/
 
 /*!40101 SET NAMES utf8 */;
 
@@ -27,7 +27,7 @@ insert  into `blog_user`(`user_id`,`user_code`,`password`,`user_nick_name`,`gend
 
 insert  into `const`(`id`,`depict`,`code`,`val`,`status`,`insert_time`,`update_time`) values (1,'文章类型','学习笔记','学习笔记','1',NULL,'2018-12-02 20:24:11'),(2,'文章类型','心情随笔','心情随笔','1',NULL,'2018-12-02 20:24:16'),(3,'学习笔记','java','java','1',NULL,'2018-11-29 23:32:02'),(4,'学习笔记','vue','vue','1',NULL,'2018-11-29 23:32:04'),(5,'java','spring232','spring24.51121','1',NULL,'2018-11-29 23:32:18'),(6,'java','mybatis','mybatis','1',NULL,'2018-11-29 23:32:20'),(7,'java','springboot','springboot','1',NULL,'2018-11-29 23:32:33'),(9,'vue','element','element','1',NULL,'2018-11-29 23:33:09'),(10,'kik','2','2','1',NULL,'2018-12-04 22:07:33'),(14,'官方的','的沙发上','是的发生','1',NULL,'2018-12-04 23:18:08');
 
-/*Data for the table `contacts` */
+/*Data for the table `contact` */
 
 /*Data for the table `leaving_msg` */
 

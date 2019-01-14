@@ -57,7 +57,7 @@ public class ConstService {
 	 * @param articleVo
 	 * @throws Exception
 	 */
-	public void addArticle(ConstVo constVo) throws Exception {
+	public void addConst(ConstVo constVo) throws Exception {
 		Const entity = new Const();
 		BeanUtils.copyProperties(entity, constVo);
 		if (entity.getId() != null) {

@@ -62,7 +62,7 @@ public class ConstApi {
 	public ApiResponse<String> articleAdd(@RequestBody ConstVo constVo) {
 		ApiResponse<String> api = new ApiResponse<>();
 		try {
-			constService.addArticle(constVo);
+			constService.addConst(constVo);
 		} catch (Exception e) {
 			api.error("新增常量处理失败");
 			e.printStackTrace();

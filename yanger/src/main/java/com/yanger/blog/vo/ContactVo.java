@@ -6,11 +6,11 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 表contacts的VO对象,通过com.yanger.generator包代码工具自动生成
- * 对应表名：contacts
+ * 表contact的VO对象,通过com.yanger.generator包代码工具自动生成
+ * 对应表名：contact
  */
 @Data
-public class ContactsVo implements Serializable {
+public class ContactVo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

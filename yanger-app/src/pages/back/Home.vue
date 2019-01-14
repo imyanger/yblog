@@ -33,10 +33,12 @@
                                 <div class="todo-item" :class="{'todo-item-del': scope.row.status}">{{scope.row.title}}</div>
                             </template>
                         </el-table-column>
-                        <el-table-column width="60">
+                        <el-table-column width="100">
                             <template slot-scope="scope">
-                                <i class="el-icon-edit"></i>
-                                <i class="el-icon-delete"></i>
+                                <div class="operate">
+                                    <i class="el-icon-edit" title="修改" @click="editTodo(scope.$index, scope.row)"></i>
+                                    <i class="el-icon-delete" title="删除" @click="delTodo(scope.$index, scope.row)"></i>
+                                </div>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -55,7 +57,7 @@
                 todoList: [
                     {
                         title: '今天要修复100个bug',
-                        status: false,
+                        status: true,
                     },
                     {
                         title: '今天要修复100个bug',
@@ -163,5 +165,10 @@
     .todo-item-del {
         text-decoration: line-through;
         color: #999;
+    }
+    .operate i {
+        font-size: 14px;
+        cursor: pointer;
+        margin-left: 15px;
     }
 </style>

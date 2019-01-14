@@ -111,8 +111,8 @@ CREATE TABLE `outer_link`(
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `contacts`;
-CREATE TABLE `contacts`(  
+DROP TABLE IF EXISTS `contact`;
+CREATE TABLE `contact`(  
   `contact_id` INT NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `type` VARCHAR(50) COMMENT '类型',
   `name` VARCHAR(50) COMMENT '组名',
@@ -156,6 +156,17 @@ CREATE TABLE `const`(
   `depict` VARCHAR(50) COMMENT '描述',
   `code` VARCHAR(10) COMMENT '常量代码',
   `val` VARCHAR(50) COMMENT '常量值',
+  `status` CHAR(1) COMMENT '状态',
+  `insert_time` DATETIME COMMENT '插入时间',
+  `update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB CHARSET=utf8;
+
+DROP TABLE IF EXISTS `todo`;
+CREATE TABLE `todo`(  
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `title` VARCHAR(20) COMMENT '标题',
+  `depict` VARCHAR(200) COMMENT '描述',
   `status` CHAR(1) COMMENT '状态',
   `insert_time` DATETIME COMMENT '插入时间',
   `update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',

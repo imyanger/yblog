@@ -4,10 +4,10 @@
 <!-- =======      通过com.yanger.generator包代码工具自动生成           ======= -->
 <!-- =======   本配置文件中定义的节点可在自定义配置文件中直接使用     ======= -->
 <!-- ============================================================== -->
-<mapper namespace="com.yanger.blog.dao.ContactsDao">
+<mapper namespace="com.yanger.blog.dao.ContactDao">
 
 	<!-- 通用查询结果对象-->
-	<resultMap id="BaseResultMap" type="com.yanger.blog.po.Contacts">
+	<resultMap id="BaseResultMap" type="com.yanger.blog.po.Contact">
 		 <id column="contact_id" property="contactId"/> 
 		 <result column="type" property="type"/> 
 		 <result column="name" property="name"/> 
@@ -86,7 +86,7 @@
 	<sql id="Base_Select_By_Entity">
 		select
 			<include refid="Base_Column_List" />
-		from contacts
+		from contact
 		<where>
 			<include refid="Base_Select_By_Entity_Where" />
 		</where>
@@ -96,7 +96,7 @@
 	<select id="selectById" resultMap="BaseResultMap" parameterType="map">
 		select
 			<include refid="Base_Column_List" />
-		from contacts
+		from contact
 		where contact_id = #{param1}
 	</select>
 
@@ -104,7 +104,7 @@
 	<select id="selectByIds" resultMap="BaseResultMap" parameterType="map">
 		select
 			<include refid="Base_Column_List" />
-		from contacts
+		from contact
 		where contact_id in
 		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
 			#{item}
@@ -112,19 +112,19 @@
 	</select>
 
 	<!-- 按对象查询一页记录（多条记录） -->
-	<select id="selectPage" resultMap="BaseResultMap" parameterType="com.yanger.blog.po.Contacts">
+	<select id="selectPage" resultMap="BaseResultMap" parameterType="com.yanger.blog.po.Contact">
 		<include refid="Base_Select_By_Entity" />
 	</select>
 
 	<!-- 按主键删除一条记录 -->
 	<delete id="deleteById" parameterType="map">
-		delete from contacts
+		delete from contact
 		where contact_id = #{param1}
 	</delete>
 
 	<!-- 按主键List删除多条记录 -->
 	<delete id="deleteByIds" parameterType="map">
-		delete from contacts
+		delete from contact
 		where contact_id in 
 		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
 			#{item}
@@ -132,8 +132,8 @@
 	</delete>
 
 	<!-- 完整插入一条记录-->
-	<insert id="insert" useGeneratedKeys="true" keyProperty="contact_id" parameterType="com.yanger.blog.po.Contacts">
-		insert into contacts (contact_id, type, name, depict, words, 
+	<insert id="insert" useGeneratedKeys="true" keyProperty="contact_id" parameterType="com.yanger.blog.po.Contact">
+		insert into contact (contact_id, type, name, depict, words, 
 			user_id, user_nick_name, user_real_name, address, moblie, 
 			user_img_path, img_path, status, insert_time, update_time
 			)
@@ -144,8 +144,8 @@
 	</insert>
 
 	<!-- 插入一条记录(为空的字段不操作) -->
-	<insert id="insertVal" useGeneratedKeys="true" keyProperty="contact_id" parameterType="com.yanger.blog.po.Contacts">
-		insert into contacts
+	<insert id="insertVal" useGeneratedKeys="true" keyProperty="contact_id" parameterType="com.yanger.blog.po.Contact">
+		insert into contact
 		<trim prefix="(" suffix=")" suffixOverrides="," >
 			<if test="contactId != null" >
 				contact_id,
@@ -243,8 +243,8 @@
 	</insert>
 
 	<!-- 更新一条记录(为空的字段不操作) -->
-	<update id="updateValById" useGeneratedKeys="true" keyProperty="contact_id" parameterType="com.yanger.blog.po.Contacts">
-		update contacts
+	<update id="updateValById" useGeneratedKeys="true" keyProperty="contact_id" parameterType="com.yanger.blog.po.Contact">
+		update contact
 		<set>
 			<if test="type != null" >
 				type=#{type},
@@ -293,8 +293,8 @@
 	</update>
 
 	<!-- 完整更新一条记录 -->
-	<update id="updateById" useGeneratedKeys="true" keyProperty="contact_id" parameterType="com.yanger.blog.po.Contacts">
-		update contacts
+	<update id="updateById" useGeneratedKeys="true" keyProperty="contact_id" parameterType="com.yanger.blog.po.Contact">
+		update contact
 		set type=#{type},
 			name=#{name},
 			depict=#{depict},
