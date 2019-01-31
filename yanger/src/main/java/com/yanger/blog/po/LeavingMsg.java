@@ -23,20 +23,8 @@ public class LeavingMsg implements Serializable {
 	/** 对应字段：user_id,备注：留言用户id */
 	private Integer userId;
 
-	/** 对应字段：user_nick_name,备注：用户昵称 */
-	private String userNickName;
-
-	/** 对应字段：user_img_path,备注：头像图片路径 */
-	private String userImgPath;
-
 	/** 对应字段：article_id,备注：留言文章id */
 	private Integer articleId;
-
-	/** 对应字段：art_img_path,备注：留言文章图片路径 */
-	private String artImgPath;
-
-	/** 对应字段：article_title,备注：留言文章标题 */
-	private String articleTitle;
 
 	/** 对应字段：content,备注：留言内容 */
 	private String content;

@@ -127,7 +127,7 @@ public class BlogService {
 	 * @return
 	 * @throws Exception
 	 */
-	private ResultPage<LeavingMsgVo> findMsgPage(int page, int size) throws Exception {
+	public ResultPage<LeavingMsgVo> findMsgPage(int page, int size) throws Exception {
 		PageParam pageParam = ParamUtils.getDescPageParam(page, size, "update_time");
 		LeavingMsg entry = new LeavingMsg();
 		entry.setStatus(ConstantUtils.STATUS_VALID);
@@ -349,20 +349,9 @@ public class BlogService {
 	public BoardDataVo getBoardData() throws Exception {
 		BoardDataVo boardDataVo = new BoardDataVo();
 		ResultPage<LeavingMsgVo> msgPage = findMsgPage(1, 6);
+		// 查询
 		boardDataVo.setMsgPage(msgPage);
 		return boardDataVo;
-	}
-
-	/**
-	 * @description 获取留言板分页数据
-	 * @author YangHao
-	 * @date 2018年9月26日-下午10:56:04
-	 * @param pageQueryVo
-	 * @return
-	 * @throws Exception
-	 */
-	public ResultPage<LeavingMsgVo> getMsgPageData(PageQueryVo pageQueryVo) throws Exception {
-		return findMsgPage(pageQueryVo.getPageNo(), 6);
 	}
 
 	/**
@@ -379,21 +368,18 @@ public class BlogService {
 		LeavingMsg entity = new LeavingMsg();
 		entity.setContent(msgVo.getContent());
 		entity.setUserId(user.getId());
-		entity.setUserNickName(user.getName());
-		entity.setUserImgPath(user.getPath());
 		// 留言类型
 		String type = msgVo.getType();
 		entity.setType(type);
 		// 文章留言
 		if (ConstantUtils.MSG_TYPE_ARTICLE.equals(type)) {
 			entity.setArticleId(msgVo.getArticleId());
-			entity.setArticleTitle(msgVo.getArticleTitle());
-			entity.setArtImgPath(msgVo.getArtImgPath());
 		}
 		entity.setInsertTime(new Date());
 		entity.setStatus(ConstantUtils.STATUS_VALID);
 		leavingMsgDao.insert(entity);
 		// 查询新的第一页数据
+		//TODO 修改为前台查询
 		ResultPage<LeavingMsgVo> page = null;
 		if (ConstantUtils.MSG_TYPE_ARTICLE.equals(type)) {
 			page = findArticleMsgPage(msgVo.getArticleId(), 1, 6);
@@ -434,7 +420,7 @@ public class BlogService {
 	 * @return
 	 * @throws Exception
 	 */
-	private ResultPage<LeavingMsgVo> findArticleMsgPage(Integer id, int page, int size) throws Exception {
+	public ResultPage<LeavingMsgVo> findArticleMsgPage(Integer id, int page, int size) throws Exception {
 		PageParam pageParam = ParamUtils.getDescPageParam(page, size, "update_time");
 		LeavingMsg entry = new LeavingMsg();
 		entry.setStatus(ConstantUtils.STATUS_VALID);
@@ -442,19 +428,8 @@ public class BlogService {
 		entry.setType(ConstantUtils.MSG_TYPE_ARTICLE);
 		// 文章id
 		entry.setArticleId(id);
-		Page<LeavingMsg> msgsPage = leavingMsgDao.selectPage(pageParam, entry);
-		return Pages.convert(pageParam, msgsPage, LeavingMsgVo.class);
-	}
-
-	/**
-	 * @description 获取文章留言分页信息
-	 * @author YangHao
-	 * @date 2018年11月11日-下午10:44:17
-	 * @param pageQueryVo
-	 * @return
-	 */
-	public ResultPage<LeavingMsgVo> getArtMsgPageData(PageQueryVo pageQueryVo) throws Exception {
-		return findArticleMsgPage(pageQueryVo.getArticleId(), pageQueryVo.getPageNo(), 6);
+		Page<LeavingMsgVo> msgsVoPage = leavingMsgDao.selectPageForVo(pageParam, entry);
+		return Pages.convert(pageParam, msgsVoPage, LeavingMsgVo.class);
 	}
 	
 }

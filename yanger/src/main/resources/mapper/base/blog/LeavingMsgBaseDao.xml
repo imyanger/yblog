@@ -11,11 +11,7 @@
 		 <id column="msg_id" property="msgId"/> 
 		 <result column="type" property="type"/> 
 		 <result column="user_id" property="userId"/> 
-		 <result column="user_nick_name" property="userNickName"/> 
-		 <result column="user_img_path" property="userImgPath"/> 
 		 <result column="article_id" property="articleId"/> 
-		 <result column="art_img_path" property="artImgPath"/> 
-		 <result column="article_title" property="articleTitle"/> 
 		 <result column="content" property="content"/> 
 		 <result column="upper_id" property="upperId"/> 
 		 <result column="msg_order" property="msgOrder"/> 
@@ -26,9 +22,8 @@
 
 	<!-- 通用查询结果列-->
 	<sql id="Base_Column_List">
-		 msg_id, type, user_id, user_nick_name, user_img_path,
-		 article_id, art_img_path, article_title, content, upper_id,
-		 msg_order, status, insert_time, update_time
+		 msg_id, type, user_id, article_id, content,
+		 upper_id, msg_order, status, insert_time, update_time
 	</sql>
 
 	<!-- 按对象查询记录的WHERE部分 -->
@@ -42,20 +37,8 @@
 		<if test="userId != null" >
 			and user_id = #{userId}
 		</if>
-		<if test="userNickName != null" >
-			and user_nick_name = #{userNickName}
-		</if>
-		<if test="userImgPath != null" >
-			and user_img_path = #{userImgPath}
-		</if>
 		<if test="articleId != null" >
 			and article_id = #{articleId}
-		</if>
-		<if test="artImgPath != null" >
-			and art_img_path = #{artImgPath}
-		</if>
-		<if test="articleTitle != null" >
-			and article_title = #{articleTitle}
 		</if>
 		<if test="content != null" >
 			and content = #{content}
@@ -128,12 +111,12 @@
 
 	<!-- 完整插入一条记录-->
 	<insert id="insert" useGeneratedKeys="true" keyProperty="msg_id" parameterType="com.yanger.blog.po.LeavingMsg">
-		insert into leaving_msg (msg_id, type, user_id, user_nick_name, user_img_path, 
-			article_id, art_img_path, article_title, content, upper_id, 
-			msg_order, status, insert_time, update_time)
-		values(#{msgId}, #{type}, #{userId}, #{userNickName}, #{userImgPath}, 
-			#{articleId}, #{artImgPath}, #{articleTitle}, #{content}, #{upperId}, 
-			#{msgOrder}, #{status}, #{insertTime}, #{updateTime})
+		insert into leaving_msg (msg_id, type, user_id, article_id, content, 
+			upper_id, msg_order, status, insert_time, update_time
+			)
+		values(#{msgId}, #{type}, #{userId}, #{articleId}, #{content}, 
+			#{upperId}, #{msgOrder}, #{status}, #{insertTime}, #{updateTime}
+			)
 	</insert>
 
 	<!-- 插入一条记录(为空的字段不操作) -->
@@ -149,20 +132,8 @@
 			<if test="userId != null" >
 				user_id,
 			</if>
-			<if test="userNickName != null" >
-				user_nick_name,
-			</if>
-			<if test="userImgPath != null" >
-				user_img_path,
-			</if>
 			<if test="articleId != null" >
 				article_id,
-			</if>
-			<if test="artImgPath != null" >
-				art_img_path,
-			</if>
-			<if test="articleTitle != null" >
-				article_title,
 			</if>
 			<if test="content != null" >
 				content,
@@ -193,20 +164,8 @@
 			<if test="userId != null" >
 				#{userId},
 			</if>
-			<if test="userNickName != null" >
-				#{userNickName},
-			</if>
-			<if test="userImgPath != null" >
-				#{userImgPath},
-			</if>
 			<if test="articleId != null" >
 				#{articleId},
-			</if>
-			<if test="artImgPath != null" >
-				#{artImgPath},
-			</if>
-			<if test="articleTitle != null" >
-				#{articleTitle},
 			</if>
 			<if test="content != null" >
 				#{content},
@@ -239,20 +198,8 @@
 			<if test="userId != null" >
 				user_id=#{userId},
 			</if>
-			<if test="userNickName != null" >
-				user_nick_name=#{userNickName},
-			</if>
-			<if test="userImgPath != null" >
-				user_img_path=#{userImgPath},
-			</if>
 			<if test="articleId != null" >
 				article_id=#{articleId},
-			</if>
-			<if test="artImgPath != null" >
-				art_img_path=#{artImgPath},
-			</if>
-			<if test="articleTitle != null" >
-				article_title=#{articleTitle},
 			</if>
 			<if test="content != null" >
 				content=#{content},
@@ -281,11 +228,7 @@
 		update leaving_msg
 		set type=#{type},
 			user_id=#{userId},
-			user_nick_name=#{userNickName},
-			user_img_path=#{userImgPath},
 			article_id=#{articleId},
-			art_img_path=#{artImgPath},
-			article_title=#{articleTitle},
 			content=#{content},
 			upper_id=#{upperId},
 			msg_order=#{msgOrder},

@@ -9,13 +9,12 @@
 	<!-- 通用查询结果对象-->
 	<resultMap id="BaseResultMap" type="com.yanger.blog.po.OperateLog">
 		 <id column="log_id" property="logId"/> 
+		 <result column="operator_id" property="operatorId"/> 
+		 <result column="operate_ip" property="operateIp"/> 
 		 <result column="operate_type" property="operateType"/> 
 		 <result column="operate_desc" property="operateDesc"/> 
-		 <result column="operator_id" property="operatorId"/> 
-		 <result column="operator_name" property="operatorName"/> 
-		 <result column="update_params" property="updateParams"/> 
+		 <result column="request_params" property="requestParams"/> 
 		 <result column="request_url" property="requestUrl"/> 
-		 <result column="table_name" property="tableName"/> 
 		 <result column="status" property="status"/> 
 		 <result column="insert_time" property="insertTime"/> 
 		 <result column="update_time" property="updateTime"/> 
@@ -23,9 +22,9 @@
 
 	<!-- 通用查询结果列-->
 	<sql id="Base_Column_List">
-		 log_id, operate_type, operate_desc, operator_id, operator_name,
-		 update_params, request_url, table_name, status, insert_time,
-		 update_time
+		 log_id, operator_id, operate_ip, operate_type, operate_desc,
+		 request_params, request_url, status, insert_time, update_time
+		
 	</sql>
 
 	<!-- 按对象查询记录的WHERE部分 -->
@@ -33,26 +32,23 @@
 		<if test="logId != null" >
 			and log_id = #{logId}
 		</if>
+		<if test="operatorId != null" >
+			and operator_id = #{operatorId}
+		</if>
+		<if test="operateIp != null" >
+			and operate_ip = #{operateIp}
+		</if>
 		<if test="operateType != null" >
 			and operate_type = #{operateType}
 		</if>
 		<if test="operateDesc != null" >
 			and operate_desc = #{operateDesc}
 		</if>
-		<if test="operatorId != null" >
-			and operator_id = #{operatorId}
-		</if>
-		<if test="operatorName != null" >
-			and operator_name = #{operatorName}
-		</if>
-		<if test="updateParams != null" >
-			and update_params = #{updateParams}
+		<if test="requestParams != null" >
+			and request_params = #{requestParams}
 		</if>
 		<if test="requestUrl != null" >
 			and request_url = #{requestUrl}
-		</if>
-		<if test="tableName != null" >
-			and table_name = #{tableName}
 		</if>
 		<if test="status != null" >
 			and status = #{status}
@@ -116,12 +112,12 @@
 
 	<!-- 完整插入一条记录-->
 	<insert id="insert" useGeneratedKeys="true" keyProperty="log_id" parameterType="com.yanger.blog.po.OperateLog">
-		insert into operate_log (log_id, operate_type, operate_desc, operator_id, operator_name, 
-			update_params, request_url, table_name, status, insert_time, 
-			update_time)
-		values(#{logId}, #{operateType}, #{operateDesc}, #{operatorId}, #{operatorName}, 
-			#{updateParams}, #{requestUrl}, #{tableName}, #{status}, #{insertTime}, 
-			#{updateTime})
+		insert into operate_log (log_id, operator_id, operate_ip, operate_type, operate_desc, 
+			request_params, request_url, status, insert_time, update_time
+			)
+		values(#{logId}, #{operatorId}, #{operateIp}, #{operateType}, #{operateDesc}, 
+			#{requestParams}, #{requestUrl}, #{status}, #{insertTime}, #{updateTime}
+			)
 	</insert>
 
 	<!-- 插入一条记录(为空的字段不操作) -->
@@ -131,26 +127,23 @@
 			<if test="logId != null" >
 				log_id,
 			</if>
+			<if test="operatorId != null" >
+				operator_id,
+			</if>
+			<if test="operateIp != null" >
+				operate_ip,
+			</if>
 			<if test="operateType != null" >
 				operate_type,
 			</if>
 			<if test="operateDesc != null" >
 				operate_desc,
 			</if>
-			<if test="operatorId != null" >
-				operator_id,
-			</if>
-			<if test="operatorName != null" >
-				operator_name,
-			</if>
-			<if test="updateParams != null" >
-				update_params,
+			<if test="requestParams != null" >
+				request_params,
 			</if>
 			<if test="requestUrl != null" >
 				request_url,
-			</if>
-			<if test="tableName != null" >
-				table_name,
 			</if>
 			<if test="status != null" >
 				status,
@@ -166,26 +159,23 @@
 			<if test="logId != null" >
 				#{logId},
 			</if>
+			<if test="operatorId != null" >
+				#{operatorId},
+			</if>
+			<if test="operateIp != null" >
+				#{operateIp},
+			</if>
 			<if test="operateType != null" >
 				#{operateType},
 			</if>
 			<if test="operateDesc != null" >
 				#{operateDesc},
 			</if>
-			<if test="operatorId != null" >
-				#{operatorId},
-			</if>
-			<if test="operatorName != null" >
-				#{operatorName},
-			</if>
-			<if test="updateParams != null" >
-				#{updateParams},
+			<if test="requestParams != null" >
+				#{requestParams},
 			</if>
 			<if test="requestUrl != null" >
 				#{requestUrl},
-			</if>
-			<if test="tableName != null" >
-				#{tableName},
 			</if>
 			<if test="status != null" >
 				#{status},
@@ -203,26 +193,23 @@
 	<update id="updateValById" useGeneratedKeys="true" keyProperty="log_id" parameterType="com.yanger.blog.po.OperateLog">
 		update operate_log
 		<set>
+			<if test="operatorId != null" >
+				operator_id=#{operatorId},
+			</if>
+			<if test="operateIp != null" >
+				operate_ip=#{operateIp},
+			</if>
 			<if test="operateType != null" >
 				operate_type=#{operateType},
 			</if>
 			<if test="operateDesc != null" >
 				operate_desc=#{operateDesc},
 			</if>
-			<if test="operatorId != null" >
-				operator_id=#{operatorId},
-			</if>
-			<if test="operatorName != null" >
-				operator_name=#{operatorName},
-			</if>
-			<if test="updateParams != null" >
-				update_params=#{updateParams},
+			<if test="requestParams != null" >
+				request_params=#{requestParams},
 			</if>
 			<if test="requestUrl != null" >
 				request_url=#{requestUrl},
-			</if>
-			<if test="tableName != null" >
-				table_name=#{tableName},
 			</if>
 			<if test="status != null" >
 				status=#{status},
@@ -240,13 +227,12 @@
 	<!-- 完整更新一条记录 -->
 	<update id="updateById" useGeneratedKeys="true" keyProperty="log_id" parameterType="com.yanger.blog.po.OperateLog">
 		update operate_log
-		set operate_type=#{operateType},
+		set operator_id=#{operatorId},
+			operate_ip=#{operateIp},
+			operate_type=#{operateType},
 			operate_desc=#{operateDesc},
-			operator_id=#{operatorId},
-			operator_name=#{operatorName},
-			update_params=#{updateParams},
+			request_params=#{requestParams},
 			request_url=#{requestUrl},
-			table_name=#{tableName},
 			status=#{status},
 			insert_time=#{insertTime},
 			update_time=#{updateTime}

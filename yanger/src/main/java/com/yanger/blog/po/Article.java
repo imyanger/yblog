@@ -53,7 +53,7 @@ public class Article implements Serializable {
 	/** 对应字段：commons,备注：评论数量 */
 	private Integer commons;
 
-	/** 对应字段：user_id,备注：用户id */
+	/** 对应字段：user_id,备注：作者（用户）id */
 	private Integer userId;
 
 	/** 对应字段：status,备注：数据状态 */
