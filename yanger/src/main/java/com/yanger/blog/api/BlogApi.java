@@ -274,7 +274,7 @@ public class BlogApi {
 	public ApiResponse<ResultPage<LeavingMsgVo>> artMsgPage(@RequestBody PageQueryVo pageQueryVo) {
 		ApiResponse<ResultPage<LeavingMsgVo>> api = new ApiResponse<>();
 		try {
-			ResultPage<LeavingMsgVo> page = blogService.getArtMsgPageData(pageQueryVo);
+			ResultPage<LeavingMsgVo> page = blogService.findArticleMsgPage(pageQueryVo.getArticleId(), pageQueryVo.getPageNo(), 6);
 			api.setData(page);
 		} catch (Exception e) {
 			api.error("加载文章留言分页数据失败");
