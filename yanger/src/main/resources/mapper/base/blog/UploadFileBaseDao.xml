@@ -16,8 +16,6 @@
 		 <result column="img_path" property="imgPath"/> 
 		 <result column="sequence" property="sequence"/> 
 		 <result column="user_id" property="userId"/> 
-		 <result column="user_nick_name" property="userNickName"/> 
-		 <result column="user_img_path" property="userImgPath"/> 
 		 <result column="status" property="status"/> 
 		 <result column="insert_time" property="insertTime"/> 
 		 <result column="update_time" property="updateTime"/> 
@@ -26,8 +24,8 @@
 	<!-- 通用查询结果列-->
 	<sql id="Base_Column_List">
 		 path_id, type, classify, file_name, suffix,
-		 img_path, sequence, user_id, user_nick_name, user_img_path,
-		 status, insert_time, update_time
+		 img_path, sequence, user_id, status, insert_time,
+		 update_time
 	</sql>
 
 	<!-- 按对象查询记录的WHERE部分 -->
@@ -55,12 +53,6 @@
 		</if>
 		<if test="userId != null" >
 			and user_id = #{userId}
-		</if>
-		<if test="userNickName != null" >
-			and user_nick_name = #{userNickName}
-		</if>
-		<if test="userImgPath != null" >
-			and user_img_path = #{userImgPath}
 		</if>
 		<if test="status != null" >
 			and status = #{status}
@@ -125,11 +117,11 @@
 	<!-- 完整插入一条记录-->
 	<insert id="insert" useGeneratedKeys="true" keyProperty="path_id" parameterType="com.yanger.blog.po.UploadFile">
 		insert into upload_file (path_id, type, classify, file_name, suffix, 
-			img_path, sequence, user_id, user_nick_name, user_img_path, 
-			status, insert_time, update_time)
+			img_path, sequence, user_id, status, insert_time, 
+			update_time)
 		values(#{pathId}, #{type}, #{classify}, #{fileName}, #{suffix}, 
-			#{imgPath}, #{sequence}, #{userId}, #{userNickName}, #{userImgPath}, 
-			#{status}, #{insertTime}, #{updateTime})
+			#{imgPath}, #{sequence}, #{userId}, #{status}, #{insertTime}, 
+			#{updateTime})
 	</insert>
 
 	<!-- 插入一条记录(为空的字段不操作) -->
@@ -159,12 +151,6 @@
 			</if>
 			<if test="userId != null" >
 				user_id,
-			</if>
-			<if test="userNickName != null" >
-				user_nick_name,
-			</if>
-			<if test="userImgPath != null" >
-				user_img_path,
 			</if>
 			<if test="status != null" >
 				status,
@@ -200,12 +186,6 @@
 			</if>
 			<if test="userId != null" >
 				#{userId},
-			</if>
-			<if test="userNickName != null" >
-				#{userNickName},
-			</if>
-			<if test="userImgPath != null" >
-				#{userImgPath},
 			</if>
 			<if test="status != null" >
 				#{status},
@@ -244,12 +224,6 @@
 			<if test="userId != null" >
 				user_id=#{userId},
 			</if>
-			<if test="userNickName != null" >
-				user_nick_name=#{userNickName},
-			</if>
-			<if test="userImgPath != null" >
-				user_img_path=#{userImgPath},
-			</if>
 			<if test="status != null" >
 				status=#{status},
 			</if>
@@ -273,8 +247,6 @@
 			img_path=#{imgPath},
 			sequence=#{sequence},
 			user_id=#{userId},
-			user_nick_name=#{userNickName},
-			user_img_path=#{userImgPath},
 			status=#{status},
 			insert_time=#{insertTime},
 			update_time=#{updateTime}

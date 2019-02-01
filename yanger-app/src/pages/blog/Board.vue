@@ -135,7 +135,7 @@
                             content: msg
                         })
                         .then(function (response) {
-                            _this.msgData.msgPage = response.data;
+                            _this.handleCurrentChange(1);
                             //清空内容
                             _this.$refs.ue.clear();
                         })

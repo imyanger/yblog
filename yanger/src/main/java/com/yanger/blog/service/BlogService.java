@@ -113,8 +113,8 @@ public class BlogService {
 		entry.setStatus(ConstantUtils.STATUS_VALID);
 		// 留言类型
 		entry.setType(ConstantUtils.MSG_TYPE_BOARD);
-		Page<LeavingMsg> msgsPage = leavingMsgDao.selectPage(pageParam, entry);
-		ResultPage<LeavingMsgVo> msgsResult = Pages.convert(pageParam, msgsPage, LeavingMsgVo.class);
+		Page<LeavingMsgVo> msgsVoPage = leavingMsgDao.selectPageForVo(pageParam, entry);
+		ResultPage<LeavingMsgVo> msgsResult = Pages.convert(pageParam, msgsVoPage, LeavingMsgVo.class);
 		return msgsResult.getData();
 	}
 
@@ -133,8 +133,8 @@ public class BlogService {
 		entry.setStatus(ConstantUtils.STATUS_VALID);
 		// 留言类型
 		entry.setType(ConstantUtils.MSG_TYPE_BOARD);
-		Page<LeavingMsg> msgsPage = leavingMsgDao.selectPage(pageParam, entry);
-		return Pages.convert(pageParam, msgsPage, LeavingMsgVo.class);
+		Page<LeavingMsgVo> msgsVoPage = leavingMsgDao.selectPageForVo(pageParam, entry);
+		return Pages.convert(pageParam, msgsVoPage, LeavingMsgVo.class);
 	}
 
 	/**
@@ -363,7 +363,7 @@ public class BlogService {
 	 * @return
 	 * @throws Exception
 	 */
-	public ResultPage<LeavingMsgVo> leaveMsg(TokenMsg user, LeavingMsgVo msgVo) throws Exception {
+	public void leaveMsg(TokenMsg user, LeavingMsgVo msgVo) throws Exception {
 		// 保存留言信息
 		LeavingMsg entity = new LeavingMsg();
 		entity.setContent(msgVo.getContent());
@@ -378,15 +378,6 @@ public class BlogService {
 		entity.setInsertTime(new Date());
 		entity.setStatus(ConstantUtils.STATUS_VALID);
 		leavingMsgDao.insert(entity);
-		// 查询新的第一页数据
-		//TODO 修改为前台查询
-		ResultPage<LeavingMsgVo> page = null;
-		if (ConstantUtils.MSG_TYPE_ARTICLE.equals(type)) {
-			page = findArticleMsgPage(msgVo.getArticleId(), 1, 6);
-		} else if (ConstantUtils.MSG_TYPE_BOARD.equals(type)) {
-			page = findMsgPage(1, 6);
-		}
-		return page;
 	}
 
 	/**

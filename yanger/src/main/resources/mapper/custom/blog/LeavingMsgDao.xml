@@ -5,7 +5,7 @@
 <!-- ============================================================== -->
 <mapper namespace="com.yanger.blog.dao.LeavingMsgDao">
 	
-	<resultMap id="VoResultMap" type="com.yanger.blog.vo.LeavingMsg">
+	<resultMap id="VoResultMap" type="com.yanger.blog.vo.LeavingMsgVo">
 		 <id column="msg_id" property="msgId"/> 
 		 <result column="type" property="type"/> 
 		 <result column="user_id" property="userId"/> 
@@ -31,7 +31,36 @@
 		art.art_img_path, art.title
 		from leaving_msg msg left join article art on msg.article_id = art.article_id left join blog_user user on msg.user_id = user.user_id
 		<where>
-			<include refid="Base_Select_By_Entity_Where" />
+			<if test="msgId != null" >
+				and msg.msg_id = #{msgId}
+			</if>
+			<if test="type != null" >
+				and msg.type = #{type}
+			</if>
+			<if test="userId != null" >
+				and msg.user_id = #{userId}
+			</if>
+			<if test="articleId != null" >
+				and msg.article_id = #{articleId}
+			</if>
+			<if test="content != null" >
+				and msg.content = #{content}
+			</if>
+			<if test="upperId != null" >
+				and msg.upper_id = #{upperId}
+			</if>
+			<if test="msgOrder != null" >
+				and msg.msg_order = #{msgOrder}
+			</if>
+			<if test="status != null" >
+				and msg.status = #{status}
+			</if>
+			<if test="insertTime != null" >
+				and msg.insert_time = #{insertTime}
+			</if>
+			<if test="updateTime != null" >
+				and msg.update_time = #{updateTime}
+			</if>
 		</where>
 	</select>
 

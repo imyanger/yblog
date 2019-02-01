@@ -1,3 +1,5 @@
+
+--操作日志
 DROP TABLE IF EXISTS `operate_log`;
 CREATE TABLE `operate_log`(  
   `log_id` INT NOT NULL AUTO_INCREMENT COMMENT '主键id',
@@ -14,6 +16,7 @@ CREATE TABLE `operate_log`(
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 
+--文章
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article`(  
   `article_id` INT NOT NULL AUTO_INCREMENT COMMENT '主键id',
@@ -37,6 +40,7 @@ CREATE TABLE `article`(
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 
+--博客用户
 DROP TABLE IF EXISTS `blog_user`;
 CREATE TABLE `blog_user`(  
   `user_id` INT NOT NULL AUTO_INCREMENT COMMENT '用户id',
@@ -62,6 +66,7 @@ CREATE TABLE `blog_user`(
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 
+--文章分类
 DROP TABLE IF EXISTS `article_kind`;
 CREATE TABLE `article_kind`(  
   `art_kinds_id` INT NOT NULL AUTO_INCREMENT COMMENT '主键id',
@@ -76,6 +81,7 @@ CREATE TABLE `article_kind`(
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 
+--留言
 DROP TABLE IF EXISTS `leaving_msg`;
 CREATE TABLE `leaving_msg`(  
   `msg_id` INT NOT NULL AUTO_INCREMENT COMMENT '主键id',
@@ -92,6 +98,7 @@ CREATE TABLE `leaving_msg`(
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 
+--外部链接
 DROP TABLE IF EXISTS `outer_link`;
 CREATE TABLE `outer_link`(  
   `link_id` INT NOT NULL AUTO_INCREMENT COMMENT '主键id',
@@ -106,6 +113,7 @@ CREATE TABLE `outer_link`(
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 
+--联系人
 DROP TABLE IF EXISTS `contact`;
 CREATE TABLE `contact`(  
   `contact_id` INT NOT NULL AUTO_INCREMENT COMMENT '主键id',
@@ -113,12 +121,7 @@ CREATE TABLE `contact`(
   `name` VARCHAR(50) COMMENT '组名',
   `depict` VARCHAR(200) COMMENT '描述',
   `words` VARCHAR(20) COMMENT '口令',
-  `user_id` INT COMMENT '成员id',
-  `user_nick_name` VARCHAR(60) COMMENT '成员昵称',
-  `user_real_name` VARCHAR(60) COMMENT '真实姓名',
-  `address` VARCHAR(100) COMMENT '地址',
-  `moblie` VARCHAR(100) COMMENT '联系方式',
-  `user_img_path` VARCHAR(100) COMMENT '用户头像路径',
+  `user_id` INT COMMENT '成员(用户)id',
   `img_path` VARCHAR(100) COMMENT '组描述图片',
   `status` CHAR(1) COMMENT '数据状态',
   `insert_time` DATETIME COMMENT '创建时间',
@@ -127,24 +130,25 @@ CREATE TABLE `contact`(
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 
+--文件上传
 DROP TABLE IF EXISTS `upload_file`;
 CREATE TABLE `upload_file`(  
-  `path_id` INT NOT NULL AUTO_INCREMENT COMMENT '用户id',
+  `path_id` INT NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `type` VARCHAR(50) COMMENT '所属类型',
   `classify` VARCHAR(50) COMMENT '分类（具体）',
   `file_name` VARCHAR(60) COMMENT '图片名',
   `suffix` VARCHAR(10) COMMENT '图片后缀',
   `img_path` VARCHAR(100) COMMENT '图片路径',
   `sequence` INT COMMENT '顺序',
-  `user_id` INT COMMENT '创建人id',
-  `user_nick_name` VARCHAR(60) COMMENT '用户昵称',
-  `user_img_path` VARCHAR(100) COMMENT '用户头像图片路径',
+  `user_id` INT COMMENT '创建人（用户）id',
   `status` CHAR(1) COMMENT '数据状态',
   `insert_time` DATETIME COMMENT '创建时间',
   `update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`path_id`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+
+--常量
 DROP TABLE IF EXISTS `const`;
 CREATE TABLE `const`(  
   `id` INT NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -157,6 +161,8 @@ CREATE TABLE `const`(
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB CHARSET=utf8;
 
+
+--待办
 DROP TABLE IF EXISTS `todo`;
 CREATE TABLE `todo`(  
   `id` INT NOT NULL AUTO_INCREMENT COMMENT '主键',

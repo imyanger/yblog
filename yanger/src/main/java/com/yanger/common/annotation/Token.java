@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 此注解不校验token
+ *  此注解不校验token
  * @author YangHao
  */
 @Target({ElementType.TYPE, ElementType.METHOD})

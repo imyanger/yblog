@@ -145,7 +145,8 @@
 							artImgPath: _this.viewData.article.artImgPath
                         })
                         .then(function (response) {
-                            _this.viewData.msgPage = response.data;
+                            // 加载第一页
+                           _this.handleCurrentChange(1);
                             //清空内容
                             _this.$refs.ue.clear();
                         })

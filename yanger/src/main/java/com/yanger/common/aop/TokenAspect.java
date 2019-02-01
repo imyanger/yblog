@@ -57,7 +57,7 @@ public class TokenAspect {
 	 */
 	@Around("tokenLog()")
 	public Object around(ProceedingJoinPoint point) throws Throwable {
-		//是否需要token --需要token：1.类上Token注解，则方法上没有NoToken 2.方法上Token注解
+		//是否需要token --需要token：1.类上Token注解，方法上没有NoToken 2.方法上Token注解
 		boolean isTokenNeed = false;
 		Class<?> targetClass = point.getTarget().getClass();
 		MethodSignature methodSignature = (MethodSignature) point.getSignature();

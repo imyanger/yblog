@@ -29,23 +29,8 @@ public class ContactVo implements Serializable {
 	/** 对应字段：words,备注：口令 */
 	private String words;
 
-	/** 对应字段：user_id,备注：成员id */
+	/** 对应字段：user_id,备注：成员(用户)id */
 	private Integer userId;
-
-	/** 对应字段：user_nick_name,备注：成员昵称 */
-	private String userNickName;
-
-	/** 对应字段：user_real_name,备注：真实姓名 */
-	private String userRealName;
-
-	/** 对应字段：address,备注：地址 */
-	private String address;
-
-	/** 对应字段：moblie,备注：联系方式 */
-	private String moblie;
-
-	/** 对应字段：user_img_path,备注：用户头像路径 */
-	private String userImgPath;
 
 	/** 对应字段：img_path,备注：组描述图片 */
 	private String imgPath;

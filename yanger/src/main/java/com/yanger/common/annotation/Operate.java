@@ -7,13 +7,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 操作类 加在类上，如果需要记录表名，则在类上加入此注解
+  *   操作日志记录注解
  * @time 2018年6月23日 下午12:05:56
  */
-@Target({ ElementType.PARAMETER, ElementType.TYPE })
+@Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface OperateClass {
+public @interface Operate {
 	
-	public Class<?> value();
+	public String value();
 }

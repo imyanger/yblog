@@ -14,11 +14,6 @@
 		 <result column="depict" property="depict"/> 
 		 <result column="words" property="words"/> 
 		 <result column="user_id" property="userId"/> 
-		 <result column="user_nick_name" property="userNickName"/> 
-		 <result column="user_real_name" property="userRealName"/> 
-		 <result column="address" property="address"/> 
-		 <result column="moblie" property="moblie"/> 
-		 <result column="user_img_path" property="userImgPath"/> 
 		 <result column="img_path" property="imgPath"/> 
 		 <result column="status" property="status"/> 
 		 <result column="insert_time" property="insertTime"/> 
@@ -28,8 +23,7 @@
 	<!-- 通用查询结果列-->
 	<sql id="Base_Column_List">
 		 contact_id, type, name, depict, words,
-		 user_id, user_nick_name, user_real_name, address, moblie,
-		 user_img_path, img_path, status, insert_time, update_time
+		 user_id, img_path, status, insert_time, update_time
 		
 	</sql>
 
@@ -52,21 +46,6 @@
 		</if>
 		<if test="userId != null" >
 			and user_id = #{userId}
-		</if>
-		<if test="userNickName != null" >
-			and user_nick_name = #{userNickName}
-		</if>
-		<if test="userRealName != null" >
-			and user_real_name = #{userRealName}
-		</if>
-		<if test="address != null" >
-			and address = #{address}
-		</if>
-		<if test="moblie != null" >
-			and moblie = #{moblie}
-		</if>
-		<if test="userImgPath != null" >
-			and user_img_path = #{userImgPath}
 		</if>
 		<if test="imgPath != null" >
 			and img_path = #{imgPath}
@@ -134,12 +113,10 @@
 	<!-- 完整插入一条记录-->
 	<insert id="insert" useGeneratedKeys="true" keyProperty="contact_id" parameterType="com.yanger.blog.po.Contact">
 		insert into contact (contact_id, type, name, depict, words, 
-			user_id, user_nick_name, user_real_name, address, moblie, 
-			user_img_path, img_path, status, insert_time, update_time
+			user_id, img_path, status, insert_time, update_time
 			)
 		values(#{contactId}, #{type}, #{name}, #{depict}, #{words}, 
-			#{userId}, #{userNickName}, #{userRealName}, #{address}, #{moblie}, 
-			#{userImgPath}, #{imgPath}, #{status}, #{insertTime}, #{updateTime}
+			#{userId}, #{imgPath}, #{status}, #{insertTime}, #{updateTime}
 			)
 	</insert>
 
@@ -164,21 +141,6 @@
 			</if>
 			<if test="userId != null" >
 				user_id,
-			</if>
-			<if test="userNickName != null" >
-				user_nick_name,
-			</if>
-			<if test="userRealName != null" >
-				user_real_name,
-			</if>
-			<if test="address != null" >
-				address,
-			</if>
-			<if test="moblie != null" >
-				moblie,
-			</if>
-			<if test="userImgPath != null" >
-				user_img_path,
 			</if>
 			<if test="imgPath != null" >
 				img_path,
@@ -211,21 +173,6 @@
 			</if>
 			<if test="userId != null" >
 				#{userId},
-			</if>
-			<if test="userNickName != null" >
-				#{userNickName},
-			</if>
-			<if test="userRealName != null" >
-				#{userRealName},
-			</if>
-			<if test="address != null" >
-				#{address},
-			</if>
-			<if test="moblie != null" >
-				#{moblie},
-			</if>
-			<if test="userImgPath != null" >
-				#{userImgPath},
 			</if>
 			<if test="imgPath != null" >
 				#{imgPath},
@@ -261,21 +208,6 @@
 			<if test="userId != null" >
 				user_id=#{userId},
 			</if>
-			<if test="userNickName != null" >
-				user_nick_name=#{userNickName},
-			</if>
-			<if test="userRealName != null" >
-				user_real_name=#{userRealName},
-			</if>
-			<if test="address != null" >
-				address=#{address},
-			</if>
-			<if test="moblie != null" >
-				moblie=#{moblie},
-			</if>
-			<if test="userImgPath != null" >
-				user_img_path=#{userImgPath},
-			</if>
 			<if test="imgPath != null" >
 				img_path=#{imgPath},
 			</if>
@@ -300,11 +232,6 @@
 			depict=#{depict},
 			words=#{words},
 			user_id=#{userId},
-			user_nick_name=#{userNickName},
-			user_real_name=#{userRealName},
-			address=#{address},
-			moblie=#{moblie},
-			user_img_path=#{userImgPath},
 			img_path=#{imgPath},
 			status=#{status},
 			insert_time=#{insertTime},

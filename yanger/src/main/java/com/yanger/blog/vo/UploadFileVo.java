@@ -14,7 +14,7 @@ public class UploadFileVo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	/** 对应字段：path_id,备注：用户id */
+	/** 对应字段：path_id,备注：主键id */
 	private Integer pathId;
 
 	/** 对应字段：type,备注：所属类型 */
@@ -35,14 +35,8 @@ public class UploadFileVo implements Serializable {
 	/** 对应字段：sequence,备注：顺序 */
 	private Integer sequence;
 
-	/** 对应字段：user_id,备注：创建人id */
+	/** 对应字段：user_id,备注：创建人（用户）id */
 	private Integer userId;
-
-	/** 对应字段：user_nick_name,备注：用户昵称 */
-	private String userNickName;
-
-	/** 对应字段：user_img_path,备注：用户头像图片路径 */
-	private String userImgPath;
 
 	/** 对应字段：status,备注：数据状态 */
 	private String status;

@@ -21,6 +21,7 @@ import com.yanger.blog.vo.LeavingMsgVo;
 import com.yanger.blog.vo.PageQueryVo;
 import com.yanger.blog.vo.StudyDataVo;
 import com.yanger.blog.vo.ViewDataVo;
+import com.yanger.common.annotation.Operate;
 import com.yanger.common.annotation.Token;
 import com.yanger.common.config.ServerConfig;
 import com.yanger.common.util.JwtUtils;
@@ -229,6 +230,7 @@ public class BlogApi {
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
 	 */
+	@Operate("查看留言信息")
 	@ApiOperation(value = "留言板页面数据初始化", notes = "")
 	@GetMapping("/boardInit")
 	public ApiResponse<BoardDataVo> boardInit() {
@@ -292,12 +294,11 @@ public class BlogApi {
 	@ApiOperation(value = "发表留言", notes = "")
 	@PostMapping("/leaveMsg")
 	@Token
-	public ApiResponse<ResultPage<LeavingMsgVo>> msgPage(@RequestBody LeavingMsgVo msgVo, HttpServletRequest request) {
-		ApiResponse<ResultPage<LeavingMsgVo>> api = new ApiResponse<>();
+	public ApiResponse<String> msgPage(@RequestBody LeavingMsgVo msgVo, HttpServletRequest request) {
+		ApiResponse<String> api = new ApiResponse<>();
 		TokenMsg user = (TokenMsg) request.getAttribute("user");
 		try {
-			ResultPage<LeavingMsgVo> page = blogService.leaveMsg(user, msgVo);
-			api.setData(page);
+			blogService.leaveMsg(user, msgVo);
 		} catch (Exception e) {
 			api.error("加载留言分页数据失败");
 			e.printStackTrace();
