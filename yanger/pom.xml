@@ -132,6 +132,25 @@
 			<version>2.4.2.1-RELEASE</version>
 		</dependency>
 		<!-- shiro相关 -->
+		
+		<!-- pagehelper分页插件 -->
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+			<version>5.1.2</version>
+		</dependency>
+		<!-- springboot2.x分页插件需要引入以下，否则会分页失败 -->
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper-spring-boot-autoconfigure</artifactId>
+			<version>1.2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper-spring-boot-starter</artifactId>
+			<version>1.2.5</version>
+		</dependency>
+		<!-- pagehelper分页插件 -->
 
 		<!-- lombok插件 -->
 		<dependency>
