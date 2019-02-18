@@ -4,6 +4,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.yanger.blog.dao.TodoDao;
 import com.yanger.blog.po.Todo;
@@ -16,6 +17,7 @@ import com.yanger.mybatis.util.Pages;
 import com.yanger.mybatis.util.ResultPage;
 
 @Service
+@Transactional
 public class TodoService {
 	
 	@Autowired
