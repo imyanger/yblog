@@ -17,6 +17,9 @@ public class TodoVo implements Serializable {
 	/** 对应字段：id,备注：主键 */
 	private Integer id;
 
+	/** 对应字段：type,备注：类型 */
+	private String type;
+
 	/** 对应字段：title,备注：标题 */
 	private String title;
 
@@ -31,8 +34,9 @@ public class TodoVo implements Serializable {
 
 	/** 对应字段：update_time,备注：更新时间 */
 	private Date updateTime;
-
-	/** 检索条件 */
+	
+	/** 查询条件 */
 	private String queryValue;
+
 
 }

@@ -9,6 +9,7 @@
 	<!-- 通用查询结果对象-->
 	<resultMap id="BaseResultMap" type="com.yanger.blog.po.Todo">
 		 <id column="id" property="id"/> 
+		 <result column="type" property="type"/> 
 		 <result column="title" property="title"/> 
 		 <result column="depict" property="depict"/> 
 		 <result column="status" property="status"/> 
@@ -18,14 +19,17 @@
 
 	<!-- 通用查询结果列-->
 	<sql id="Base_Column_List">
-		 id, title, depict, status, insert_time,
-		 update_time
+		 id, type, title, depict, status,
+		 insert_time, update_time
 	</sql>
 
 	<!-- 按对象查询记录的WHERE部分 -->
 	<sql id="Base_Select_By_Entity_Where">
 		<if test="id != null" >
 			and id = #{id}
+		</if>
+		<if test="type != null" >
+			and type = #{type}
 		</if>
 		<if test="title != null" >
 			and title = #{title}
@@ -95,10 +99,10 @@
 
 	<!-- 完整插入一条记录-->
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.yanger.blog.po.Todo">
-		insert into todo (id, title, depict, status, insert_time, 
-			update_time)
-		values(#{id}, #{title}, #{depict}, #{status}, #{insertTime}, 
-			#{updateTime})
+		insert into todo (id, type, title, depict, status, 
+			insert_time, update_time)
+		values(#{id}, #{type}, #{title}, #{depict}, #{status}, 
+			#{insertTime}, #{updateTime})
 	</insert>
 
 	<!-- 插入一条记录(为空的字段不操作) -->
@@ -107,6 +111,9 @@
 		<trim prefix="(" suffix=")" suffixOverrides="," >
 			<if test="id != null" >
 				id,
+			</if>
+			<if test="type != null" >
+				type,
 			</if>
 			<if test="title != null" >
 				title,
@@ -127,6 +134,9 @@
 		values <trim prefix="(" suffix=")" suffixOverrides="," >
 			<if test="id != null" >
 				#{id},
+			</if>
+			<if test="type != null" >
+				#{type},
 			</if>
 			<if test="title != null" >
 				#{title},
@@ -150,6 +160,9 @@
 	<update id="updateValById" useGeneratedKeys="true" keyProperty="id" parameterType="com.yanger.blog.po.Todo">
 		update todo
 		<set>
+			<if test="type != null" >
+				type=#{type},
+			</if>
 			<if test="title != null" >
 				title=#{title},
 			</if>
@@ -172,7 +185,8 @@
 	<!-- 完整更新一条记录 -->
 	<update id="updateById" useGeneratedKeys="true" keyProperty="id" parameterType="com.yanger.blog.po.Todo">
 		update todo
-		set title=#{title},
+		set type=#{type},
+			title=#{title},
 			depict=#{depict},
 			status=#{status},
 			insert_time=#{insertTime},

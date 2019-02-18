@@ -17,6 +17,9 @@ public class Todo implements Serializable {
 	/** 对应字段：id,备注：主键 */
 	private Integer id;
 
+	/** 对应字段：type,备注：类型 */
+	private String type;
+
 	/** 对应字段：title,备注：标题 */
 	private String title;
 

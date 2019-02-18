@@ -1,5 +1,5 @@
 
---操作日志
+-- 操作日志
 DROP TABLE IF EXISTS `operate_log`;
 CREATE TABLE `operate_log`(  
   `log_id` INT NOT NULL AUTO_INCREMENT COMMENT '主键id',
@@ -16,7 +16,7 @@ CREATE TABLE `operate_log`(
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 
---文章
+-- 文章
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article`(  
   `article_id` INT NOT NULL AUTO_INCREMENT COMMENT '主键id',
@@ -40,7 +40,7 @@ CREATE TABLE `article`(
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 
---博客用户
+-- 博客用户
 DROP TABLE IF EXISTS `blog_user`;
 CREATE TABLE `blog_user`(  
   `user_id` INT NOT NULL AUTO_INCREMENT COMMENT '用户id',
@@ -66,7 +66,7 @@ CREATE TABLE `blog_user`(
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 
---文章分类
+-- 文章分类
 DROP TABLE IF EXISTS `article_kind`;
 CREATE TABLE `article_kind`(  
   `art_kinds_id` INT NOT NULL AUTO_INCREMENT COMMENT '主键id',
@@ -81,7 +81,7 @@ CREATE TABLE `article_kind`(
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 
---留言
+-- 留言
 DROP TABLE IF EXISTS `leaving_msg`;
 CREATE TABLE `leaving_msg`(  
   `msg_id` INT NOT NULL AUTO_INCREMENT COMMENT '主键id',
@@ -98,7 +98,7 @@ CREATE TABLE `leaving_msg`(
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 
---外部链接
+-- 外部链接
 DROP TABLE IF EXISTS `outer_link`;
 CREATE TABLE `outer_link`(  
   `link_id` INT NOT NULL AUTO_INCREMENT COMMENT '主键id',
@@ -113,7 +113,7 @@ CREATE TABLE `outer_link`(
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 
---联系人
+-- 联系人
 DROP TABLE IF EXISTS `contact`;
 CREATE TABLE `contact`(  
   `contact_id` INT NOT NULL AUTO_INCREMENT COMMENT '主键id',
@@ -130,7 +130,7 @@ CREATE TABLE `contact`(
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 
---文件上传
+-- 文件上传
 DROP TABLE IF EXISTS `upload_file`;
 CREATE TABLE `upload_file`(  
   `path_id` INT NOT NULL AUTO_INCREMENT COMMENT '主键id',
@@ -148,7 +148,7 @@ CREATE TABLE `upload_file`(
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 
---常量
+-- 常量
 DROP TABLE IF EXISTS `const`;
 CREATE TABLE `const`(  
   `id` INT NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -162,10 +162,11 @@ CREATE TABLE `const`(
 ) ENGINE=INNODB CHARSET=utf8;
 
 
---待办
+-- 待办
 DROP TABLE IF EXISTS `todo`;
 CREATE TABLE `todo`(  
   `id` INT NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `type` CHAR(1) COMMENT '类型',
   `title` VARCHAR(20) COMMENT '标题',
   `depict` VARCHAR(200) COMMENT '描述',
   `status` CHAR(1) COMMENT '状态',
