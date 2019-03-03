@@ -16,3 +16,6 @@ spring:
 #日志文件位置
 logging:
   file: D:/code/log/yanger.log
+#添加服务器ip，供获取图片
+yg-file:
+  ip: localhost

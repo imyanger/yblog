@@ -14,17 +14,20 @@ public class ServerConfig implements ApplicationListener<WebServerInitializedEve
 	@Value("${server.servlet.context-path}")
 	private String serverName;
 	
+	@Value("${yg-file.ip}")
+	private String ip;
 	
 	private int serverPort;
 
 	public String getUrl() {
-        InetAddress address = null;
+        /*InetAddress address = null;
         try {
             address = InetAddress.getLocalHost();
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        return "http://" + address.getHostAddress() + ":" + this.serverPort + serverName;
+        return "http://" + address.getHostAddress() + ":" + this.serverPort + serverName;*/
+		return "http://" + ip + ":" + this.serverPort + serverName;
     }
 
 	@Override
