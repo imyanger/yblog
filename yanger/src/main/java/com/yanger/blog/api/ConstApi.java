@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yanger.blog.service.ConstService;
 import com.yanger.blog.vo.ConstVo;
 import com.yanger.blog.vo.PageQueryVo;
+import com.yanger.common.annotation.Token;
 import com.yanger.common.vo.ApiResponse;
 import com.yanger.mybatis.util.ResultPage;
 
@@ -36,6 +37,7 @@ public class ConstApi {
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
 	 */
+	@Token
 	@ApiOperation(value = "查询常量表分页数据", notes = "")
 	@PostMapping("/list")
 	public ApiResponse<ResultPage<ConstVo>> articleList(@RequestBody PageQueryVo pageQueryVo) {

@@ -66,12 +66,6 @@ public class BlogApi {
 
 		}
 	}
-
-	@GetMapping("log")
-	public void log() {
-		log.info("这是info信息2");
-		log.error("这是error信息");
-	}
 	
 	/**
 	 * @description 博客首页数据初始化
@@ -162,6 +156,7 @@ public class BlogApi {
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
 	 */
+	@Operate("注册新用户")
 	@ApiOperation(value = "用户注册", notes = "")
 	@PostMapping("/register")
 	public ApiResponse<String> register(@RequestBody BlogUserVo blogUserVo) {

@@ -30,7 +30,9 @@ public class XSSFilter implements Filter {
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		chain.doFilter(new XSSRequestWrapper((HttpServletRequest) request), response);
+		// 使得流可以重复读取
+		RequestWrapper requestWrapper = new RequestWrapper((HttpServletRequest) request);
+		chain.doFilter(new XSSRequestWrapper(requestWrapper), response);
 	}
 
 	@Override

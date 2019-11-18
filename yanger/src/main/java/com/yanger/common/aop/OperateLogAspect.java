@@ -1,9 +1,6 @@
 package com.yanger.common.aop;
 
 import java.lang.reflect.Method;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,15 +16,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.alibaba.fastjson.JSON;
 import com.yanger.blog.dao.OperateLogDao;
 import com.yanger.blog.po.OperateLog;
 import com.yanger.common.annotation.Operate;
+import com.yanger.common.filter.RequestWrapper;
 import com.yanger.common.util.ConstantUtils;
 
 /**
@@ -89,7 +85,9 @@ public class OperateLogAspect {
 			OperateLog operateLog = new OperateLog();
 			operateLog.setOperateDesc(operate.value());
 			// 参数
-			operateLog.setRequestParams(getParams());
+			RequestWrapper requestWrapper = new RequestWrapper((HttpServletRequest) request);
+			String body = requestWrapper.getBody();
+			operateLog.setRequestParams(body);
 			operateLog.setStatus(ConstantUtils.STATUS_VALID);
 			// ip
 			operateLog.setOperateIp(getIp());
@@ -97,28 +95,6 @@ public class OperateLogAspect {
 			operateLogDao.insert(operateLog);
 		}
 		return point.proceed();
-	}
-
-	/**
-	 * @description 获取请求参数
-	 * @author 杨号  
-	 * @date 2019年2月1日-下午3:44:58  
-	 * @return
-	 */
-	private String getParams() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		Enumeration paramNames = request.getParameterNames();
-		while (paramNames.hasMoreElements()) {
-			String paramName = (String) paramNames.nextElement();
-			String[] paramValues = request.getParameterValues(paramName);
-			if (paramValues.length > 0) {
-				String paramValue = paramValues[0];
-				if (paramValue.length() != 0) {
-					map.put(paramName, paramValue);
-				}
-			}
-		}
-		return JSON.toJSONString(map);
 	}
 
 	/**

@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { Message } from 'element-ui';
+import { MessageBox } from 'element-ui';
+import router from '@/router'
 
 axios.defaults.timeout = 30000;
 axios.defaults.baseURL = '/api/core';
@@ -7,23 +8,19 @@ axios.defaults.baseURL = '/api/core';
 //http request 拦截器
 axios.interceptors.request.use(
     config => {
-        //config.data = JSON.stringify(config.data);
-        config.headers = {
-            /* 'Content-Type': 'application/x-www-form-urlencoded' */
-            'Content-Type': 'application/json'
-        }
+        // config.headers = {
+        //     /* 'Content-Type': 'application/x-www-form-urlencoded' */
+        //     'Content-Type': 'application/json'
+        // }
+        config.headers['Content-Type'] = 'application/json';
         let token;
-        if(config.url.indexOf("/back/") > -1){
-            token = localStorage.getItem('$back-token');
-        } else {
+        if(config.url.indexOf("/blog/") > -1){
             token = localStorage.getItem('$token');
+        } else {
+            token = localStorage.getItem('$back-token');
         }
         if(token){
-            if(config.params){
-                config.params.token = token;
-            }else {
-                config.params = {'token': token};
-            }
+            config.headers['token'] = token;
         }
         return config;
     },
@@ -36,20 +33,26 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     response => {
         //token失效的判断
-        if (response.data.status === '2') {
-            router.push({
-                path: "back/login",
-                querry: {
-                    redirect: router.currentRoute.fullPath
-                } //从哪个页面跳转
-            })
+        if (response.data.status === 2) {
+            MessageBox.alert(response.data.msg, '提示', {
+                confirmButtonText: '确定',
+                callback: action => {
+                    router.push({
+                        path: "/back/login",
+                        querry: {
+                            // 从哪个页面跳转
+                            redirect: router.currentRoute.fullPath
+                        } 
+                    })
+                }
+            });
         }
         //有token则更新token
         else if(response.data.token) {
-            if(response.config.url.indexOf("/back/") > -1) {
-                localStorage.setItem('$back-token', response.data.token);
-            } else {
+            if(response.config.url.indexOf("/blog/") > -1) {
                 localStorage.setItem('$token', response.data.token);
+            } else {
+                localStorage.setItem('$back-token', response.data.token);
             }
         }
         console.log(response.data);

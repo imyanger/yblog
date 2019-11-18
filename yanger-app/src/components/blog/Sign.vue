@@ -45,32 +45,32 @@
                     <center>
                         <el-input placeholder="请输入注册账号    6-20字母或数字" prefix-icon="el-icon-info" 
                             v-model="sginData.registerData.userCode" maxlength="20" 
-                            :suffix-icon="sginData.registerData.icon.userCode" 
+                            :suffix-icon="sginData.registerIconData.userCode" 
                             @change="reCgUserCode(sginData.registerData.userCode)">
                         </el-input>
                         <el-input placeholder="请输入注册密码    6-20字母或数字" prefix-icon="el-icon-sold-out" type='password' 
                             v-model="sginData.registerData.password" maxlength="20" 
-                            :suffix-icon="sginData.registerData.icon.password" 
+                            :suffix-icon="sginData.registerIconData.password" 
                             @change="reCgPassword(sginData.registerData.password)">
                         </el-input>
                         <el-input placeholder="请输入确认密码    6-20字母或数字" prefix-icon="el-icon-goods" type='password' 
                             v-model="sginData.registerData.password2" maxlength="20" 
-                            :suffix-icon="sginData.registerData.icon.password2"
+                            :suffix-icon="sginData.registerIconData.password2"
                             @change="reCgPassword2(sginData.registerData.password2)">
                         </el-input>
                         <el-input placeholder="请输入用户昵称    3-12非特殊字符" prefix-icon="el-icon-service" 
                             v-model="sginData.registerData.userNickName" maxlength="12" 
-                            :suffix-icon="sginData.registerData.icon.userNickName"
+                            :suffix-icon="sginData.registerIconData.userNickName"
                             @change="reCgUserNickName(sginData.registerData.userNickName)">
                         </el-input>
                         <el-input placeholder="请输入邮箱地址" prefix-icon="el-icon-message" 
                             v-model="sginData.registerData.email" maxlength="30" 
-                            :suffix-icon="sginData.registerData.icon.email" 
+                            :suffix-icon="sginData.registerIconData.email" 
                             @change="reCgEmail(sginData.registerData.email)">
                         </el-input>
                         <el-input placeholder="请输入手机号码" prefix-icon="el-icon-phone-outline" 
                             v-model="sginData.registerData.moblie" maxlength="11" 
-                            :suffix-icon="sginData.registerData.icon.moblie" 
+                            :suffix-icon="sginData.registerIconData.moblie" 
                             @change="reCgMoblie(sginData.registerData.moblie)">
                         </el-input>
                     </center>
@@ -113,16 +113,15 @@
                     isLogin: true, //是否加载登录区域
                     isDragOk: false, // 登录滑块时候解锁
                     loginData: {},
-                    registerData: {
-                        icon: {
-                            //动态绑定class必须初始化声明
-                            userCode: '',
-                            password: '',
-                            password2: '',
-                            userNickName: '',
-                            email: '',
-                            moblie: ''
-                        }
+                    registerData: {},
+                    registerIconData: {
+                        //动态绑定class必须初始化声明
+                        userCode: '',
+                        password: '',
+                        password2: '',
+                        userNickName: '',
+                        email: '',
+                        moblie: ''
                     },
                     user: {},
                     errorMsg: ""
@@ -266,17 +265,17 @@
                 }
                 if(msg.length === 3){
                     //检查是否全部录入正确
-                    if(el_icon_success !== this.sginData.registerData.icon.userCode){
+                    if(el_icon_success !== this.sginData.registerIconData.userCode){
                         msg += "正确的注册账号";
-                    }else if(el_icon_success !== this.sginData.registerData.icon.password){
+                    }else if(el_icon_success !== this.sginData.registerIconData.password){
                         msg += "正确的注册密码";
-                    }else if(el_icon_success !== this.sginData.registerData.icon.password2){
+                    }else if(el_icon_success !== this.sginData.registerIconData.password2){
                         msg += "正确的确认密码";
-                    }else if(el_icon_success !== this.sginData.registerData.icon.userNickName){
+                    }else if(el_icon_success !== this.sginData.registerIconData.userNickName){
                         msg += "正确的用户昵称";
-                    }else if(el_icon_success !== this.sginData.registerData.icon.email){
+                    }else if(el_icon_success !== this.sginData.registerIconData.email){
                         msg += "正确的邮箱地址";
-                    }else if(el_icon_success !== this.sginData.registerData.icon.moblie){
+                    }else if(el_icon_success !== this.sginData.registerIconData.moblie){
                         msg += "正确的手机号码";
                     }
                     if(msg.length === 3){
@@ -293,10 +292,10 @@
             reCgUserCode(val){
                 let f = simpleValidate.isUsername(val);
                 if(f){
-                    this.sginData.registerData.icon.userCode = el_icon_success;
+                    this.sginData.registerIconData.userCode = el_icon_success;
                     this.sginData.errorMsg = "";
                 }else {
-                    this.sginData.registerData.icon.userCode = el_icon_error;
+                    this.sginData.registerIconData.userCode = el_icon_error;
                     this.sginData.errorMsg = "注册账号输入错误，请使用6-20字母或数字";
                 }
             },
@@ -306,17 +305,17 @@
                 if(f){
                     //校验两次密码是否一致
                     if(this.sginData.registerData.password2 && val !== this.sginData.registerData.password2){
-                        this.sginData.registerData.icon.password = el_icon_error;
+                        this.sginData.registerIconData.password = el_icon_error;
                         this.sginData.errorMsg = "注册密码输入错误，两次密码不一致";
                     }else{
-                        this.sginData.registerData.icon.password = el_icon_success;
+                        this.sginData.registerIconData.password = el_icon_success;
                         this.sginData.errorMsg = "";
                         if(this.sginData.registerData.password2){
-                            this.sginData.registerData.icon.password2 = el_icon_success;
+                            this.sginData.registerIconData.password2 = el_icon_success;
                         }
                     }
                 }else {
-                    this.sginData.registerData.icon.password = el_icon_error;
+                    this.sginData.registerIconData.password = el_icon_error;
                     this.sginData.errorMsg = "注册密码输入错误，请使用6-20字母或数字";
                 }
             },
@@ -325,17 +324,17 @@
                 let f = simpleValidate.isPassword(val);
                 if(f){
                     if(this.sginData.registerData.password && val !== this.sginData.registerData.password){
-                        this.sginData.registerData.icon.password2 = el_icon_error;
+                        this.sginData.registerIconData.password2 = el_icon_error;
                         this.sginData.errorMsg = "确认密码输入错误，两次密码不一致";
                     }else {
-                        this.sginData.registerData.icon.password2 = el_icon_success;
+                        this.sginData.registerIconData.password2 = el_icon_success;
                         this.sginData.errorMsg = "";
                         if(this.sginData.registerData.password){
-                            this.sginData.registerData.icon.password = el_icon_success;
+                            this.sginData.registerIconData.password = el_icon_success;
                         }
                     }
                 }else {
-                    this.sginData.registerData.icon.password2 = el_icon_error;
+                    this.sginData.registerIconData.password2 = el_icon_error;
                     this.sginData.errorMsg = "确认密码输入错误，请使用6-20字母或数字";
                 }
             },
@@ -343,10 +342,10 @@
             reCgUserNickName(val){
                 let f = simpleValidate.isNickName(val);
                 if(f){
-                    this.sginData.registerData.icon.userNickName = el_icon_success;
+                    this.sginData.registerIconData.userNickName = el_icon_success;
                     this.sginData.errorMsg = "";
                 }else {
-                    this.sginData.registerData.icon.userNickName = el_icon_error;
+                    this.sginData.registerIconData.userNickName = el_icon_error;
                     this.sginData.errorMsg = "用户昵称输入错误，请使用3-12非特殊字符";
                 }
             },
@@ -354,10 +353,10 @@
             reCgEmail(val){
                 let f = simpleValidate.isEmail(val);
                 if(f){
-                    this.sginData.registerData.icon.email = el_icon_success;
+                    this.sginData.registerIconData.email = el_icon_success;
                     this.sginData.errorMsg = "";
                 }else {
-                    this.sginData.registerData.icon.email = el_icon_error;
+                    this.sginData.registerIconData.email = el_icon_error;
                     this.sginData.errorMsg = "邮箱格式错误";
                 }
             },
@@ -365,10 +364,10 @@
             reCgMoblie(val){
                 let f = simpleValidate.isTelphone(val);
                 if(f){
-                    this.sginData.registerData.icon.moblie = el_icon_success;
+                    this.sginData.registerIconData.moblie = el_icon_success;
                     this.sginData.errorMsg = "";
                 }else {
-                    this.sginData.registerData.icon.moblie = el_icon_error;
+                    this.sginData.registerIconData.moblie = el_icon_error;
                     this.sginData.errorMsg = "手机号格式错误";
                 }
             },

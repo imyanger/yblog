@@ -72,7 +72,7 @@ public class TokenAspect {
 		}
 		if(isTokenNeed){
 			request = getHttpServletRequest();
-			String token = request.getParameter("token");
+			String token = request.getHeader("token");
 			log.info("TokenAspect--token：" + token);
 			//校验token
 			TokenMsg tokenMsg = JwtUtils.parse(TokenMsg.class, token);
