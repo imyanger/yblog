@@ -30,5 +30,14 @@ public class ConstantUtils {
 
 	/** 留言类型 --留言板 */
 	public static final String MSG_TYPE_BOARD = "02";
+	
+	/** 用户类型 -- 博客用户 */
+	public static final String USER_TYPE_BLOG = "1";
 
+	/** 用户类型 -- 后台用户 */
+	public static final String USER_TYPE_BACK = "2";
+	
+	/** 文章模块类型的上级常量代码upperCode */
+	public static final String ARTICLE_MODULE_UPPER_CODE = "wzlx";
+	
 }

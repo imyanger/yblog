@@ -34,22 +34,20 @@
 			<div id="content_message">
 				<h3>最近留言</h3>
 				<div id="con">
-                    <vue-scroll :data='homeData.msgs' :class-option='classOption'>
-                        <ul>
-                            <li v-for="(msg, index) in homeData.msgs" :key="msg.index">
-                                <div class="message_left">
-                                    <img alt="" src="static/img/img.jpg">
-                                </div>
-                                <div class="message_right">
-                                    <p>
-                                        <a href="javascript:void(0)">{{msg.userNickName}}</a>
-                                        &nbsp;&nbsp;&nbsp;{{msg.updateTime | formatDate}}&nbsp;:
-                                    </p>
-                                    <p>{{msg.content}}</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </vue-scroll>
+                    <ul>
+                        <li v-for="(msg, index) in homeData.msgs" :key="msg.index">
+                            <div class="message_left">
+                                <img alt="" src="static/img/img.jpg">
+                            </div>
+                            <div class="message_right">
+                                <p>
+                                    <a href="javascript:void(0)">{{msg.userNickName}}</a>
+                                    &nbsp;&nbsp;&nbsp;{{msg.updateTime | formatDate}}&nbsp;:
+                                </p>
+                                <p>{{msg.content}}</p>
+                            </div>
+                        </li>
+                    </ul>
 				</div>
 			</div>
 			<div id="content_link">
@@ -64,7 +62,7 @@
 
 <script>
     // import $ from 'jquery'; //引入jquery
-    import vueScroll from 'vue-seamless-scroll'; //滚动组件
+    //import vueScroll from 'vue-seamless-scroll'; //滚动组件
     import aboutMe from '@/components/blog/AboutMe'; //关于我模块
     import autor from '@/components/blog/Autor'; //列表文章底部部分
     import { formatDate } from 'static/js/date'; //date格式化
@@ -93,7 +91,9 @@
             }
         },
         components: {
-            aboutMe, vueScroll, autor
+            aboutMe, 
+            //vueScroll, 
+            autor
         },
         methods: {
         },
@@ -141,12 +141,14 @@
         padding: 2px 0 4px 10px;
         border-left: 3px solid #3472ef;
         margin: 0 0 0 0;
-        border-bottom: #db6d4c 2px solid;
+        border-bottom: #fb4912 2px solid;
     }
     .content_study_note {
         border-bottom: #bfab86 1px solid;
         overflow: hidden;
         background-color: #fefefe;
+        border-radius: 5px;
+        box-shadow: 1px -1px 3px #adc2d7;
     }
     .note_left {
         width: 150px;
@@ -157,6 +159,7 @@
     .note_left img {
         width: 90%;
         height: 90%;
+        border-radius: 4px;
     }
     .note_c {
         color: #888;
@@ -194,6 +197,8 @@
         border-bottom: #bfab86 1px solid;
         overflow: hidden;
         background-color: #fcfbf1;
+        border-radius: 5px;
+        box-shadow: 1px -1px 3px #adc2d7;
     }
     .content_journal .title-h2 {
         font-size: 17px;
@@ -223,6 +228,7 @@
     .journal_left img {
         width: 90%;
         height: 90%;
+        border-radius: 4px;
     }
     .journal_right {
         width: 75%;
@@ -233,12 +239,15 @@
 
     /*   ------------------ 最新留言 ---------------------  */
     #content_message {
-        height: 422px;
+        height: 512px;
         margin: 0px auto;
         position: relative;
         border-top: 1px solid #d6d6d6;
         background-color: #fff;
         overflow: hidden;
+        word-break: break-all;
+        border-radius: 4px;
+        box-shadow: 1px 2px 3px #adc2d7;
     }
     #con {
         overflow: hidden;
@@ -314,7 +323,7 @@
     #content_link {
         width: 100%;
         height: 200px;
-        margin-top: 25px;
+        margin-top: 15px;
     }
     #content_link h3 {
         line-height: 40px;
@@ -323,14 +332,15 @@
         border-bottom: 1px solid #ff3300;
         text-align: center;
         height: 40px;
-        margin-bottom: 16px;
+        margin-bottom: 5px;
         font-weight: 500;
     }
     #content_link p {
         margin: 0 auto;
-        text-align: center;
-        font-size: 16px;
+        font-size: 15px;
         cursor: pointer;
+        line-height: 22px;
+        margin-left: 4px;
     }
     #content_link p a {
         color: #3472ef;

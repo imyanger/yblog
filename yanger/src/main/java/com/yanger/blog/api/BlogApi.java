@@ -24,6 +24,7 @@ import com.yanger.blog.vo.ViewDataVo;
 import com.yanger.common.annotation.Operate;
 import com.yanger.common.annotation.Token;
 import com.yanger.common.config.ServerConfig;
+import com.yanger.common.util.ConstantUtils;
 import com.yanger.common.util.JwtUtils;
 import com.yanger.common.util.RedisMagger;
 import com.yanger.common.vo.ApiResponse;
@@ -166,6 +167,7 @@ public class BlogApi {
 	public ApiResponse<String> register(@RequestBody BlogUserVo blogUserVo) {
 		ApiResponse<String> api = new ApiResponse<>();
 		try {
+			blogUserVo.setUserType(ConstantUtils.USER_TYPE_BLOG);
 			blogService.userRegister(blogUserVo);
 			api.setData("注册成功");
 		} catch (Exception e) {
@@ -186,7 +188,7 @@ public class BlogApi {
 	public ApiResponse<BlogUserVo> login(@RequestBody BlogUserVo blogUserVo) {
 		ApiResponse<BlogUserVo> api = new ApiResponse<>();
 		try {
-			BlogUserVo user = blogService.userLogin(blogUserVo);
+			BlogUserVo user = blogService.userLogin(blogUserVo, ConstantUtils.USER_TYPE_BLOG);
 			if (user != null) {
 				api.setData(user);
 				// 添加token
@@ -230,7 +232,6 @@ public class BlogApi {
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
 	 */
-	@Operate("查看留言信息")
 	@ApiOperation(value = "留言板页面数据初始化", notes = "")
 	@GetMapping("/boardInit")
 	public ApiResponse<BoardDataVo> boardInit() {

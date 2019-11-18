@@ -164,10 +164,13 @@
         height: 100%;
         float: left;
         margin-top:3px;
+        border-radius: 5px;
+        box-shadow: 1px 2px 3px #adc2d7;
     }
     #Msg {
         width: 700px;
         background-color: #fefefe;
+        border-radius: 4px;
     }
     #content_right {
         width: 280px;
@@ -175,6 +178,8 @@
         float: right;
         background-color: #b4f3dc;
         margin-top: 40px;
+        border-radius: 5px;
+        box-shadow: 1px 2px 3px #adc2d7;
     }
 
     /*-------------- 留言板  --------------------*/

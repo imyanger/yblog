@@ -58,10 +58,10 @@ public class BlogService {
 		List<ArticleVo> essays = this.findArticlesByModule(2, ConstantUtils.ARTICLE_MODULE_ESSAY);
 		homeData.setEssays(essays);
 		// 获取最新留言
-		List<LeavingMsgVo> msgs = this.findMsgs(PageParam.NO_PAGE, 10);
+		List<LeavingMsgVo> msgs = this.findMsgs(PageParam.NO_PAGE, 5);
 		homeData.setMsgs(msgs);
 		// 获取外连接
-		List<OuterLinkVo> shipLinks = this.findShipLinks(8, ConstantUtils.LINK_TYPE_SHIP);
+		List<OuterLinkVo> shipLinks = this.findShipLinks(6, ConstantUtils.LINK_TYPE_SHIP);
 		homeData.setShipLinks(shipLinks);
 		return homeData;
 	}
@@ -313,11 +313,11 @@ public class BlogService {
 	 * @return
 	 * @throws Exception
 	 */
-	public BlogUserVo userLogin(BlogUserVo blogUserVo) throws Exception {
+	public BlogUserVo userLogin(BlogUserVo blogUserVo, String type) throws Exception {
 		BlogUserVo user = null;
 		String password = EncryptUtils.getMD5(blogUserVo.getPassword());
 		// 根据用户名密码查询用户
-		BlogUser blogUser = blogUserDao.findLoginUser(blogUserVo.getUserCode(), password);
+		BlogUser blogUser = blogUserDao.findLoginUser(blogUserVo.getUserCode(), password, type);
 		if (blogUser != null) {
 			user = new BlogUserVo();
 			user.setUserCode(blogUser.getUserCode());

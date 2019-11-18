@@ -128,41 +128,45 @@
 		width: 700px;
 		max-height: 1130px;
 		min-height: 750px;
-		background-color: #fefefe;
+        background-color: #fefefe;
+        border-radius: 5px;
 	}
 	#content_left {
 		width: 700px;
 		height: 100%;
 		float: left;
-		margin-top: 3px;
+        margin-top: 3px;
+        border-radius: 5px;
 	}
 	#content_right {
 		width: 280px;
 		height: 100%;
 		float: right;
 		background-color: #fafacc;
-		margin-top: 40px;
+        margin-top: 40px;
+        border-radius: 5px;
+        box-shadow: 1px 2px 3px #adc2d7
 	}
 	#content_left .title-h2 {
 		width: 100%;
-		height: 50px;
-		background-color: #efefef;
-		font-size: 23px;
-		text-align: center;
-		padding-top: 11px;
-		margin-bottom: -1px;
-		border-top: 2px dashed #ccc;
-		border-left: 2px dashed #ccc;
-		border-right: 2px dashed #ccc;
-		font-weight: 500;
-		margin-left: -2px;
+        height: 50px;
+        background-color: #2875605c;
+        font-size: 23px;
+        text-align: center;
+        padding-top: 11px;
+        margin-bottom: -1px;
+        font-weight: 500;
+        border-radius: 5px;
+        box-shadow: 1px 2px 3px #adc2d7;
 	}
 
 	/* ---------------文章列表 --------------- */
 	.content_study_note {
 		border-bottom: #bfab86 1px solid;
 		overflow: hidden;
-		background-color: white;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 1px -1px 3px #adc2d7;
 	}
 	.note_left {
 		width: 150px;
@@ -281,5 +285,9 @@
 	}
 	#article .el-pagination .el-pager li {
 		background-color: transparent;
-	}
+    }
+    #article .el-pagination {
+        border-radius: 4px;
+        box-shadow: 1px 2px 3px #adc2d7;
+    }
 </style>

@@ -7,11 +7,16 @@ axios.defaults.baseURL = '/api/core';
 //http request 拦截器
 axios.interceptors.request.use(
     config => {
-        const token = localStorage.getItem('$token');
         //config.data = JSON.stringify(config.data);
         config.headers = {
             /* 'Content-Type': 'application/x-www-form-urlencoded' */
             'Content-Type': 'application/json'
+        }
+        let token;
+        if(config.url.indexOf("/back/") > -1){
+            token = localStorage.getItem('$back-token');
+        } else {
+            token = localStorage.getItem('$token');
         }
         if(token){
             if(config.params){
@@ -33,13 +38,19 @@ axios.interceptors.response.use(
         //token失效的判断
         if (response.data.status === '2') {
             router.push({
-                path: "/login",
+                path: "back/login",
                 querry: {
                     redirect: router.currentRoute.fullPath
                 } //从哪个页面跳转
             })
-        }else if(response.data.token){ //有token则更新token
-            localStorage.setItem('$token', response.data.token);
+        }
+        //有token则更新token
+        else if(response.data.token) {
+            if(response.config.url.indexOf("/back/") > -1) {
+                localStorage.setItem('$back-token', response.data.token);
+            } else {
+                localStorage.setItem('$token', response.data.token);
+            }
         }
         console.log(response.data);
         return response;

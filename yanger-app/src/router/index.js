@@ -3,7 +3,7 @@ import Router from 'vue-router';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
     routes: [
         {
             path: '/',
@@ -15,72 +15,82 @@ export default new Router({
             component: resolve => require(['@/components/blog/Layout.vue'], resolve),
             children: [
                 {
-                    path: '/blog/home',
-                    component: resolve => require(['../pages/blog/Home.vue'], resolve)
+                    path: 'home',
+                    component: resolve => require(['@/pages/blog/Home.vue'], resolve)
                 },
                 {
-                    path: '/blog/study',
-                    component: resolve => require(['../pages/blog/Study.vue'], resolve)
+                    path: 'study',
+                    component: resolve => require(['@/pages/blog/Study.vue'], resolve)
                 },
                 {
-                    path: '/blog/essay',
-                    component: resolve => require(['../pages/blog/Essay.vue'], resolve)
+                    path: 'essay',
+                    component: resolve => require(['@/pages/blog/Essay.vue'], resolve)
                 },
                 {
-                    path: '/blog/func',
-                    component: resolve => require(['../pages/blog/Func.vue'], resolve)
+                    path: 'func',
+                    component: resolve => require(['@/pages/blog/Func.vue'], resolve)
                 },
                 {
-                    path: '/blog/board',
-                    component: resolve => require(['../pages/blog/Board.vue'], resolve)
+                    path: 'board',
+                    component: resolve => require(['@/pages/blog/Board.vue'], resolve)
                 },
                 {
-                    path: '/blog/about',
-                    component: resolve => require(['../pages/blog/About.vue'], resolve)
+                    path: 'about',
+                    component: resolve => require(['@/pages/blog/About.vue'], resolve)
                 },
             ]
         },
         //文章浏览部分
         {
             path: '/view/:id',
-            component: resolve => require(['../pages/blog/View.vue'], resolve),
+            component: resolve => require(['@/pages/blog/View.vue'], resolve),
             meta: { title: '文章浏览' }
         },
         //后台管理系统
+        {
+            path: '/back/login',
+            component: resolve => require(['@/pages/back/Login.vue'], resolve),
+            meta: { title: '后台登录' }
+        },
         {
             path: '/back',
             component: resolve => require(['@/components/back/Layout.vue'], resolve),
             meta: { title: '后台管理' },
             children:[
                 {
-                    path: '/back/home',
+                    path: 'home',
                     component: resolve => require(['@/pages/back/Home.vue'], resolve),
                     meta: { title: '系统首页' }
                 },
                 {
-                    path: '/back/art/list',
+                    path: 'art/list',
                     component: resolve => require(['@/pages/back/ArtList.vue'], resolve),
                     meta: { title: '文章查询' }
                 },
                 {
-                    path: '/back/art/add',
+                    path: 'art/add',
                     component: resolve => require(['@/pages/back/ArtAdd.vue'], resolve),
                     meta: { title: '文章新增' }
                 },
                 {
-                    path: '/back/art/count',
+                    path: 'art/add/md',
+                    component: resolve => require(['@/pages/back/ArtAddMd.vue'], resolve),
+                    meta: { title: 'markdown' }
+                },
+                {
+                    path: 'art/count',
                     component: resolve => require(['@/pages/back/ArtCount.vue'], resolve),
                     meta: { title: '文章统计' }
                 },
                 {
-                    path: '/back/user/list',
+                    path: 'user/list',
                     component: resolve => require(['@/pages/back/UserList.vue'], resolve),
                     meta: { title: '用户查询' }
                 },
                 {
-                    path: '/back/sys/const',
+                    path: 'sys/const',
                     component: resolve => require(['@/pages/back/SysConst.vue'], resolve),
-                    meta: { title: '常量查询' }
+                    meta: { title: '文章类型维护' }
                 },
             ]
         },
@@ -167,3 +177,19 @@ export default new Router({
         }
     ]
 })
+
+router.beforeEach((to, from, next) => {
+    // 后台路径校验token
+    if (to.path != "/back/login" && to.path.startsWith("/back/")) {
+        let jwtToken = localStorage.getItem('$back-token');
+        if(jwtToken){
+            next();
+        } else {
+            next('back/login');
+        }
+    } else {
+        next();
+    }
+});
+
+export default router;

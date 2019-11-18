@@ -24,6 +24,7 @@
 		 <result column="education" property="education"/> 
 		 <result column="birtd" property="birtd"/> 
 		 <result column="user_real_name" property="userRealName"/> 
+		 <result column="user_type" property="userType"/> 
 		 <result column="status" property="status"/> 
 		 <result column="insert_time" property="insertTime"/> 
 		 <result column="update_time" property="updateTime"/> 
@@ -34,7 +35,8 @@
 		 user_id, user_code, password, user_nick_name, gender,
 		 user_img_path, summary, age, phone_number, moblie,
 		 email, address, graduate_school, education, birtd,
-		 user_real_name, status, insert_time, update_time
+		 user_real_name, user_type, status, insert_time, update_time
+		
 	</sql>
 
 	<!-- 按对象查询记录的WHERE部分 -->
@@ -86,6 +88,9 @@
 		</if>
 		<if test="userRealName != null" >
 			and user_real_name = #{userRealName}
+		</if>
+		<if test="userType != null" >
+			and user_type = #{userType}
 		</if>
 		<if test="status != null" >
 			and status = #{status}
@@ -152,11 +157,13 @@
 		insert into blog_user (user_id, user_code, password, user_nick_name, gender, 
 			user_img_path, summary, age, phone_number, moblie, 
 			email, address, graduate_school, education, birtd, 
-			user_real_name, status, insert_time, update_time)
+			user_real_name, user_type, status, insert_time, update_time
+			)
 		values(#{userId}, #{userCode}, #{password}, #{userNickName}, #{gender}, 
 			#{userImgPath}, #{summary}, #{age}, #{phoneNumber}, #{moblie}, 
 			#{email}, #{address}, #{graduateSchool}, #{education}, #{birtd}, 
-			#{userRealName}, #{status}, #{insertTime}, #{updateTime})
+			#{userRealName}, #{userType}, #{status}, #{insertTime}, #{updateTime}
+			)
 	</insert>
 
 	<!-- 插入一条记录(为空的字段不操作) -->
@@ -210,6 +217,9 @@
 			</if>
 			<if test="userRealName != null" >
 				user_real_name,
+			</if>
+			<if test="userType != null" >
+				user_type,
 			</if>
 			<if test="status != null" >
 				status,
@@ -269,6 +279,9 @@
 			</if>
 			<if test="userRealName != null" >
 				#{userRealName},
+			</if>
+			<if test="userType != null" >
+				#{userType},
 			</if>
 			<if test="status != null" >
 				#{status},
@@ -331,6 +344,9 @@
 			<if test="userRealName != null" >
 				user_real_name=#{userRealName},
 			</if>
+			<if test="userType != null" >
+				user_type=#{userType},
+			</if>
 			<if test="status != null" >
 				status=#{status},
 			</if>
@@ -362,6 +378,7 @@
 			education=#{education},
 			birtd=#{birtd},
 			user_real_name=#{userRealName},
+			user_type=#{userType},
 			status=#{status},
 			insert_time=#{insertTime},
 			update_time=#{updateTime}

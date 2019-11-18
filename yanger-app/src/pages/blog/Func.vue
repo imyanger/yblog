@@ -57,14 +57,18 @@
 		height: 100%;
 		float: left;
 		margin-top: 3px;
-		background-color: #fefefe;
+        background-color: #fefefe;
+        border-radius: 5px;
+        box-shadow: 1px 2px 3px #adc2d7;
 	}
 	#content_right {
 		width: 280px;
 		height: 100%;
 		float: right;
 		margin-top: 3px;
-		background-color: #c8dbf8;
+        background-color: #c8dbf8;
+        border-radius: 5px;
+        box-shadow: 1px 2px 3px #adc2d7;
 	}
 
 	/*--------------------- 扩展功能表格 ---------------------------*/
@@ -84,12 +88,16 @@
 		width: 160px;
 		height: 120px;
 		text-align: center;
-		cursor: pointer;
+        cursor: pointer;
+        border-radius: 10px;
+        box-shadow: 1px 2px 3px #adc2d7;
 	}
 	table tr td img {
 		width: 50px;
 		height: 50px;
-		margin-bottom: 10px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        box-shadow: 1px 2px 3px #adc2d7;
 	}
 
 	table tr td a {

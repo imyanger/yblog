@@ -166,6 +166,7 @@
             //注销用户
             clearUserInfo(){
                 this.sginData.user = {};
+                localStorage.removeItem('$token');
                 this.clearUser();
             },
             //接受滑动解锁成功的回调

@@ -56,8 +56,8 @@
 <style scoped>
     .content_aboutMe {
         width: 100%;
-        height: 250px;
-        margin-bottom: 20px;
+        height: 230px;
+        margin-bottom: 10px;
     }
     .aboutMe_left {
         width: 90px;
@@ -67,7 +67,9 @@
     }
     .aboutMe_left img {
         width: 90px;
-        height: 120px;
+        height: 108px;
+        margin-top: 5px;
+        border-radius: 3px;
     }
     .content_aboutMe h3 {
         line-height: 40px;
@@ -95,21 +97,38 @@
     #about_me_follow {
         width: 280px;
         height: 65px;
-        margin-top: 150px;
+        margin-top: 135px;
     }
     #about_me_sinaweb, #about_me_weichat, #about_me_github {
-        width: 40px;
-        height: 40px;
+        width: 44px;
+        height: 42px;
         float: left;
         margin-left: 23px;
         cursor: pointer;
     }
-    #about_me_csdn {
+     #about_me_weichat {
+        width: 41px;
+        height: 41px;
+        float: left;
+        margin-left: 23px;
+        cursor: pointer;
+    }
+    #about_me_github {
         width: 36px;
         height: 36px;
         float: left;
-        margin-left: 23px;
+        margin-left: 27px;
         cursor: pointer;
+        border-radius: 18px;
+    }
+    #about_me_csdn {
+        width: 32px;
+        height: 32px;
+        float: left;
+        margin-left: 27px;
+        cursor: pointer;
+        margin-top: 3px;
+        border-radius: 16px;
     }
     #wechat_des {
         font-size: 20px;

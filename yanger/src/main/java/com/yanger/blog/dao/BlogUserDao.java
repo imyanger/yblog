@@ -20,7 +20,7 @@ public interface BlogUserDao extends MybatisBaseDao<BlogUser, Integer> {
 	 * @param pwd
 	 * @return
 	 */
-	public BlogUser findLoginUser(@Param("code") String code, @Param("pwd") String pwd);
+	public BlogUser findLoginUser(@Param("code") String code, @Param("pwd") String pwd, @Param("type") String type);
 
 	/**
 	 * @description 根据用户名/邮箱/手机号查找用户

@@ -12,6 +12,7 @@
 		 <result column="depict" property="depict"/> 
 		 <result column="code" property="code"/> 
 		 <result column="val" property="val"/> 
+		 <result column="upper_code" property="upperCode"/> 
 		 <result column="status" property="status"/> 
 		 <result column="insert_time" property="insertTime"/> 
 		 <result column="update_time" property="updateTime"/> 
@@ -19,8 +20,8 @@
 
 	<!-- 通用查询结果列-->
 	<sql id="Base_Column_List">
-		 id, depict, code, val, status,
-		 insert_time, update_time
+		 id, depict, code, val, upper_code,
+		 status, insert_time, update_time
 	</sql>
 
 	<!-- 按对象查询记录的WHERE部分 -->
@@ -36,6 +37,9 @@
 		</if>
 		<if test="val != null" >
 			and val = #{val}
+		</if>
+		<if test="upperCode != null" >
+			and upper_code = #{upperCode}
 		</if>
 		<if test="status != null" >
 			and status = #{status}
@@ -99,10 +103,10 @@
 
 	<!-- 完整插入一条记录-->
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.yanger.blog.po.Const">
-		insert into const (id, depict, code, val, status, 
-			insert_time, update_time)
-		values(#{id}, #{depict}, #{code}, #{val}, #{status}, 
-			#{insertTime}, #{updateTime})
+		insert into const (id, depict, code, val, upper_code, 
+			status, insert_time, update_time)
+		values(#{id}, #{depict}, #{code}, #{val}, #{upperCode}, 
+			#{status}, #{insertTime}, #{updateTime})
 	</insert>
 
 	<!-- 插入一条记录(为空的字段不操作) -->
@@ -120,6 +124,9 @@
 			</if>
 			<if test="val != null" >
 				val,
+			</if>
+			<if test="upperCode != null" >
+				upper_code,
 			</if>
 			<if test="status != null" >
 				status,
@@ -143,6 +150,9 @@
 			</if>
 			<if test="val != null" >
 				#{val},
+			</if>
+			<if test="upperCode != null" >
+				#{upperCode},
 			</if>
 			<if test="status != null" >
 				#{status},
@@ -169,6 +179,9 @@
 			<if test="val != null" >
 				val=#{val},
 			</if>
+			<if test="upperCode != null" >
+				upper_code=#{upperCode},
+			</if>
 			<if test="status != null" >
 				status=#{status},
 			</if>
@@ -188,6 +201,7 @@
 		set depict=#{depict},
 			code=#{code},
 			val=#{val},
+			upper_code=#{upperCode},
 			status=#{status},
 			insert_time=#{insertTime},
 			update_time=#{updateTime}

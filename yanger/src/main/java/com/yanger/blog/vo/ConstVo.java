@@ -27,6 +27,9 @@ public class ConstVo implements Serializable {
 
 	/** 对应字段：val,备注：常量值 */
 	private String val;
+	
+	/** 对应字段：upper_code,备注：上一级常量代码 */
+	private String upperCode;
 
 	/** 对应字段：status,备注：状态 */
 	private String status;

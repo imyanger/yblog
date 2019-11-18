@@ -62,6 +62,9 @@ public class BlogUser implements Serializable {
 	/** 对应字段：user_real_name,备注：真实姓名 */
 	private String userRealName;
 
+	/** 对应字段：user_type,备注：用户类型 */
+	private String userType;
+
 	/** 对应字段：status,备注：数据状态 */
 	private String status;
 

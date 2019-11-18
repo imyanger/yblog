@@ -44,18 +44,19 @@
         },
         computed:{
             username(){
-                let user = this.getUser();
+                let user = this.getBuser();
                 return user.userNickName ? user.userNickName : this.name;
             }
         },
         methods:{
-            ...mapGetters(['getUser']),
-            ...mapMutations(['clearUser']),
+            ...mapGetters(['getBuser']),
+            ...mapMutations(['clearBuser']),
             // 用户名下拉菜单选择事件
             handleCommand(command) {
                 if(command === 'logout'){
-                    this.clearUser();
-                    this.$router.push('/login');
+                    this.clearBuser();
+                    localStorage.removeItem('$back-token');
+                    this.$router.push('/back/login');
                 }
             },
             // 侧边栏折叠

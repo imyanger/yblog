@@ -49,6 +49,10 @@
                                 title: '文章新增'
                             },
                             {
+                                index: '/back/art/add/md',
+                                title: 'markdown'
+                            },
+                            {
                                 index: '/back/art/count',
                                 title: '文章统计'
                             }
@@ -72,7 +76,7 @@
                         subs: [
                             {
                                 index: '/back/sys/const',
-                                title: '常量维护'
+                                title: '文章类型维护'
                             },
                         ]
                     }

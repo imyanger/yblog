@@ -9,7 +9,7 @@
 		select
 			<include refid="Base_Column_List" />
 		from blog_user
-		where (user_code = #{code} or moblie = #{code} or email = #{code}) and password = #{pwd}
+		where (user_code = #{code} or moblie = #{code} or email = #{code}) and password = #{pwd} and user_type = #{type}
 	</select>
 
 	<select id="findUserByCode" resultMap="BaseResultMap" parameterType="String">

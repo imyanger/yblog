@@ -2,7 +2,7 @@
     <div id="blog_foot">
 		<p>
 			Design by Yanger &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="http://www.miitbeian.gov.cn/">京ICP备17068496号</a>
+			<a href="http://www.miitbeian.gov.cn/">京ICP备19044592号-1</a>
 		</p>
 	</div>
 </template>

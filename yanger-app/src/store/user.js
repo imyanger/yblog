@@ -25,7 +25,7 @@ const mutations = {
     //注销登录
     clearUser(state) {
         state.user = {};
-        localStorage.setItem('$user', '');
+        localStorage.removeItem('$user');
     }
 }
 

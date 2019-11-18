@@ -123,14 +123,17 @@
 		width: 700px;
 		height: 100%;
 		float: left;
-		margin-top: 24px;
+        margin-top: 24px;
+        border-radius: 5px;
 	}
 	#content_right {
 		width: 280px;
 		height: 100%;
 		float: right;
 		margin-top:3px;
-		background-color: #fefefe;
+        background-color: #fefefe;
+        border-radius: 5px;
+        box-shadow: 1px 2px 3px #adc2d7;
 	}
 	#content_left .title-h2{
 		width: 100%;
@@ -138,7 +141,9 @@
 		font-size: 23px;
 		text-align: center;
 		padding-top: 18px;
-		font-weight: 500;
+        font-weight: 500;
+        border-radius: 5px;
+        box-shadow: 1px 2px 3px #adc2d7;
 	}
 
 	/* ---------------文章列表 --------------- */
@@ -146,6 +151,8 @@
 		border-bottom: #BFAB86 1px solid;
 		overflow: hidden;
 		background-color: #fffce8;
+        border-radius: 5px;
+        box-shadow: 1px -1px 3px #adc2d7;
 	}
 	.note_left {
 		width: 150px;
@@ -249,5 +256,9 @@
 	}
 	#article .el-pagination .el-pager li {
 		background-color: transparent;
-	}
+    }
+    #article .el-pagination {
+        border-radius: 4px;
+        box-shadow: 1px 2px 3px #adc2d7;
+    }
 </style>
