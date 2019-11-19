@@ -2,6 +2,7 @@ package com.yanger.blog.api;
 
 import java.util.List;
 
+import com.yanger.blog.po.ArticleType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import com.yanger.blog.service.ConstService;
 import com.yanger.blog.vo.ConstVo;
 import com.yanger.blog.vo.PageQueryVo;
 import com.yanger.common.annotation.Token;
+import com.yanger.common.util.ConstantUtils;
 import com.yanger.common.vo.ApiResponse;
 import com.yanger.mybatis.util.ResultPage;
 
@@ -23,13 +25,54 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @Api
-// @Token
+@Token
 @RestController
 @RequestMapping("/const")
 public class ConstApi {
 
 	@Autowired
 	private ConstService constService;
+	
+	/**
+	 * @description 查询常量表分页数据
+	 * @author YangHao
+	 * @date 2018年9月6日-下午11:07:41
+	 * @return
+	 */
+	@ApiOperation(value = "获取文章模块数据失败", notes = "")
+	@GetMapping("art/module")
+	public ApiResponse<List<ConstVo>> artModule() {
+		ApiResponse<List<ConstVo>> api = new ApiResponse<>();
+		try {
+			List<ConstVo> constVos = constService.getConstList(ConstantUtils.ARTICLE_MODULE_UPPER_CODE);
+			api.setData(constVos);
+		} catch (Exception e) {
+			api.error("获取文章模块数据失败");
+			e.printStackTrace();
+		}
+		return api;
+	}
+
+	/**
+	 * @description 根据upperCode获取常量
+	 * @author yanger
+	 * @date 2019/11/19
+	 * @param type
+	 * @return com.yanger.common.vo.ApiResponse<java.util.List<com.yanger.blog.vo.ConstVo>>
+	 */
+	@ApiOperation(value = "获取文章模块数据失败", notes = "")
+	@GetMapping("list/{type}")
+	public ApiResponse<List<ConstVo>> constsByType(@PathVariable("type") String type) {
+		ApiResponse<List<ConstVo>> api = new ApiResponse<>();
+		try {
+			List<ConstVo> constVos = constService.getConstList(type);
+			api.setData(constVos);
+		} catch (Exception e) {
+			api.error("获取文章模块数据失败");
+			e.printStackTrace();
+		}
+		return api;
+	}
 
 	/**
 	 * @description 查询常量表分页数据
@@ -37,10 +80,9 @@ public class ConstApi {
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
 	 */
-	@Token
 	@ApiOperation(value = "查询常量表分页数据", notes = "")
 	@PostMapping("/list")
-	public ApiResponse<ResultPage<ConstVo>> articleList(@RequestBody PageQueryVo pageQueryVo) {
+	public ApiResponse<ResultPage<ConstVo>> constList(@RequestBody PageQueryVo pageQueryVo) {
 		ApiResponse<ResultPage<ConstVo>> api = new ApiResponse<>();
 		try {
 			ResultPage<ConstVo> page = constService.getPageData(pageQueryVo);
@@ -53,10 +95,31 @@ public class ConstApi {
 	}
 
 	/**
+	 * @description 查询文章类型分页数据
+	 * @author YangHao
+	 * @date 2018年9月6日-下午11:07:41
+	 * @return
+	 */
+	@ApiOperation(value = "查询文章类型分页数据", notes = "")
+	@PostMapping("/art/list")
+	public ApiResponse<ResultPage<ArticleType>> articleList(@RequestBody PageQueryVo pageQueryVo) {
+		ApiResponse<ResultPage<ArticleType>> api = new ApiResponse<>();
+		try {
+			ResultPage<ArticleType> page = constService.getArtTypePage(pageQueryVo);
+			api.setData(page);
+		} catch (Exception e) {
+			api.error("查询文章类型分页数据失败");
+			e.printStackTrace();
+		}
+		return api;
+	}
+
+
+	/**
 	 * @description 新增常量
 	 * @author YangHao
 	 * @date 2018年11月29日-下午10:02:38
-	 * @param articleVo
+	 * @param constVo
 	 * @return
 	 */
 	@ApiOperation(value = "新增常量", notes = "")
@@ -73,52 +136,10 @@ public class ConstApi {
 	}
 
 	/**
-	 * @description 获取文章类型和分类，不包含模块选项
-	 * @author YangHao
-	 * @date 2018年11月29日-下午10:02:38
-	 * @param articleVo
-	 * @return
-	 */
-	@ApiOperation(value = "获取文章类型和分类", notes = "")
-	@GetMapping("/artTypes")
-	public ApiResponse<List<ConstVo>> artTypes() {
-		ApiResponse<List<ConstVo>> api = new ApiResponse<>();
-		try {
-			List<ConstVo> types = constService.getArticleTypes();
-			api.setData(types);
-		} catch (Exception e) {
-			api.error("获取文章类型和分类");
-			e.printStackTrace();
-		}
-		return api;
-	}
-
-	/**
-	 * @description 获取文章类型和分类，包含模块选项
-	 * @author YangHao
-	 * @date 2018年11月29日-下午10:02:38
-	 * @param articleVo
-	 * @return
-	 */
-	@ApiOperation(value = "获取文章类型和分类", notes = "")
-	@GetMapping("/allTypes")
-	public ApiResponse<List<ConstVo>> allTypes() {
-		ApiResponse<List<ConstVo>> api = new ApiResponse<>();
-		try {
-			List<ConstVo> types = constService.getAllArticleTypes("文章类型");
-			api.setData(types);
-		} catch (Exception e) {
-			api.error("获取文章类型和分类");
-			e.printStackTrace();
-		}
-		return api;
-	}
-
-	/**
 	 * @description 根据id删除常量
 	 * @author YangHao
 	 * @date 2018年11月29日-下午10:02:38
-	 * @param articleVo
+	 * @param id
 	 * @return
 	 */
 	@ApiOperation(value = "根据id删除常量", notes = "")

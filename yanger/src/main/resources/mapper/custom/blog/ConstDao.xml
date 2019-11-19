@@ -5,12 +5,18 @@
 <!-- ============================================================== -->
 <mapper namespace="com.yanger.blog.dao.ConstDao">
 
+	<resultMap id="DetailsResultMap" type="com.yanger.blog.po.ArticleType" extends="com.yanger.blog.dao.ConstDao.BaseResultMap">
+		<!--num属性-->
+		<association property="num" column="code" javaType="integer"
+					 select="com.yanger.blog.dao.ConstDao.getCountByUpperCode"/>
+	</resultMap>
+
 	<!-- 根据描述depict查询 -->
-	<select id="findAllByDepict" resultMap="BaseResultMap" parameterType="map">
+	<select id="findAllByType" resultMap="BaseResultMap" parameterType="map">
 		select
 			<include refid="Base_Column_List" />
 		from const
-		where depict = #{param1}
+		where upper_code = #{type}
 	</select>
 	
 	<!-- 按对象查询一页记录（多条记录） -->
@@ -23,11 +29,29 @@
 			<include refid="Entity_Where_queryValue" />
 		</where>
 	</select>
-	
+
+	<!-- 按对象查询一页文章分类记录（多条记录） -->
+	<select id="selectArtTypePage" resultMap="DetailsResultMap" parameterType="com.yanger.blog.vo.ConstVo">
+		select
+		<include refid="Base_Column_List" />
+		from const
+		<where>
+			<include refid="Base_Select_By_Entity_Where" />
+			<include refid="Entity_Where_queryValue" />
+			and upper_code in (${upperCodes})
+		</where>
+	</select>
+
+
 	<sql id="Entity_Where_queryValue">
 		<if test="queryValue != null" >
 			and (depict like "%"#{queryValue}"%" or code like "%"#{queryValue}"%" or val like "%"#{queryValue}"%")
 		</if>
 	</sql>
+
+	<select id="getCountByUpperCode" resultType="integer" parameterType="string">
+		SELECT COUNT(*) FROM const WHERE upper_code = #{upperCode}
+	</select>
+
 
 </mapper>

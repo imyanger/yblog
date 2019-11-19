@@ -3,12 +3,15 @@ package com.yanger.blog.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import com.yanger.blog.po.ArticleType;
 import com.yanger.blog.po.Const;
 import com.yanger.blog.vo.ConstVo;
 import com.yanger.generator.dao.MybatisBaseDao;
 import com.yanger.mybatis.paginator.Page;
 import com.yanger.mybatis.paginator.PageParam;
+
 
 /**
  * 表const对应Dao接口
@@ -23,7 +26,7 @@ public interface ConstDao extends MybatisBaseDao<Const, Integer> {
 	 * @param depict
 	 * @return
 	 */
-	List<Const> findAllByDepict(String depict);
+	List<Const> findAllByType(@Param("type") String type);
 	
 	/**
 	 * @description 根据vo进行查询
@@ -34,5 +37,25 @@ public interface ConstDao extends MybatisBaseDao<Const, Integer> {
 	 * @return
 	 */
 	Page<Const> selectPageByVo(PageParam pageParam, ConstVo entity);
+	
+	/**
+	 * 
+	 * @description 
+	 * @author 杨号  
+	 * @date 2019年11月19日-下午1:54:41  
+	 * @param pageParam
+	 * @param entity
+	 * @return
+	 */
+	Page<ArticleType> selectArtTypePage(PageParam pageParam, ConstVo entity);
+
+	/**
+	 * @description 查询子集个数
+	 * @author yanger
+	 * @date 2019/11/19
+	 * @param upperCode
+	 * @return int
+	 */
+	int getCountByUpperCode(@Param("upperCode") String upperCode);
 	
 }

@@ -2,7 +2,7 @@
     <div>
         <header>
             <div class='header'>
-                <img src="static/img/blog/header.jpg" alt="杨号个人网站-杨号个人博客-杨号"/>
+                <img src="static/img/blog/header_yh.jpg" alt="杨号个人网站-杨号个人博客-杨号"/>
                 <div class='navbar-container'>
                     <ul>
                         <li class='navbar-container-home'>

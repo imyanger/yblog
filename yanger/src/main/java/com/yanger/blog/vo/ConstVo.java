@@ -45,4 +45,7 @@ public class ConstVo implements Serializable {
 
 	private List<ConstVo> children = new ArrayList<>(0);
 
+	/** 父级code集合 */
+	private String upperCodes;
+
 }

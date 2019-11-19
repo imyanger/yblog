@@ -11,7 +11,7 @@
 		 <id column="id" property="id"/> 
 		 <result column="depict" property="depict"/> 
 		 <result column="code" property="code"/> 
-		 <result column="val" property="val"/> 
+		 <result column="val" property="val"/>
 		 <result column="upper_code" property="upperCode"/> 
 		 <result column="status" property="status"/> 
 		 <result column="insert_time" property="insertTime"/> 

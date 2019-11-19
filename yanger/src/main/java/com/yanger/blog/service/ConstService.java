@@ -2,8 +2,14 @@ package com.yanger.blog.service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.yanger.blog.po.ArticleType;
+import com.yanger.common.util.ConstantUtils;
+import com.yanger.common.util.PageUtils;
+import com.yanger.mybatis.util.Paginator;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +32,26 @@ public class ConstService {
 
 	@Autowired
 	private ConstDao constDao;
+	
+	/**
+	 * @description 
+	 * @author 杨号  
+	 * @date 2019年11月19日-上午11:05:17  
+	 * @param type
+	 * @return
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
+	 */
+	public List<ConstVo> getConstList(String type) throws IllegalAccessException, InvocationTargetException {
+		List<Const> consts = constDao.findAllByType(type);
+		List<ConstVo> constVos = new ArrayList<>(consts.size());
+		for (Const constPo : consts) {
+			ConstVo constVo = new ConstVo();
+			BeanUtils.copyProperties(constVo, constPo);
+			constVos.add(constVo);
+		}
+		return constVos;
+	}
 
 	/**
 	 * @description 获取常量表分页数据
@@ -54,7 +80,7 @@ public class ConstService {
 	 * @description 新增文章
 	 * @author YangHao
 	 * @date 2018年11月27日-下午11:00:21
-	 * @param articleVo
+	 * @param constVo
 	 * @throws Exception
 	 */
 	public void addConst(ConstVo constVo) throws Exception {
@@ -65,44 +91,6 @@ public class ConstService {
 		} else {
 			constDao.insert(entity);
 		}
-	}
-
-	/**
-	 * @description 获取文章类型和分类
-	 * @author YangHao
-	 * @date 2018年11月29日-下午10:02:38
-	 * @param articleVo
-	 * @return
-	 */
-	public List<ConstVo> getArticleTypes() throws Exception {
-		List<ConstVo> typeVos = new ArrayList<>(0);
-		// 获取模块
-		List<Const> modules = constDao.findAllByDepict("文章类型");
-		for (Const module : modules) {
-			// 类型
-			List<Const> types = constDao.findAllByDepict(module.getVal());
-			if (types.isEmpty()) { // 没有子类型，则添加模块
-				ConstVo moduleVo = new ConstVo();
-				BeanUtils.copyProperties(moduleVo, module);
-				typeVos.add(moduleVo);
-			} else {
-				for (Const type : types) {
-					ConstVo typeVo = new ConstVo();
-					BeanUtils.copyProperties(typeVo, type);
-					// 分类
-					List<Const> classifys = constDao.findAllByDepict(type.getVal());
-					List<ConstVo> classifyVos = new ArrayList<>(0);
-					for (Const classify : classifys) {
-						ConstVo classifyVo = new ConstVo();
-						BeanUtils.copyProperties(classifyVo, classify);
-						classifyVos.add(classifyVo);
-					}
-					typeVo.setChildren(classifyVos);
-					typeVos.add(typeVo);
-				}
-			}
-		}
-		return typeVos;
 	}
 
 	/**
@@ -117,41 +105,30 @@ public class ConstService {
 	}
 
 	/**
-	 * @description 获取全部文章类型
-	 * @author YangHao
-	 * @time 2018年12月12日-下午10:03:37
-	 * @return
-	 * @throws InvocationTargetException 
-	 * @throws IllegalAccessException 
+	 * @description 获取文章分类数据
+	 * @author yanger
+	 * @date 2019/11/19
+	 * @param pageQueryVo
+	 * @return com.yanger.mybatis.util.ResultPage<com.yanger.blog.po.ArticleType>
 	 */
-	public List<ConstVo> getAllArticleTypes(String depict) throws IllegalAccessException, InvocationTargetException {
-		List<ConstVo> moduleVos = new ArrayList<>(0);
-		// 获取模块
-		List<Const> modules = constDao.findAllByDepict(depict);
-		for (Const module : modules) {
-			ConstVo moduleVo = new ConstVo();
-			BeanUtils.copyProperties(moduleVo, module);
-			// 类型
-			List<Const> types = constDao.findAllByDepict(module.getVal());
-			List<ConstVo> typeVos = new ArrayList<>(0);
-			for (Const type : types) {
-				ConstVo typeVo = new ConstVo();
-				BeanUtils.copyProperties(typeVo, type);
-				// 分类
-				List<Const> classifys = constDao.findAllByDepict(type.getVal());
-				List<ConstVo> classifyVos = new ArrayList<>(0);
-				for (Const classify : classifys) {
-					ConstVo classifyVo = new ConstVo();
-					BeanUtils.copyProperties(classifyVo, classify);
-					classifyVos.add(classifyVo);
-				}
-				typeVo.setChildren(classifyVos);
-				typeVos.add(typeVo);
-			}
-			moduleVo.setChildren(typeVos);
-			moduleVos.add(moduleVo);
-		}
-		return moduleVos;
+	public ResultPage<ArticleType> getArtTypePage(PageQueryVo pageQueryVo) {
+		int pageNo = pageQueryVo.getPageNo();
+		int size = pageQueryVo.getPageSize();
+		PageParam pageParam = ParamUtils.getDescPageParam(pageNo, size > 0 ? size : 10, "update_time");
+		ConstVo entry = new ConstVo();
+		List<Const> consts = constDao.findAllByType(ConstantUtils.ARTICLE_MODULE_UPPER_CODE);
+		StringBuilder sb = new StringBuilder();
+		Map<String, String> map = new HashMap<>();
+ 		consts.forEach(v -> {
+			sb.append("'" + v.getCode() + "'," );
+			map.put(v.getCode(), v.getVal());
+		});
+		entry.setUpperCodes(sb.toString().substring(0, sb.length() - 1 ));
+		Page <ArticleType> articleTypes = constDao.selectArtTypePage(pageParam, entry);
+        articleTypes.forEach(at -> {
+            at.setModule(map.get(at.getUpperCode()));
+        });
+		return new PageUtils <ArticleType>().convert(articleTypes);
 	}
 
 }

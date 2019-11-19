@@ -24,7 +24,7 @@
                         <a href="https://github.com/imyanger/yblog" target="_blank">
                             <el-dropdown-item>项目仓库</el-dropdown-item>
                         </a>
-                        <el-dropdown-item divided  command="logout">退出登录</el-dropdown-item>
+                        <el-dropdown-item divided command="logout">退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </div>
@@ -38,34 +38,33 @@
         data() {
             return {
                 collapse: true,
-                fullscreen: false,
-                name: '用户名加载失败'
+                fullscreen: false
             }
         },
-        computed:{
-            username(){
+        computed: {
+            username() {
                 let user = this.getBuser();
-                return user.userNickName ? user.userNickName : this.name;
+                return user.userNickName ? user.userNickName : '用户名加载失败';
             }
         },
-        methods:{
+        methods: {
             ...mapGetters(['getBuser']),
             ...mapMutations(['clearBuser']),
             // 用户名下拉菜单选择事件
             handleCommand(command) {
-                if(command === 'logout'){
+                if (command === 'logout') {
                     this.clearBuser();
                     localStorage.removeItem('$back-token');
                     this.$router.push('/back/login');
                 }
             },
             // 侧边栏折叠
-            collapseChage(){
+            collapseChage() {
                 this.collapse = !this.collapse;
                 bus.$emit('collapse', this.collapse);
             },
             // 全屏事件
-            handleFullScreen(){
+            handleFullScreen() {
                 let element = document.documentElement;
                 if (this.fullscreen) {
                     if (document.exitFullscreen) {
@@ -92,8 +91,8 @@
                 this.fullscreen = !this.fullscreen;
             }
         },
-        mounted(){
-            if(document.body.clientWidth < 1500){
+        mounted() {
+            if (document.body.clientWidth < 1500) {
                 this.collapseChage();
             }
         }
@@ -108,50 +107,50 @@
         font-size: 22px;
         color: #fff;
     }
-    .collapse-btn{
+    .collapse-btn {
         float: left;
         padding: 0 21px;
         cursor: pointer;
         line-height: 70px;
     }
-    .header .logo{
+    .header .logo {
         float: left;
         width: 200px;
         line-height: 70px;
         margin-left: 20px;
         font-size: 20px;
     }
-    .header-right{
+    .header-right {
         float: right;
         padding-right: 50px;
     }
-    .header-user-con{
+    .header-user-con {
         display: flex;
         height: 70px;
         align-items: center;
     }
-    .btn-fullscreen{
+    .btn-fullscreen {
         transform: rotate(45deg);
         margin-right: 5px;
         font-size: 24px;
     }
-    .user-name{
+    .user-name {
         margin-left: 10px;
     }
-    .user-avator{
+    .user-avator {
         margin-left: 20px;
     }
-    .user-avator img{
+    .user-avator img {
         display: block;
-        width:40px;
-        height:40px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
     }
-    .el-dropdown-link{
+    .el-dropdown-link {
         color: #fff;
         cursor: pointer;
     }
-    .el-dropdown-menu__item{
+    .el-dropdown-menu__item {
         text-align: center;
     }
 </style>
