@@ -18,5 +18,15 @@
 		from blog_user
 		where user_code = #{code} or moblie = #{code} or email = #{code}
 	</select>
+	
+	<!-- 按对象查询一页记录（多条记录） -->
+	<select id="selectPageByVo" resultMap="BaseResultMap" parameterType="com.yanger.blog.vo.BlogUserVo">
+		select
+			<include refid="Base_Column_List" />
+		from blog_user
+		<where>
+			<include refid="Base_Select_By_Entity_Where" />
+		</where>
+	</select>
 
 </mapper>

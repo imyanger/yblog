@@ -62,7 +62,7 @@
         </el-dialog>
 
         <!-- 文章分类处理 -->
-        <el-dialog :title="'文章分类编辑（' + sub.oneData.code + '-' + sub.oneData.val + '）'" :visible.sync="subVisible" width="50%">
+        <el-dialog :title="'文章分类编辑（' + sub.oneData.code + '-' + sub.oneData.val + '）'" :visible.sync="subVisible" width="60%">
             <el-form ref="subForm" id="subForm" :model="constData" label-width="0px">
                 <el-table :data="sub.subConst" border style="width: 100%" :row-style="{height:'10px'}" 
                     :header-row-style="{'height': '40px'}" ref="multipleTable">
@@ -80,14 +80,14 @@
                             </el-form-item>
                         </template>
                     </el-table-column>
-                    <el-table-column label="文章分类描述">
+                    <el-table-column label="文章分类描述" width="250">
                          <template slot-scope="scope">
                              <el-form-item>
                                 <el-input v-model="scope.row.depict"></el-input>
                             </el-form-item>
                         </template>
                     </el-table-column>
-                    <el-table-column label="状态">
+                    <el-table-column label="状态" width="120">
                          <template slot-scope="scope">
                              <el-form-item>
                                 <el-select placeholder="状态" v-model="scope.row.status">
@@ -95,6 +95,12 @@
                                     <el-option key="2" label="无效" value="0"></el-option>
                                 </el-select>
                             </el-form-item>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="操作" width="100">
+                        <template slot-scope="scope">
+                            <i class="el-icon-circle-plus-outline iconbtn" @click="addRow(scope.$index, sub.subConst)"></i>
+                            <i class="el-icon-circle-close iconbtn" @click="delRow(scope.$index, sub.subConst)"></i>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -234,7 +240,7 @@
                     this.$get("/const/list/" + row.code)
                     .then(function (response) {
                         _this.sub.subConst = response.data;
-                        if(_this.sub.subConst){
+                        if(!_this.sub.subConst){
                             _this.sub.subConst = [{}]
                         }
                     })
@@ -242,12 +248,55 @@
                         console.log(error);
                     });
                 }else {
-                     _this.sub.subConst = [{}]
+                     _this.sub.subConst = [{
+                         status: '1'
+                     }]
                 }
             },
             saveSubConst(){
-                
-            }
+                let flag = true; // 代码和名称必录
+                let _this = this;
+                _this.sub.subConst.forEach(item => {
+                    if(!item.upperCode){
+                        item.upperCode = _this.sub.oneData.code;
+                    }
+                    if(flag){
+                        if(!(item.code && item.val)){
+                            flag = false;
+                        }
+                    }
+                });
+                if(flag) {
+                    this.$put("/const/adds", _this.sub.subConst)
+                    .then(function (response) {
+                       _this.$alert("保存分类成功", "提示")
+                       .then(function(){
+                           _this.search();
+                           _this.subVisible = false;
+                       })
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                }else {
+                    _this.$alert("每一类型代码和名称都必须录入", "提示");
+                }
+
+            },
+            // 增加列
+            addRow(index, rows) {
+                rows.splice(index + 1, 0, {status: '1'});
+            },
+            // 移除列
+            delRow(index, rows) {
+                if (rows.length > 1) {
+                    rows.splice(index, 1);
+                }else {
+                    rows[0].code = '';
+                    rows[0].val = '';
+                    rows[0].depict = '';
+                }
+            },
         }
     }
 </script>
@@ -284,6 +333,11 @@
         font-size: 14px;
         cursor: pointer;
         margin-left: 15px;
+    }
+    .iconbtn {
+        font-size: 22px;
+        margin-left: 10px;
+        cursor: pointer;
     }
 </style>
 

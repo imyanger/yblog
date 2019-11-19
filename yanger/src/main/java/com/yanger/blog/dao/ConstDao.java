@@ -58,4 +58,13 @@ public interface ConstDao extends MybatisBaseDao<Const, Integer> {
 	 */
 	int getCountByUpperCode(@Param("upperCode") String upperCode);
 	
+	
+	/**
+	 * @description 根据type删除常量
+	 * @author YangHao  
+	 * @time 2019年11月19日-下午11:16:45
+	 * @param type
+	 */
+	void delByType(@Param("type") String type);
+	
 }

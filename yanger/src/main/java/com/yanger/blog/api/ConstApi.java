@@ -124,12 +124,32 @@ public class ConstApi {
 	 */
 	@ApiOperation(value = "新增常量", notes = "")
 	@PutMapping("/add")
-	public ApiResponse<String> articleAdd(@RequestBody ConstVo constVo) {
+	public ApiResponse<String> addConst(@RequestBody ConstVo constVo) {
 		ApiResponse<String> api = new ApiResponse<>();
 		try {
-			constService.addConst(constVo);
+			constService.saveOrUpdateConst(constVo);
 		} catch (Exception e) {
 			api.error("新增常量处理失败");
+			e.printStackTrace();
+		}
+		return api;
+	}
+	
+	/**
+	 * @description 新增常量
+	 * @author YangHao
+	 * @date 2018年11月29日-下午10:02:38
+	 * @param constVo
+	 * @return
+	 */
+	@ApiOperation(value = "批量新增新增常量", notes = "")
+	@PutMapping("/adds")
+	public ApiResponse<String> addConsts(@RequestBody List<ConstVo> constVos) {
+		ApiResponse<String> api = new ApiResponse<>();
+		try {
+			constService.saveArtClassifyConst(constVos);
+		} catch (Exception e) {
+			api.error("批量新增新增常量失败");
 			e.printStackTrace();
 		}
 		return api;

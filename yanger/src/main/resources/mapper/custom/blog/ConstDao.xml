@@ -52,6 +52,10 @@
 	<select id="getCountByUpperCode" resultType="integer" parameterType="string">
 		SELECT COUNT(*) FROM const WHERE upper_code = #{upperCode}
 	</select>
+	
+	<delete id="delByType" parameterType="string">
+		DELETE FROM const WHERE upper_code = #{type}
+	</delete>
 
 
 </mapper>

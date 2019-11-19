@@ -4,7 +4,10 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.yanger.blog.po.BlogUser;
+import com.yanger.blog.vo.BlogUserVo;
 import com.yanger.generator.dao.MybatisBaseDao;
+import com.yanger.mybatis.paginator.Page;
+import com.yanger.mybatis.paginator.PageParam;
 
 /**
  * 表blog_user对应Dao接口<br/>
@@ -31,5 +34,15 @@ public interface BlogUserDao extends MybatisBaseDao<BlogUser, Integer> {
 	 * @return
 	 */
 	public BlogUser findUserByCode(@Param("code") String code);
+
+	/**
+	 * @description 根据vo进行查询
+	 * @author YangHao  
+	 * @time 2018年12月19日-下午11:30:19
+	 * @param pageParam
+	 * @param entity
+	 * @return
+	 */
+	public Page<BlogUser> selectPageByVo(PageParam pageParam, BlogUserVo entry);
 
 }

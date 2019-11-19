@@ -83,7 +83,7 @@ public class ConstService {
 	 * @param constVo
 	 * @throws Exception
 	 */
-	public void addConst(ConstVo constVo) throws Exception {
+	public void saveOrUpdateConst(ConstVo constVo) throws Exception {
 		Const entity = new Const();
 		BeanUtils.copyProperties(entity, constVo);
 		if (entity.getId() != null) {
@@ -129,6 +129,29 @@ public class ConstService {
             at.setModule(map.get(at.getUpperCode()));
         });
 		return new PageUtils <ArticleType>().convert(articleTypes);
+	}
+
+	/**
+	 * @description 保存文章分类
+	 * @author YangHao  
+	 * @time 2019年11月19日-下午11:06:42
+	 * @param constVos
+	 * @throws Exception 
+	 */
+	public void saveArtClassifyConst(List<ConstVo> constVos) throws Exception {
+		String type = "";
+		for (ConstVo constVo : constVos) {
+			if(StringUtils.isNoneBlank(constVo.getUpperCode())){
+				type = constVo.getUpperCode();
+				break;
+			}
+		}
+		// 先根据type删除旧的
+		constDao.delByType(type);
+		for (ConstVo constVo : constVos) {
+			constVo.setId(null);
+			saveOrUpdateConst(constVo);
+		}
 	}
 
 }
