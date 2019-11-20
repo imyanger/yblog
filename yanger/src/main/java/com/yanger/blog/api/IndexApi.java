@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yanger.blog.service.BlogService;
 import com.yanger.blog.vo.BlogUserVo;
-import com.yanger.common.util.ConstantUtils;
+import com.yanger.blog.util.BolgConstant;
 import com.yanger.common.util.JwtUtils;
 import com.yanger.common.vo.ApiResponse;
 import com.yanger.common.vo.TokenMsg;
@@ -24,7 +24,7 @@ public class IndexApi {
     public ApiResponse<BlogUserVo> login(@RequestBody BlogUserVo blogUserVo) {
     	ApiResponse<BlogUserVo> api = new ApiResponse<>();
 		try {
-			BlogUserVo user = blogService.userLogin(blogUserVo, ConstantUtils.USER_TYPE_BACK);
+			BlogUserVo user = blogService.userLogin(blogUserVo, BolgConstant.USER_TYPE_BACK);
 			if (user != null) {
 				api.setData(user);
 				// 添加token

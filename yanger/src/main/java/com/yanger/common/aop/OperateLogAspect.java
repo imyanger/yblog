@@ -24,7 +24,7 @@ import com.yanger.blog.dao.OperateLogDao;
 import com.yanger.blog.po.OperateLog;
 import com.yanger.common.annotation.Operate;
 import com.yanger.common.filter.RequestWrapper;
-import com.yanger.common.util.ConstantUtils;
+import com.yanger.blog.util.BolgConstant;
 
 /**
  * 操作日志处理类
@@ -88,7 +88,7 @@ public class OperateLogAspect {
 			RequestWrapper requestWrapper = new RequestWrapper((HttpServletRequest) request);
 			String body = requestWrapper.getBody();
 			operateLog.setRequestParams(body);
-			operateLog.setStatus(ConstantUtils.STATUS_VALID);
+			operateLog.setStatus(BolgConstant.STATUS_VALID);
 			// ip
 			operateLog.setOperateIp(getIp());
 			// 插入操作痕迹到数据库

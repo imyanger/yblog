@@ -11,13 +11,13 @@
                 <el-table-column prop="userNickName" label="昵称" sortable></el-table-column>
                 <el-table-column prop="moblie" label="手机号" sortable></el-table-column>
                 <el-table-column prop="email" label="邮箱" sortable></el-table-column>
-                <el-table-column prop="userType" label="类型" sortable></el-table-column>
+                <el-table-column prop="userType" label="类型" sortable :formatter="typeFormatter"></el-table-column>
                 <el-table-column prop="gender" label="性别" sortable width="100"></el-table-column>
                 <el-table-column prop="age" label="年龄" width="100"></el-table-column>
                 <el-table-column label="操作" width="120">
                     <template slot-scope="scope">
                         <div class="operate">
-                            <i class="el-icon-edit" title="禁用" @click="editConst(scope.$index, scope.row)"></i>
+                            <i class="el-icon-remove" title="禁用" @click="editConst(scope.$index, scope.row)"></i>
                             <i class="el-icon-delete" title="删除" @click="delConst(scope.$index, scope.row)"></i>
                         </div>
                     </template>
@@ -76,10 +76,14 @@ export default {
         search() {
             this.getPage(1, this.listData.page.pageSize ? this.listData.page.pageSize : 10);
         },
+        //禁用用户
+        editConst(index, row){
+
+        },
         delConst(index, row) {
             let _this = this;
             _this.$confirm("确定删除吗？").then(_ => {
-                this.$del("/user/del/" + row.id)
+                this.$del("/user/del/" + row.userId)
                     .then(function (response) {
                         _this.$alert("删除成功", "提示");
                         //刷新列表
@@ -89,7 +93,10 @@ export default {
                         console.log(error);
                     });
             })
-        }
+        },
+        typeFormatter(row, column){ 
+            return row.userType === '1' ? '门户用户' : '管理账号';
+        },
     }
 }
 </script>

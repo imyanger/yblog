@@ -2,6 +2,8 @@ package com.yanger.blog.service;
 
 import java.util.Date;
 
+import com.yanger.blog.util.ConstUtils;
+import com.yanger.common.util.CommonConstant;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,7 @@ import com.yanger.blog.dao.ArticleDao;
 import com.yanger.blog.po.Article;
 import com.yanger.blog.vo.ArticleVo;
 import com.yanger.blog.vo.PageQueryVo;
-import com.yanger.common.util.ConstantUtils;
+import com.yanger.blog.util.BolgConstant;
 import com.yanger.common.util.ParamUtils;
 import com.yanger.mybatis.paginator.Page;
 import com.yanger.mybatis.paginator.PageParam;
@@ -25,6 +27,9 @@ public class ArticleService {
 
 	@Autowired
 	private ArticleDao articleDao;
+
+	@Autowired
+	private ConstUtils constUtils;
 
 	/**
 	 * @description 分页查询文章
@@ -53,7 +58,13 @@ public class ArticleService {
 		}
 		Page<Article> page = articleDao.selectPageByVo(pageParam, entry);
 		// 分页数据
-		return Pages.convert(pageParam, page, ArticleVo.class);
+		ResultPage <ArticleVo> resultPage = Pages.convert(pageParam, page, ArticleVo.class);
+		resultPage.getData().forEach(a -> {
+			a.setModuleVal(constUtils.getValByCode(a.getModule()));
+			a.setTypeVal(constUtils.getValByCode(a.getType()));
+			a.setClassifyVal(constUtils.getValByCode(a.getClassify()));
+		});
+		return resultPage;
 	}
 
 	/**
@@ -67,11 +78,11 @@ public class ArticleService {
 		Article entity = new Article();
 		BeanUtils.copyProperties(entity, articleVo);
 		//路径去掉根路径
-		entity.setArtImgPath(entity.getArtImgPath().replace(ConstantUtils.FILE_PATH, ""));
+		entity.setArtImgPath(entity.getArtImgPath().replace(CommonConstant.FILE_PATH, ""));
 		// 作者
 		entity.setAuthor("yanger");
 		// 有效状态
-		entity.setStatus(ConstantUtils.STATUS_VALID);
+		entity.setStatus(BolgConstant.STATUS_VALID);
 		entity.setLikes(0);
 		entity.setViews(0);
 		entity.setCommons(0);

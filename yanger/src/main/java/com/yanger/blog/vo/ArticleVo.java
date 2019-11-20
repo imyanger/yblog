@@ -38,8 +38,17 @@ public class ArticleVo implements Serializable {
 	/** 对应字段：summary,备注：简介 */
 	private String summary;
 
-	/** 对应字段：content,备注：内容 */
+	/** 对应字段：content,备注：内容(html格式) */
 	private String content;
+
+	/** 对应字段：word_content,备注：文档内容(编辑器中的原格式) */
+	private String wordContent;
+
+	/** 对应字段：word_type,备注：文档编辑器类型 */
+	private String wordType;
+
+	/** 对应字段：art_state,备注：文章的状态 */
+	private String artState;
 
 	/** 对应字段：art_img_path,备注：图片路径 */
 	private String artImgPath;
@@ -67,5 +76,14 @@ public class ArticleVo implements Serializable {
 
 	/** 检索条件 */
 	private String queryValue;
+
+	/** 模块名称 */
+	private String moduleVal;
+
+	/** 所属类型名称 */
+	private String typeVal;
+
+	/** 分类（具体）名称 */
+	private String classifyVal;
 	
 }

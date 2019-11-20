@@ -3,7 +3,6 @@ package com.yanger.blog.api;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +23,7 @@ import com.yanger.blog.vo.ViewDataVo;
 import com.yanger.common.annotation.Operate;
 import com.yanger.common.annotation.Token;
 import com.yanger.common.config.ServerConfig;
-import com.yanger.common.util.ConstantUtils;
+import com.yanger.blog.util.BolgConstant;
 import com.yanger.common.util.JwtUtils;
 import com.yanger.common.util.RedisMagger;
 import com.yanger.common.vo.ApiResponse;
@@ -36,7 +35,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
 @Api
-// @Token
 @RestController
 @RequestMapping("/blog")
 @Slf4j
@@ -131,12 +129,12 @@ public class BlogApi {
 	}
 
 	/**
-	 * @description 查询文章分页数据
+	 * @description 门户查询文章分页数据
 	 * @author YangHao
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
 	 */
-	@ApiOperation(value = "查询文章分页数据", notes = "")
+	@ApiOperation(value = "门户查询文章分页数据", notes = "")
 	@PostMapping("/articlePage")
 	public ApiResponse<ResultPage<ArticleVo>> articlePage(@RequestBody PageQueryVo pageQueryVo) {
 		ApiResponse<ResultPage<ArticleVo>> api = new ApiResponse<>();
@@ -162,7 +160,7 @@ public class BlogApi {
 	public ApiResponse<String> register(@RequestBody BlogUserVo blogUserVo) {
 		ApiResponse<String> api = new ApiResponse<>();
 		try {
-			blogUserVo.setUserType(ConstantUtils.USER_TYPE_BLOG);
+			blogUserVo.setUserType(BolgConstant.USER_TYPE_BLOG);
 			blogService.userRegister(blogUserVo);
 			api.setData("注册成功");
 		} catch (Exception e) {
@@ -183,7 +181,7 @@ public class BlogApi {
 	public ApiResponse<BlogUserVo> login(@RequestBody BlogUserVo blogUserVo) {
 		ApiResponse<BlogUserVo> api = new ApiResponse<>();
 		try {
-			BlogUserVo user = blogService.userLogin(blogUserVo, ConstantUtils.USER_TYPE_BLOG);
+			BlogUserVo user = blogService.userLogin(blogUserVo, BolgConstant.USER_TYPE_BLOG);
 			if (user != null) {
 				api.setData(user);
 				// 添加token

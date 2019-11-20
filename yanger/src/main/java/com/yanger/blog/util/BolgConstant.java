@@ -1,23 +1,23 @@
-package com.yanger.common.util;
+package com.yanger.blog.util;
 
 /**
- * @description 常量工具类
+ * @description blog包的常量类
  * @author 杨号
  * @date 2018年9月14日
  */
-public class ConstantUtils {
+public class BolgConstant {
 
-	/** 文件跟目录 */
-	public static final String FILE_PATH = "/data/blog";
+	/** 文章模块类型的上级常量代码upperCode */
+	public static final String ARTICLE_MODULE_UPPER_CODE = "wzlx";
 
 	/** 文章模块--学习笔记 */
-	public static final String ARTICLE_MODULE_STUDY = "学习笔记";
+	public static final String ARTICLE_MODULE_STUDY = "wzlx01";
 
 	/** 文章模块--心情随笔 */
-	public static final String ARTICLE_MODULE_ESSAY = "心情随笔";
+	public static final String ARTICLE_MODULE_ESSAY = "wzlx02";
 
 	/** 外连接类型--友情链接 */
-	public static final String LINK_TYPE_SHIP = "友情链接";
+	public static final String LINK_TYPE_SHIP = "yqlj";
 
 	/** 数据有效标志 --有效 */
 	public static final String STATUS_VALID = "1";
@@ -36,8 +36,5 @@ public class ConstantUtils {
 
 	/** 用户类型 -- 后台用户 */
 	public static final String USER_TYPE_BACK = "2";
-	
-	/** 文章模块类型的上级常量代码upperCode */
-	public static final String ARTICLE_MODULE_UPPER_CODE = "wzlx";
 	
 }

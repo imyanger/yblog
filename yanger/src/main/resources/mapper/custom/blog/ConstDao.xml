@@ -57,5 +57,8 @@
 		DELETE FROM const WHERE upper_code = #{type}
 	</delete>
 
+    <select id="findAll" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from const
+    </select>
 
 </mapper>

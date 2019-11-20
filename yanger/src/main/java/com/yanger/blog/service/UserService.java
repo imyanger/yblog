@@ -37,4 +37,15 @@ public class UserService {
 		return Pages.convert(pageParam, page, BlogUserVo.class);
 	}
 
+	/**
+	 * @description 根据id删除用户
+	 * @author yanger
+	 * @date 2019/11/20
+	 * @param userId
+	 * @return void
+	 */
+	public void delByUserId(int userId) {
+		blogUserDao.deleteById(userId);
+	}
+
 }

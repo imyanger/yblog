@@ -11,6 +11,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -35,6 +37,9 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 public class TokenAspect {
 
+	@Value("${swagger.token-check:true}")
+	private boolean tokenCheck = true;
+
 	private HttpServletRequest request = null;
 
 	@Pointcut("execution(* com.yanger..*.*Api.*(..))")
@@ -57,6 +62,10 @@ public class TokenAspect {
 	 */
 	@Around("tokenLog()")
 	public Object around(ProceedingJoinPoint point) throws Throwable {
+		// swagger: token-cheack: false 时跳过token验证
+		if(!tokenCheck){
+			return point.proceed();
+		}
 		//是否需要token --需要token：1.类上Token注解，方法上没有NoToken 2.方法上Token注解
 		boolean isTokenNeed = false;
 		Class<?> targetClass = point.getTarget().getClass();

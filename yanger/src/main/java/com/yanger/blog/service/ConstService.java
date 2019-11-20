@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.yanger.blog.cache.CacheRunner;
 import com.yanger.blog.po.ArticleType;
-import com.yanger.common.util.ConstantUtils;
+import com.yanger.blog.util.BolgConstant;
 import com.yanger.common.util.PageUtils;
-import com.yanger.mybatis.util.Paginator;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +32,9 @@ public class ConstService {
 
 	@Autowired
 	private ConstDao constDao;
+
+	@Autowired
+	private CacheRunner cacheRunner;
 	
 	/**
 	 * @description 
@@ -116,13 +119,14 @@ public class ConstService {
 		int size = pageQueryVo.getPageSize();
 		PageParam pageParam = ParamUtils.getDescPageParam(pageNo, size > 0 ? size : 10, "update_time");
 		ConstVo entry = new ConstVo();
-		List<Const> consts = constDao.findAllByType(ConstantUtils.ARTICLE_MODULE_UPPER_CODE);
+		List<Const> consts = constDao.findAllByType(BolgConstant.ARTICLE_MODULE_UPPER_CODE);
 		StringBuilder sb = new StringBuilder();
 		Map<String, String> map = new HashMap<>();
  		consts.forEach(v -> {
 			sb.append("'" + v.getCode() + "'," );
 			map.put(v.getCode(), v.getVal());
 		});
+ 		// 分页组件针对vo中list的foreach有bug，暂拼接sql解决
 		entry.setUpperCodes(sb.toString().substring(0, sb.length() - 1 ));
 		Page <ArticleType> articleTypes = constDao.selectArtTypePage(pageParam, entry);
         articleTypes.forEach(at -> {
@@ -154,4 +158,49 @@ public class ConstService {
 		}
 	}
 
+	/**
+	 * @description 获取文章分级数据
+	 * @author yanger
+	 * @date 2019/11/20
+	 * @param
+	 * @return java.util.List<com.yanger.blog.vo.ConstVo>
+	 */
+	public List<ConstVo> getMtcs() {
+		Map <String, Const> constCache = cacheRunner.getConstCache();
+		Map<String, List<ConstVo>> upperCodeMap = new HashMap <>();
+		constCache.entrySet().forEach(entry -> {
+			List<ConstVo> constVos;
+			String upperCode = entry.getValue().getUpperCode();
+			if(upperCodeMap.containsKey(upperCode)) {
+				constVos = upperCodeMap.get(upperCode);
+			} else {
+				constVos = new ArrayList <>();
+			}
+			try {
+				ConstVo constVo = new ConstVo();
+				BeanUtils.copyProperties(constVo, entry.getValue());
+				constVos.add(constVo);
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+			upperCodeMap.put(upperCode, constVos);
+		});
+
+		List<ConstVo> modules = upperCodeMap.get(BolgConstant.ARTICLE_MODULE_UPPER_CODE);
+		if(modules != null){
+            modules.forEach(module -> {
+                List<ConstVo> types = upperCodeMap.get(module.getCode());
+                module.setChildren(types);
+                if(types != null) {
+                    types.forEach(type -> {
+                        List<ConstVo> classifys = upperCodeMap.get(type.getCode());
+                        type.setChildren(classifys);
+                    });
+                }
+            });
+        }
+		return modules;
+	}
 }

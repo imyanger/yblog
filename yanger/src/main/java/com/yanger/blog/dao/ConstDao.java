@@ -23,7 +23,7 @@ public interface ConstDao extends MybatisBaseDao<Const, Integer> {
 	 * @description 根据描述获取常量
 	 * @author YangHao  
 	 * @time 2018年12月12日-下午10:10:33
-	 * @param depict
+	 * @param type
 	 * @return
 	 */
 	List<Const> findAllByType(@Param("type") String type);
@@ -66,5 +66,14 @@ public interface ConstDao extends MybatisBaseDao<Const, Integer> {
 	 * @param type
 	 */
 	void delByType(@Param("type") String type);
+
+	/**
+	 * @description 获取所有常量
+	 * @author yanger
+	 * @date 2019/11/20
+	 * @param
+	 * @return java.util.List<com.yanger.blog.po.Const>
+	 */
+	List<Const> findAll();
 	
 }

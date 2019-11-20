@@ -1,24 +1,15 @@
 package com.yanger.ueditor.upload;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.imageio.stream.FileImageOutputStream;
-import javax.servlet.http.HttpServletRequest;
-
+import com.yanger.common.util.CommonConstant;
+import com.yanger.ueditor.define.AppInfo;
+import com.yanger.ueditor.define.BaseState;
+import com.yanger.ueditor.define.State;
 import org.apache.commons.io.FileUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import com.yanger.common.util.ConstantUtils;
-import com.yanger.ueditor.define.AppInfo;
-import com.yanger.ueditor.define.BaseState;
-import com.yanger.ueditor.define.State;
+import javax.servlet.http.HttpServletRequest;
+import java.io.*;
 
 @Component
 @ConfigurationProperties(prefix="nginx")
@@ -107,7 +98,7 @@ public class StorageManager {
 				//所属group填入此处
 				state.putInfo( "group", "");
 				//文件访问的url填入此处
-				String url = "/file/getImg?path=" + path.substring(ConstantUtils.FILE_PATH.length()) + "/" + picName;
+				String url = "/file/getImg?path=" + path.substring(CommonConstant.FILE_PATH.length()) + "/" + picName;
 				state.putInfo( "url", url);
 				tmpFile.delete();
 			}else{

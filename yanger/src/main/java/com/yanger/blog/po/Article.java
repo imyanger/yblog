@@ -32,14 +32,26 @@ public class Article implements Serializable {
 	/** 对应字段：author,备注：作者 */
 	private String author;
 
+	/** 对应字段：user_id,备注：作者（用户）id */
+	private Integer userId;
+
 	/** 对应字段：rux_words,备注：关键字 */
 	private String ruxWords;
 
 	/** 对应字段：summary,备注：简介 */
 	private String summary;
 
-	/** 对应字段：content,备注：内容 */
+	/** 对应字段：content,备注：内容(html格式) */
 	private String content;
+
+	/** 对应字段：word_content,备注：文档内容(编辑器中的原格式) */
+	private String wordContent;
+
+	/** 对应字段：word_type,备注：文档编辑器类型 */
+	private String wordType;
+
+	/** 对应字段：art_state,备注：文章的状态 */
+	private String artState;
 
 	/** 对应字段：art_img_path,备注：图片路径 */
 	private String artImgPath;
@@ -53,9 +65,6 @@ public class Article implements Serializable {
 	/** 对应字段：commons,备注：评论数量 */
 	private Integer commons;
 
-	/** 对应字段：user_id,备注：作者（用户）id */
-	private Integer userId;
-
 	/** 对应字段：status,备注：数据状态 */
 	private String status;
 
@@ -64,5 +73,5 @@ public class Article implements Serializable {
 
 	/** 对应字段：update_time,备注：更新时间 */
 	private Date updateTime;
-	
+
 }

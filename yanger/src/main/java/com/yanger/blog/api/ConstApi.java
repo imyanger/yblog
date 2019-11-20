@@ -2,6 +2,7 @@ package com.yanger.blog.api;
 
 import java.util.List;
 
+import com.yanger.blog.cache.CacheRunner;
 import com.yanger.blog.po.ArticleType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +18,7 @@ import com.yanger.blog.service.ConstService;
 import com.yanger.blog.vo.ConstVo;
 import com.yanger.blog.vo.PageQueryVo;
 import com.yanger.common.annotation.Token;
-import com.yanger.common.util.ConstantUtils;
+import com.yanger.blog.util.BolgConstant;
 import com.yanger.common.vo.ApiResponse;
 import com.yanger.mybatis.util.ResultPage;
 
@@ -32,9 +33,12 @@ public class ConstApi {
 
 	@Autowired
 	private ConstService constService;
+
+	@Autowired
+	private CacheRunner cacheRunner;
 	
 	/**
-	 * @description 查询常量表分页数据
+	 * @description 获取文章模块数据
 	 * @author YangHao
 	 * @date 2018年9月6日-下午11:07:41
 	 * @return
@@ -44,7 +48,7 @@ public class ConstApi {
 	public ApiResponse<List<ConstVo>> artModule() {
 		ApiResponse<List<ConstVo>> api = new ApiResponse<>();
 		try {
-			List<ConstVo> constVos = constService.getConstList(ConstantUtils.ARTICLE_MODULE_UPPER_CODE);
+			List<ConstVo> constVos = constService.getConstList(BolgConstant.ARTICLE_MODULE_UPPER_CODE);
 			api.setData(constVos);
 		} catch (Exception e) {
 			api.error("获取文章模块数据失败");
@@ -52,6 +56,26 @@ public class ConstApi {
 		}
 		return api;
 	}
+
+    /**
+     * @description 获取文章模块、类型、分类数据
+     * @author YangHao
+     * @date 2018年9月6日-下午11:07:41
+     * @return
+     */
+    @ApiOperation(value = "获取文章模块、类型、分类数据", notes = "")
+    @GetMapping("art/mtcs")
+    public ApiResponse<List<ConstVo>> mtcs() {
+        ApiResponse<List<ConstVo>> api = new ApiResponse<>();
+        try {
+            List<ConstVo> constVos = constService.getMtcs();
+            api.setData(constVos);
+        } catch (Exception e) {
+            api.error("获取文章模块、类型、分类数据");
+            e.printStackTrace();
+        }
+        return api;
+    }
 
 	/**
 	 * @description 根据upperCode获取常量
@@ -128,6 +152,7 @@ public class ConstApi {
 		ApiResponse<String> api = new ApiResponse<>();
 		try {
 			constService.saveOrUpdateConst(constVo);
+			cacheRunner.reloadConstCache();
 		} catch (Exception e) {
 			api.error("新增常量处理失败");
 			e.printStackTrace();
@@ -139,7 +164,7 @@ public class ConstApi {
 	 * @description 新增常量
 	 * @author YangHao
 	 * @date 2018年11月29日-下午10:02:38
-	 * @param constVo
+	 * @param constVos
 	 * @return
 	 */
 	@ApiOperation(value = "批量新增新增常量", notes = "")
@@ -148,6 +173,7 @@ public class ConstApi {
 		ApiResponse<String> api = new ApiResponse<>();
 		try {
 			constService.saveArtClassifyConst(constVos);
+			cacheRunner.reloadConstCache();
 		} catch (Exception e) {
 			api.error("批量新增新增常量失败");
 			e.printStackTrace();
@@ -168,6 +194,7 @@ public class ConstApi {
 		ApiResponse<String> api = new ApiResponse<>();
 		try {
 			constService.delConst(id);
+			cacheRunner.reloadConstCache();
 		} catch (Exception e) {
 			api.error("删除常量失败");
 			e.printStackTrace();

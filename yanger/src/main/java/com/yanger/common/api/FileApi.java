@@ -20,6 +20,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.yanger.common.util.CommonConstant;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.yanger.common.util.ConstantUtils;
+import com.yanger.blog.util.BolgConstant;
 import com.yanger.common.vo.ApiResponse;
 
 import io.swagger.annotations.Api;
@@ -66,7 +67,7 @@ public class FileApi {
 			fileName = System.currentTimeMillis() + fileName;
 			int size = (int) file.getSize();
 			// 文件根路径
-			String path = ConstantUtils.FILE_PATH + "/file";
+			String path = CommonConstant.FILE_PATH + "/file";
 			File dest = new File(path + "/" + fileName);
 			log.info("上传文件：{}---路径：{}--->大小：{}", fileName, path, size);
 			// 判断文件父目录是否存在
@@ -106,7 +107,7 @@ public class FileApi {
 			FileInputStream fis = null;
 			OutputStream os = null;
 			// 组织完整的文件路径
-			path = new StringBuilder(ConstantUtils.FILE_PATH).append(path).toString();
+			path = new StringBuilder(CommonConstant.FILE_PATH).append(path).toString();
 			try {
 				// File file = new File(url);
 				fis = new FileInputStream(path);
@@ -144,7 +145,7 @@ public class FileApi {
 			Integer width = 100;
 			Integer height = 100;
 			// 组织完整的文件路径
-			path = new StringBuilder(ConstantUtils.FILE_PATH).append(path).toString();
+			path = new StringBuilder(CommonConstant.FILE_PATH).append(path).toString();
 			try {
 				
 				// 获取原尺寸的图片
@@ -227,7 +228,7 @@ public class FileApi {
 			Integer width = 100;
 			Integer height = 100;
 			// 组织完整的文件路径
-			path = new StringBuilder(ConstantUtils.FILE_PATH).append(path).toString();
+			path = new StringBuilder(CommonConstant.FILE_PATH).append(path).toString();
 			try {
 				
 				// 获取原尺寸的图片
@@ -305,7 +306,7 @@ public class FileApi {
 			
 			try {
 				String videoFilename = URLDecoder.decode(path, "UTF-8");
-				String videoPath = new StringBuilder(ConstantUtils.FILE_PATH).toString();
+				String videoPath = new StringBuilder(CommonConstant.FILE_PATH).toString();
 				Path video = Paths.get(videoPath, videoFilename);
 				
 				int length = (int) Files.size(video);

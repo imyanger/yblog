@@ -2,14 +2,19 @@
     <div class="table">
         <div class="container">
             <div class="handle-box">
-                <el-select v-model="artList.type" placeholder="文章类型" class="handle-select mr10"
-                    @change="typeChange(artList.type)">
-                    <el-option v-for="(type, index) in artList.types" :key="index" 
+                <el-select placeholder="文章模块" v-model="artList.module" class="handle-select mr10"
+                    @change="typeChange(1, artList.module)">
+                    <el-option v-for="(type, index) in consts.modules" :key="index" 
                         :label="type.val" :value="type.code"></el-option>
                 </el-select>
-                <el-select v-model="artList.classify" placeholder="文章分类" class="handle-select mr10">
-                    <el-option v-for="(classify, index) in artList.classifys" :key="index" 
-                        :label="classify.val" :value="classify.code"></el-option>
+                <el-select placeholder="文章类型" v-model="artList.type" class="handle-select mr10"
+                    @change="typeChange(2, artList.type)">
+                    <el-option v-for="(type, index) in consts.types" :key="index" 
+                        :label="type.val" :value="type.code"></el-option>
+                </el-select>
+                <el-select placeholder="文章分类" v-model="artList.classify" class="handle-select mr10">
+                    <el-option v-for="(type, index) in consts.classifys" :key="index" 
+                        :label="type.val" :value="type.code"></el-option>
                 </el-select>
                 <el-input v-model="artList.queryValue" placeholder="筛选关键词" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="search" @click="search">搜索</el-button>
@@ -67,26 +72,33 @@
                     queryValue: '',
                     type: '',
                     classify: '',
+                },
+                consts: {
+                    modules: [],
                     types: [],
                     classifys: []
                 }
             }
         },
         created() {
-            let _this = this;
-            this.getPage(1);
-            //获取下拉选项的值
-            this.$get("/const/artTypes")
-            .then(function (response) {
-                _this.artList.types = response.data;
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+            this.search();
+            this.getMtcs();
         },
         computed: {
         },
         methods: {
+            // 获取文章类型选择下拉值
+            getMtcs(){
+                let _this = this;
+                //获取下拉选项的值
+                this.$get("/const/art/mtcs")
+                .then(function (response) {
+                    _this.consts.modules = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
             // 分页导航
             handleCurrentChange(val) {
                 this.getPage(val, this.artList.page.pageSize);
@@ -123,12 +135,26 @@
             statusFormatter(row, column){ 
                 return row.status === "1" ? '有效' : '无效';
             },
-            typeChange(val){
+            // 模块、类型、分类改变
+            typeChange(type, val){
                 let _this = this;
-                this.artList.types.forEach(type => {
-                    if(val === type.code){
-                        _this.artList.classify = "";
-                        _this.artList.classifys = type.children;
+                let consts = [];
+                if (1 === type) {
+                    consts = _this.consts.modules;
+                } else if(2 === type) {
+                    consts = _this.consts.types;
+                }
+                consts.forEach(item => {
+                    if(val === item.code){
+                        if (1 === type) {
+                            _this.artList.type = '';
+                            _this.consts.types = item.children;
+                            _this.artList.classify = '';
+                            _this.consts.classifys = [];
+                        } else if(2 === type) {
+                            _this.artList.classify = '';
+                            _this.consts.classifys = item.children;
+                        }
                     }
                 });
             }

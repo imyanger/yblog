@@ -3,6 +3,8 @@ package com.yanger.blog.api;
 import java.io.File;
 import java.io.IOException;
 
+import com.yanger.common.annotation.Token;
+import com.yanger.common.util.CommonConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,7 +20,7 @@ import com.yanger.blog.vo.ArticleVo;
 import com.yanger.blog.vo.PageQueryVo;
 import com.yanger.common.annotation.Operate;
 import com.yanger.common.config.ServerConfig;
-import com.yanger.common.util.ConstantUtils;
+import com.yanger.blog.util.BolgConstant;
 import com.yanger.common.vo.ApiResponse;
 import com.yanger.mybatis.util.ResultPage;
 
@@ -27,7 +29,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
 @Api
-//@Token
+@Token
 @Slf4j
 @RestController
 @RequestMapping("/art")
@@ -98,7 +100,7 @@ public class ArticleApi {
 			fileName = System.currentTimeMillis() + fileName;
 			int size = (int) file.getSize();
 			// 文件根路径
-			String path = ConstantUtils.FILE_PATH + "/md";
+			String path = CommonConstant.FILE_PATH + "/md";
 			File dest = new File(path + "/" + fileName);
 			log.info("上传文件：{}---路径：{}--->大小：{}", fileName, path, size);
 			// 判断文件父目录是否存在
@@ -111,7 +113,7 @@ public class ArticleApi {
 				String sysUrl = serverConfig.getUrl();
 				StringBuilder imgPath = new StringBuilder(sysUrl)
 						.append("/file/getImg?path=")
-						.append(path.replace(ConstantUtils.FILE_PATH, ""))
+						.append(path.replace(CommonConstant.FILE_PATH, ""))
 						.append("/")
 						.append(fileName);
 				api.setData(imgPath.toString());

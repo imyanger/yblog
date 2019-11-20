@@ -14,14 +14,17 @@
 		 <result column="classify" property="classify"/> 
 		 <result column="title" property="title"/> 
 		 <result column="author" property="author"/> 
+		 <result column="user_id" property="userId"/> 
 		 <result column="rux_words" property="ruxWords"/> 
 		 <result column="summary" property="summary"/> 
 		 <result column="content" property="content"/> 
+		 <result column="word_content" property="wordContent"/> 
+		 <result column="word_type" property="wordType"/> 
+		 <result column="art_state" property="artState"/> 
 		 <result column="art_img_path" property="artImgPath"/> 
 		 <result column="likes" property="likes"/> 
 		 <result column="views" property="views"/> 
 		 <result column="commons" property="commons"/> 
-		 <result column="user_id" property="userId"/> 
 		 <result column="status" property="status"/> 
 		 <result column="insert_time" property="insertTime"/> 
 		 <result column="update_time" property="updateTime"/> 
@@ -30,9 +33,10 @@
 	<!-- 通用查询结果列-->
 	<sql id="Base_Column_List">
 		 article_id, module, type, classify, title,
-		 author, rux_words, summary, content, art_img_path,
-		 likes, views, commons, user_id, status,
-		 insert_time, update_time
+		 author, user_id, rux_words, summary, content,
+		 word_content, word_type, art_state, art_img_path, likes,
+		 views, commons, status, insert_time, update_time
+		
 	</sql>
 
 	<!-- 按对象查询记录的WHERE部分 -->
@@ -55,6 +59,9 @@
 		<if test="author != null" >
 			and author = #{author}
 		</if>
+		<if test="userId != null" >
+			and user_id = #{userId}
+		</if>
 		<if test="ruxWords != null" >
 			and rux_words = #{ruxWords}
 		</if>
@@ -63,6 +70,15 @@
 		</if>
 		<if test="content != null" >
 			and content = #{content}
+		</if>
+		<if test="wordContent != null" >
+			and word_content = #{wordContent}
+		</if>
+		<if test="wordType != null" >
+			and word_type = #{wordType}
+		</if>
+		<if test="artState != null" >
+			and art_state = #{artState}
 		</if>
 		<if test="artImgPath != null" >
 			and art_img_path = #{artImgPath}
@@ -75,9 +91,6 @@
 		</if>
 		<if test="commons != null" >
 			and commons = #{commons}
-		</if>
-		<if test="userId != null" >
-			and user_id = #{userId}
 		</if>
 		<if test="status != null" >
 			and status = #{status}
@@ -142,13 +155,15 @@
 	<!-- 完整插入一条记录-->
 	<insert id="insert" useGeneratedKeys="true" keyProperty="article_id" parameterType="com.yanger.blog.po.Article">
 		insert into article (article_id, module, type, classify, title, 
-			author, rux_words, summary, content, art_img_path, 
-			likes, views, commons, user_id, status, 
-			insert_time, update_time)
+			author, user_id, rux_words, summary, content, 
+			word_content, word_type, art_state, art_img_path, likes, 
+			views, commons, status, insert_time, update_time
+			)
 		values(#{articleId}, #{module}, #{type}, #{classify}, #{title}, 
-			#{author}, #{ruxWords}, #{summary}, #{content}, #{artImgPath}, 
-			#{likes}, #{views}, #{commons}, #{userId}, #{status}, 
-			#{insertTime}, #{updateTime})
+			#{author}, #{userId}, #{ruxWords}, #{summary}, #{content}, 
+			#{wordContent}, #{wordType}, #{artState}, #{artImgPath}, #{likes}, 
+			#{views}, #{commons}, #{status}, #{insertTime}, #{updateTime}
+			)
 	</insert>
 
 	<!-- 插入一条记录(为空的字段不操作) -->
@@ -173,6 +188,9 @@
 			<if test="author != null" >
 				author,
 			</if>
+			<if test="userId != null" >
+				user_id,
+			</if>
 			<if test="ruxWords != null" >
 				rux_words,
 			</if>
@@ -181,6 +199,15 @@
 			</if>
 			<if test="content != null" >
 				content,
+			</if>
+			<if test="wordContent != null" >
+				word_content,
+			</if>
+			<if test="wordType != null" >
+				word_type,
+			</if>
+			<if test="artState != null" >
+				art_state,
 			</if>
 			<if test="artImgPath != null" >
 				art_img_path,
@@ -193,9 +220,6 @@
 			</if>
 			<if test="commons != null" >
 				commons,
-			</if>
-			<if test="userId != null" >
-				user_id,
 			</if>
 			<if test="status != null" >
 				status,
@@ -226,6 +250,9 @@
 			<if test="author != null" >
 				#{author},
 			</if>
+			<if test="userId != null" >
+				#{userId},
+			</if>
 			<if test="ruxWords != null" >
 				#{ruxWords},
 			</if>
@@ -234,6 +261,15 @@
 			</if>
 			<if test="content != null" >
 				#{content},
+			</if>
+			<if test="wordContent != null" >
+				#{wordContent},
+			</if>
+			<if test="wordType != null" >
+				#{wordType},
+			</if>
+			<if test="artState != null" >
+				#{artState},
 			</if>
 			<if test="artImgPath != null" >
 				#{artImgPath},
@@ -246,9 +282,6 @@
 			</if>
 			<if test="commons != null" >
 				#{commons},
-			</if>
-			<if test="userId != null" >
-				#{userId},
 			</if>
 			<if test="status != null" >
 				#{status},
@@ -281,6 +314,9 @@
 			<if test="author != null" >
 				author=#{author},
 			</if>
+			<if test="userId != null" >
+				user_id=#{userId},
+			</if>
 			<if test="ruxWords != null" >
 				rux_words=#{ruxWords},
 			</if>
@@ -289,6 +325,15 @@
 			</if>
 			<if test="content != null" >
 				content=#{content},
+			</if>
+			<if test="wordContent != null" >
+				word_content=#{wordContent},
+			</if>
+			<if test="wordType != null" >
+				word_type=#{wordType},
+			</if>
+			<if test="artState != null" >
+				art_state=#{artState},
 			</if>
 			<if test="artImgPath != null" >
 				art_img_path=#{artImgPath},
@@ -301,9 +346,6 @@
 			</if>
 			<if test="commons != null" >
 				commons=#{commons},
-			</if>
-			<if test="userId != null" >
-				user_id=#{userId},
 			</if>
 			<if test="status != null" >
 				status=#{status},
@@ -326,14 +368,17 @@
 			classify=#{classify},
 			title=#{title},
 			author=#{author},
+			user_id=#{userId},
 			rux_words=#{ruxWords},
 			summary=#{summary},
 			content=#{content},
+			word_content=#{wordContent},
+			word_type=#{wordType},
+			art_state=#{artState},
 			art_img_path=#{artImgPath},
 			likes=#{likes},
 			views=#{views},
 			commons=#{commons},
-			user_id=#{userId},
 			status=#{status},
 			insert_time=#{insertTime},
 			update_time=#{updateTime}
