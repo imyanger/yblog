@@ -3,6 +3,7 @@ package com.yanger.blog.api;
 import java.io.File;
 import java.io.IOException;
 
+import com.yanger.blog.service.KindService;
 import com.yanger.common.annotation.Token;
 import com.yanger.common.util.CommonConstant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class ArticleApi {
 	
 	@Autowired
 	private ServerConfig serverConfig;
+
+	@Autowired
+	private KindService kindService;
 	
 	/**
 	 * @description 查询文章分页数据  
@@ -68,6 +72,7 @@ public class ArticleApi {
 		ApiResponse<String> api = new ApiResponse<>();
 		try {
 			articleService.addArticle(articleVo);
+			kindService.exeDealSummary();
 		} catch (Exception e) {
 			api.error("新增文章处理失败");
 			e.printStackTrace();
@@ -155,6 +160,7 @@ public class ArticleApi {
 		ApiResponse<String> api = new ApiResponse<>();
 		try {
 			articleService.delArticle(id);
+			kindService.exeDealSummary();
 		} catch (Exception e) {
 			api.error("删除文章失败");
 			e.printStackTrace();

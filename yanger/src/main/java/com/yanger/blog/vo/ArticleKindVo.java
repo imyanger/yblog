@@ -42,4 +42,13 @@ public class ArticleKindVo implements Serializable {
 	/** 子级文章分类 */
 	private List<ArticleKindVo> children;
 
+	/** 模块名称 */
+	private String moduleVal;
+
+	/** 所属类型名称 */
+	private String typeVal;
+
+	/** 分类（具体）名称 */
+	private String classifyVal;
+
 }

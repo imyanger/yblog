@@ -12,4 +12,22 @@
 		from article_kind where status = '1' and module = #{_parameter}
 	</select>
 
+	<select id="selectSummary" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from article_kind
+	</select>
+
+	<select id="dealSummaryData">
+		DELETE FROM article_kind;
+		ALTER TABLE article_kind AUTO_INCREMENT = 1;
+		INSERT INTO article_kind(`module`,`type`,`classify`,`sum`,`status`, `insert_time`)
+		SELECT module, TYPE, classify, COUNT(*) AS SUM, '1', NOW() FROM article GROUP BY module,TYPE,classify;
+	</select>
+
+	<select id="dateSum">
+		SELECT DATE_FORMAT(update_time,"%Y-%m") AS artDate ,COUNT(*) as sum FROM article
+		GROUP BY DATE_FORMAT(update_time,"%Y-%m") ORDER BY DATE_FORMAT(update_time,"%Y-%m") DESC ;
+	</select>
+
 </mapper>

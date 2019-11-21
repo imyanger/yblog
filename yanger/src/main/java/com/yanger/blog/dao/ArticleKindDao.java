@@ -2,6 +2,7 @@ package com.yanger.blog.dao;
 
 import java.util.List;
 
+import com.yanger.blog.po.DateSum;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.yanger.blog.po.ArticleKind;
@@ -20,5 +21,32 @@ public interface ArticleKindDao extends MybatisBaseDao<ArticleKind, Integer> {
 	 * @return
 	 */
 	List<ArticleKind> findAll(String module);
+
+	/**
+	 * @description 从article查询汇总数据
+	 * @author yanger
+	 * @date 2019/11/21
+	 * @param
+	 * @return java.util.List<com.yanger.blog.po.ArticleKind>
+	 */
+	List<ArticleKind> selectSummary();
+
+	/**
+	 * @description 处理统计数据
+	 * @author yanger
+	 * @date 2019/11/21
+	 * @param
+	 * @return void
+	 */
+	void dealSummaryData();
+
+	/**
+	 * @description 按年月日期统计
+	 * @author yanger
+	 * @date 2019/11/21
+	 * @param
+	 * @return java.util.List<com.yanger.blog.po.DateSum>
+	 */
+	List<DateSum> dateSum();
 
 }
