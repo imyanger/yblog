@@ -33,7 +33,7 @@
         </div>
 
         <!-- 编辑弹出框 -->
-        <el-dialog :title="title" :visible.sync="editVisible" width="30%">
+        <el-dialog :title="title" :visible.sync="editVisible" width="30%" :close-on-click-modal="false">
             <el-form ref="form" :model="constData" label-width="30%" :rules="rules">
                 <el-form-item label="文章模块" prop="upperCode">
                     <el-select placeholder="文章模块" v-model="constData.upperCode"  class="handle-input mr10">
@@ -62,7 +62,8 @@
         </el-dialog>
 
         <!-- 文章分类处理 -->
-        <el-dialog :title="'文章分类编辑（' + sub.oneData.code + '-' + sub.oneData.val + '）'" :visible.sync="subVisible" width="60%">
+        <el-dialog :title="'文章分类编辑（' + sub.oneData.code + '-' + sub.oneData.val + '）'" 
+            :visible.sync="subVisible" width="60%"  :close-on-click-modal="false">
             <el-form ref="subForm" id="subForm" :model="constData" label-width="0px">
                 <el-table :data="sub.subConst" border style="width: 100%" :row-style="{height:'10px'}" 
                     :header-row-style="{'height': '40px'}" ref="multipleTable">

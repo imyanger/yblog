@@ -40,6 +40,8 @@ public interface ArticleKindDao extends MybatisBaseDao<ArticleKind, Integer> {
 	 */
 	void dealSummaryData();
 
+	void deleteAll();
+
 	/**
 	 * @description 按年月日期统计
 	 * @author yanger

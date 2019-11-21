@@ -2,43 +2,16 @@
     <div>
         <div class="container">
             <div class="schart-box">
-                        <div class="content-title">折线图</div>
-                        <schart class="schart"  canvasId="line" :data="data1" type="line" :options="options2"></schart>
-                    </div>
-            <el-tabs type="border-card">
-                <el-tab-pane label="用户管理1" :lazy=true>
-                    <div class="schart-box" v-if="1==1">
-                        <div class="content-title">
-                            <schart class="schart" canvasId="bar" :data="data1" type="bar" :options="options1"></schart>
-                        </div>
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane label="配置管理2">
-                    <div class="schart-box">
-                        <div class="content-title">折线图</div>
-                        <schart class="schart" canvasId="line" :data="data1" type="line" :options="options2"></schart>
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane label="角色管理3">
-                    <div class="schart-box">
-                        <div class="content-title">折线图</div>
-                        <schart class="schart" canvasId="line" :data="data1" type="line" :options="options2"></schart>
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane label="角色管理4">
-                    <div class="schart-box">
-                        <div class="content-title">饼状图</div>
-                        <schart class="schart" canvasId="pie" :data="data2" type="pie" :options="options3"></schart>
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane label="角色管理5">
-                    <div class="schart-box">
-                        <div class="content-title">环形图</div>
-                        <schart class="schart" canvasId="ring" :data="data2" type="ring" :options="options4"></schart>
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
-            </el-tabs>
+                <schart class="schart"  canvasId="line" :data="data1" type="line" :options="options2"></schart>
+            </div>
+            <div class="schart-box">
+                <div class="content-title">
+                    <schart class="schart" canvasId="bar" :data="data1" type="bar" :options="options1"></schart>
+                </div>
+            </div>
+            <div class="schart-box">
+                <schart class="schart" canvasId="pie" :data="data2" type="pie" :options="options3"></schart>
+            </div>
         </div>
     </div>
 </template>
@@ -87,16 +60,19 @@
                 titleColor: '#ffffff',
                 legendColor: '#ffffff',
                 radius: 120
-            },
-            options4: {
-                title: '某商店各商品年度销量',
-                bgColor: '#829daa',
-                titleColor: '#ffffff',
-                legendColor: '#ffffff',
-                radius: 120,
-                innerRadius:80
             }
-        })
+        }),
+        created(){
+            let _this = this;
+            //获取下拉选项的值
+            this.$get("/kind/summary")
+            .then(function (response) {
+                console.log(response.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
     }
 </script>
 
@@ -106,8 +82,8 @@
         margin: 20px;
     }
     .schart{
-        width: 500px;
-        height: 400px;
+        width: 1000px;
+        height: 300px;
     }
     .content-title{
         clear: both;

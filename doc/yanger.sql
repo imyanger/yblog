@@ -7,7 +7,7 @@ CREATE TABLE `operate_log`(
   `operate_ip` VARCHAR(60) COMMENT '操作机器Ip',
   `operate_type` VARCHAR(10) COMMENT '操作类型',
   `operate_desc` VARCHAR(50) COMMENT '操作描述',
-  `request_params` VARCHAR(1000) COMMENT '请求参数',
+  `request_params` TEXT COMMENT '请求参数',
   `request_url` VARCHAR(100) COMMENT '请求地址',
   `status` CHAR(1) COMMENT '数据状态',
   `insert_time` DATETIME COMMENT '创建时间',

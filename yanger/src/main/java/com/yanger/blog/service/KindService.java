@@ -38,8 +38,9 @@ public class KindService {
      * @return void
      */
     public void exeDealSummary(){
+        articleKindDao.deleteAll();
+        articleKindDao.dealSummaryData();
         new Thread(() -> {
-            articleKindDao.dealSummaryData();
         }).start();
     }
 

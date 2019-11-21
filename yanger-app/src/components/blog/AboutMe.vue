@@ -12,15 +12,15 @@
             <p>爱好：阅读，编程，写作</p>
         </div>
         <div id="about_me_follow">
-            <a href="https://weibo.com/u/2022020142?is_hot=1" target="_Blank">
-                <img id="about_me_sinaweb" alt="" src="static/img/blog/sinaweb.png">
-            </a>
             <img id="about_me_weichat" alt="" src="static/img/blog/weichat.png" @click="showWechat">
             <a href="https://github.com/imyanger" target="_Blank">
                 <img id="about_me_github" alt="" src="static/img/blog/github.png">
             </a>
             <a href="https://blog.csdn.net/Simple_Yangger" target="_Blank">
                 <img id="about_me_csdn" alt="" src="static/img/blog/csdn.png">
+            </a>
+            <a href="https://weibo.com/u/2022020142?is_hot=1" target="_Blank">
+                <img id="about_me_sinaweb" alt="" src="static/img/blog/sinaweb.png">
             </a>
             <!-- 引入微信公众号关注的模态框 -->
             <el-dialog :visible.sync="dialogVisible" :close-on-click-modal="false" width="450px">

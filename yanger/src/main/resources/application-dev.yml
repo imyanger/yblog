@@ -12,7 +12,7 @@ spring:
   servlet:
     multipart:
       #设置上传文件根路径
-      location: E:/
+      location: D:/
 #日志文件位置
 logging:
   file: D:/code/log/yanger.log
