@@ -6,13 +6,7 @@ import java.io.IOException;
 import com.yanger.common.annotation.Token;
 import com.yanger.common.util.CommonConstant;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.yanger.blog.service.ArticleService;
@@ -20,7 +14,6 @@ import com.yanger.blog.vo.ArticleVo;
 import com.yanger.blog.vo.PageQueryVo;
 import com.yanger.common.annotation.Operate;
 import com.yanger.common.config.ServerConfig;
-import com.yanger.blog.util.BolgConstant;
 import com.yanger.common.vo.ApiResponse;
 import com.yanger.mybatis.util.ResultPage;
 
@@ -120,14 +113,74 @@ public class ArticleApi {
 			} catch (IllegalStateException e) {
 				api.error("保存文件报错");
 				log.error("保存文件报错", e);
-				e.printStackTrace();
 			} catch (IOException e) {
 				api.error("保存文件报错");
 				log.error("保存文件报错", e);
-				e.printStackTrace();
 			}
 		}
 		return api;
 	}
-	
+
+	/**
+	 * @description 更新文章状态
+	 * @author yanger
+	 * @date 2019/11/21
+	 * @param id
+	 * @param state
+	 * @return com.yanger.common.vo.ApiResponse<java.lang.String>
+	 */
+	@PutMapping("state/{id}/{state}")
+	@ApiOperation(value = "更新文章状态state", notes = "")
+	public ApiResponse<String> state(@PathVariable("id") int id, @PathVariable("state") String state) {
+		ApiResponse<String> api = new ApiResponse<>();
+		try {
+			articleService.updateState(id, state);
+		} catch (Exception e) {
+			api.error("更新文章状态异常");
+			log.error("更新文章状态异常", e);
+		}
+		return api;
+	}
+
+	/**
+	 * @description 根据id删除文章
+	 * @author YangHao
+	 * @date 2018年11月29日-下午10:02:38
+	 * @param id
+	 * @return
+	 */
+	@ApiOperation(value = "根据id删除文章", notes = "")
+	@DeleteMapping("/{id}")
+	public ApiResponse<String> delArticle(@PathVariable Integer id) {
+		ApiResponse<String> api = new ApiResponse<>();
+		try {
+			articleService.delArticle(id);
+		} catch (Exception e) {
+			api.error("删除文章失败");
+			e.printStackTrace();
+		}
+		return api;
+	}
+
+	/**
+	 * @description 根据id查询文章
+	 * @author YangHao
+	 * @date 2018年11月29日-下午10:02:38
+	 * @param id
+	 * @return
+	 */
+	@ApiOperation(value = "根据id查询文章", notes = "")
+	@GetMapping("/{id}")
+	public ApiResponse<ArticleVo> getArticle(@PathVariable Integer id) {
+		ApiResponse<ArticleVo> api = new ApiResponse<>();
+		try {
+			ArticleVo articleVo = articleService.getArticle(id);
+			api.setData(articleVo);
+		} catch (Exception e) {
+			api.error("加载文章数据失败");
+			e.printStackTrace();
+		}
+		return api;
+	}
+
 }

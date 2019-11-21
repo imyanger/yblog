@@ -112,7 +112,7 @@
                 imageUrl:'',
                 uploadInfo: {
                     // 头像选择框默认展示图片
-                    defaultSrc: './static/img/img.jpg',
+                    defaultSrc: './static/img/blog/img-upload.jpg',
                     // 头像框图片上传接口
                     uploadUrl: '/api/core/file/fileUpload',
                     // 图片上传后的响应信息
@@ -135,6 +135,7 @@
         },
         created() {
             this.getMtcs();
+            this.getArt();
         },
         computed: {},
         components: {
@@ -227,7 +228,9 @@
                             this.$put("/art/add", this.artData)
                             .then(function (response) {
                                 _this.$alert(state === '01' ? "文章保存成功" : "文章发表成功", "提示");
-                                _this.reset();
+                                if(!_this.$route.query.key){
+                                    _this.reset();
+                                }
                             })
                             .catch(function (error) {
                                 console.log(error);
@@ -239,6 +242,36 @@
                         return false;
                     }
                 });
+            },
+            // 根据id获取文章信息
+            getArt() {
+                let articleId = this.$route.query.key;
+                if(articleId){
+                    let _this = this;
+                    this.$get("/art/" + articleId)
+                    .then(function (response) {
+                        let data = response.data;
+                        _this.artData = data;
+                        let type = data.type;
+                        let classify = data.classify;
+                        if(type){
+                            _this.typeChange(1, data.module);
+                            _this.artData.type = type;
+                            if(classify){
+                                _this.typeChange(2, type);
+                                _this.artData.classify = classify;
+                            }
+                        }
+                        let imgUrl = data.serverPath + '/file/thumbImg?wh=150&path=' + data.artImgPath;
+                        _this.$refs.upload.setcropImg(imgUrl);
+                        // 图片上传状态
+                        _this.uploadInfo.response.status = 0;
+                        _this.uploadInfo.response.data = data.artImgPath;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                }
             }
         }
     }

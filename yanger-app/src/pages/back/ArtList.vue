@@ -24,16 +24,22 @@
                 <el-table-column type="expand" label="详情">
                     <template slot-scope="props">
                         <el-form label-position="left" inline class="demo-table-expand">
+                            <el-form-item>
+                                <div class="art_img">
+                                    <img alt="" :src="props.row.serverPath + '/file/thumbImg?wh=50&path=' + props.row.artImgPath">
+                                </div>
+                            </el-form-item>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <el-form-item label="作者：">
                                 <span>{{ props.row.author }}</span>
                             </el-form-item>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <el-form-item label="关键字：">
-                                <span>{{ props.row.ruxWords }}</span>
+                            <el-form-item label="文档编辑类型：">
+                                <span>{{ props.row.wordType === '1' ? "UE编辑器" : 'Markdown' }}</span>
                             </el-form-item>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <el-form-item label="图片路径：">
-                                <span>{{ props.row.artImgPath }}</span>
+                            <el-form-item label="关键字：">
+                                <span>{{ props.row.ruxWords }}</span>
                             </el-form-item>
                             <br/>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="summary">{{ props.row.summary }}</span>
@@ -41,15 +47,22 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="title" label="标题"></el-table-column>
-                <el-table-column prop="type" label="分类" sortable></el-table-column>
-                <el-table-column prop="classify" label="类型"></el-table-column>
-                <el-table-column prop="likes" label="喜爱" sortable></el-table-column>
-                <el-table-column prop="views" label="浏览" sortable></el-table-column>
-                <el-table-column prop="commons" label="评论" sortable></el-table-column>
-                <el-table-column prop="updateTime" label="编辑时间" :formatter="dateFormatter" sortable width="130%"></el-table-column>
-                <el-table-column prop="status" label="状态" sortable :formatter="statusFormatter" width="70%"></el-table-column>
+                <el-table-column prop="moduleVal" label="模块"></el-table-column>
+                <el-table-column prop="typeVal" label="分类"></el-table-column>
+                <el-table-column prop="classifyVal" label="类型"></el-table-column>
+                <el-table-column prop="likes" label="喜爱" width="60%"></el-table-column>
+                <el-table-column prop="views" label="浏览" width="60%"></el-table-column>
+                <el-table-column prop="commons" label="评论" width="60%"></el-table-column>
+                <el-table-column prop="artState" label="文章状态" :formatter="statusFormatter" width="80%"></el-table-column>
                 <el-table-column label="操作">
-                   
+                   <template slot-scope="scope">
+                        <div class="operate">
+                            <i class="el-icon-edit" title="修改" @click="editOne(scope.row)"></i>
+                            <i class="el-icon-s-promotion" title="发表" @click="updateState(scope.row, '02')" v-if='scope.row.artState === "01"'></i>
+                            <i class="el-icon-document-delete" title="撤回" @click="updateState(scope.row, '01')" v-if='scope.row.artState === "02"'></i>
+                            <i class="el-icon-delete" title="删除" @click="delOne(scope.row)"></i>
+                        </div>
+                    </template>
                 </el-table-column>
             </el-table>
             <div class="pagination">
@@ -133,7 +146,7 @@
                 return formatDate(date, 'yyyy-MM-dd hh:mm');
             },
             statusFormatter(row, column){ 
-                return row.status === "1" ? '有效' : '无效';
+                return row.artState === "01" ? '暂存' : '已发表';
             },
             // 模块、类型、分类改变
             typeChange(type, val){
@@ -157,6 +170,42 @@
                         }
                     }
                 });
+            },
+            // 更新文章状态
+            updateState(row, state){
+                let _this = this;
+                this.$put("/art/state/" + row.articleId + '/' + state)
+                .then(function (response) {
+                    _this.$alert(state === '01' ? "撤回成功" : "发表成功", "提示")
+                    .then(function(){
+                        _this.search();
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            delOne(row){
+                let _this = this;
+                this.$del("/art/" + row.articleId)
+                .then(function (response) {
+                    _this.$alert("删除成功", "提示")
+                    .then(function(){
+                        _this.search();
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            editOne(row){
+                this.$router.push({
+                    path: '/back/art/edit', 
+                    query: {
+                        key: row.articleId,
+                        type: row.wordType
+                    }
+                })
             }
         }
     }
@@ -189,6 +238,19 @@
     }
     .summary {
         line-height: 20px;
+    }
+    .art_img {
+
+    }
+    .iconbtn {
+        font-size: 18px;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+    .operate i {
+        font-size: 14px;
+        cursor: pointer;
+        margin-left: 15px;
     }
 </style>
 

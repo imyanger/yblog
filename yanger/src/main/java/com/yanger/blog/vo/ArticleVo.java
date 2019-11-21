@@ -85,5 +85,8 @@ public class ArticleVo implements Serializable {
 
 	/** 分类（具体）名称 */
 	private String classifyVal;
+
+	//项目服务路径
+	private String serverPath;
 	
 }

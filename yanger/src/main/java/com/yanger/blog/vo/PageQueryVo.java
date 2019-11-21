@@ -27,5 +27,8 @@ public class PageQueryVo implements Serializable {
 
 	//文章id
 	private Integer articleId;
+
+	// 文章状态
+	private String artState;
 	
 }

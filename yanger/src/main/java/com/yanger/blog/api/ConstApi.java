@@ -18,7 +18,7 @@ import com.yanger.blog.service.ConstService;
 import com.yanger.blog.vo.ConstVo;
 import com.yanger.blog.vo.PageQueryVo;
 import com.yanger.common.annotation.Token;
-import com.yanger.blog.util.BolgConstant;
+import com.yanger.blog.util.BlogConstant;
 import com.yanger.common.vo.ApiResponse;
 import com.yanger.mybatis.util.ResultPage;
 
@@ -48,7 +48,7 @@ public class ConstApi {
 	public ApiResponse<List<ConstVo>> artModule() {
 		ApiResponse<List<ConstVo>> api = new ApiResponse<>();
 		try {
-			List<ConstVo> constVos = constService.getConstList(BolgConstant.ARTICLE_MODULE_UPPER_CODE);
+			List<ConstVo> constVos = constService.getConstList(BlogConstant.ARTICLE_MODULE_UPPER_CODE);
 			api.setData(constVos);
 		} catch (Exception e) {
 			api.error("获取文章模块数据失败");

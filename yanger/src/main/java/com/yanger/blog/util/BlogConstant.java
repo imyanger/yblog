@@ -5,7 +5,7 @@ package com.yanger.blog.util;
  * @author 杨号
  * @date 2018年9月14日
  */
-public class BolgConstant {
+public class BlogConstant {
 
 	/** 文章模块类型的上级常量代码upperCode */
 	public static final String ARTICLE_MODULE_UPPER_CODE = "wzlx";
@@ -36,5 +36,11 @@ public class BolgConstant {
 
 	/** 用户类型 -- 后台用户 */
 	public static final String USER_TYPE_BACK = "2";
+
+	/** 文章状态 --已发表 */
+	public static final String ART_STATE_ZC = "01";
+
+	/** 文章状态 --暂存 */
+	public static final String ART_STATE_YFB = "02";
 	
 }

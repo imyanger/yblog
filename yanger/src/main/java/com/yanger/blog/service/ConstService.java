@@ -8,7 +8,7 @@ import java.util.Map;
 
 import com.yanger.blog.cache.CacheRunner;
 import com.yanger.blog.po.ArticleType;
-import com.yanger.blog.util.BolgConstant;
+import com.yanger.blog.util.BlogConstant;
 import com.yanger.common.util.PageUtils;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -119,7 +119,7 @@ public class ConstService {
 		int size = pageQueryVo.getPageSize();
 		PageParam pageParam = ParamUtils.getDescPageParam(pageNo, size > 0 ? size : 10, "update_time");
 		ConstVo entry = new ConstVo();
-		List<Const> consts = constDao.findAllByType(BolgConstant.ARTICLE_MODULE_UPPER_CODE);
+		List<Const> consts = constDao.findAllByType(BlogConstant.ARTICLE_MODULE_UPPER_CODE);
 		StringBuilder sb = new StringBuilder();
 		Map<String, String> map = new HashMap<>();
  		consts.forEach(v -> {
@@ -188,7 +188,7 @@ public class ConstService {
 			upperCodeMap.put(upperCode, constVos);
 		});
 
-		List<ConstVo> modules = upperCodeMap.get(BolgConstant.ARTICLE_MODULE_UPPER_CODE);
+		List<ConstVo> modules = upperCodeMap.get(BlogConstant.ARTICLE_MODULE_UPPER_CODE);
 		if(modules != null){
             modules.forEach(module -> {
                 List<ConstVo> types = upperCodeMap.get(module.getCode());

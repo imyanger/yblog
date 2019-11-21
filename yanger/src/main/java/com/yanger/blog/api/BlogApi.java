@@ -23,7 +23,7 @@ import com.yanger.blog.vo.ViewDataVo;
 import com.yanger.common.annotation.Operate;
 import com.yanger.common.annotation.Token;
 import com.yanger.common.config.ServerConfig;
-import com.yanger.blog.util.BolgConstant;
+import com.yanger.blog.util.BlogConstant;
 import com.yanger.common.util.JwtUtils;
 import com.yanger.common.util.RedisMagger;
 import com.yanger.common.vo.ApiResponse;
@@ -139,6 +139,8 @@ public class BlogApi {
 	public ApiResponse<ResultPage<ArticleVo>> articlePage(@RequestBody PageQueryVo pageQueryVo) {
 		ApiResponse<ResultPage<ArticleVo>> api = new ApiResponse<>();
 		try {
+			//  只查询已发表的
+			pageQueryVo.setArtState(BlogConstant.ART_STATE_YFB);
 			ResultPage<ArticleVo> page = blogService.getPageData(pageQueryVo);
 			api.setData(page);
 		} catch (Exception e) {
@@ -160,7 +162,7 @@ public class BlogApi {
 	public ApiResponse<String> register(@RequestBody BlogUserVo blogUserVo) {
 		ApiResponse<String> api = new ApiResponse<>();
 		try {
-			blogUserVo.setUserType(BolgConstant.USER_TYPE_BLOG);
+			blogUserVo.setUserType(BlogConstant.USER_TYPE_BLOG);
 			blogService.userRegister(blogUserVo);
 			api.setData("注册成功");
 		} catch (Exception e) {
@@ -181,7 +183,7 @@ public class BlogApi {
 	public ApiResponse<BlogUserVo> login(@RequestBody BlogUserVo blogUserVo) {
 		ApiResponse<BlogUserVo> api = new ApiResponse<>();
 		try {
-			BlogUserVo user = blogService.userLogin(blogUserVo, BolgConstant.USER_TYPE_BLOG);
+			BlogUserVo user = blogService.userLogin(blogUserVo, BlogConstant.USER_TYPE_BLOG);
 			if (user != null) {
 				api.setData(user);
 				// 添加token

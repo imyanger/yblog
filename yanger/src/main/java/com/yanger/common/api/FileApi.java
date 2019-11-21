@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.yanger.blog.util.BolgConstant;
 import com.yanger.common.vo.ApiResponse;
 
 import io.swagger.annotations.Api;

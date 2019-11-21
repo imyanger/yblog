@@ -3,7 +3,7 @@ package com.yanger.blog.service;
 import com.yanger.blog.dao.*;
 import com.yanger.blog.po.*;
 import com.yanger.blog.vo.*;
-import com.yanger.blog.util.BolgConstant;
+import com.yanger.blog.util.BlogConstant;
 import com.yanger.common.util.EncryptUtils;
 import com.yanger.common.util.ParamUtils;
 import com.yanger.common.vo.TokenMsg;
@@ -52,16 +52,16 @@ public class BlogService {
 	public HomeDataVo getHomeData() throws Exception {
 		HomeDataVo homeData = new HomeDataVo();
 		// 获得读书笔记
-		List<ArticleVo> studys = this.findArticlesByModule(3, BolgConstant.ARTICLE_MODULE_STUDY);
+		List<ArticleVo> studys = this.findArticlesByModule(3, BlogConstant.ARTICLE_MODULE_STUDY);
 		homeData.setStudys(studys);
 		// 获取心情随笔
-		List<ArticleVo> essays = this.findArticlesByModule(2, BolgConstant.ARTICLE_MODULE_ESSAY);
+		List<ArticleVo> essays = this.findArticlesByModule(2, BlogConstant.ARTICLE_MODULE_ESSAY);
 		homeData.setEssays(essays);
 		// 获取最新留言
 		List<LeavingMsgVo> msgs = this.findMsgs(PageParam.NO_PAGE, 5);
 		homeData.setMsgs(msgs);
 		// 获取外连接
-		List<OuterLinkVo> shipLinks = this.findShipLinks(6, BolgConstant.LINK_TYPE_SHIP);
+		List<OuterLinkVo> shipLinks = this.findShipLinks(6, BlogConstant.LINK_TYPE_SHIP);
 		homeData.setShipLinks(shipLinks);
 		return homeData;
 	}
@@ -79,7 +79,8 @@ public class BlogService {
 		Article entry = new Article();
 		entry.setModule(module);
 		// 有效
-		entry.setStatus(BolgConstant.STATUS_VALID);
+		entry.setStatus(BlogConstant.STATUS_VALID);
+		entry.setArtState(BlogConstant.ART_STATE_YFB);
 		Page<Article> studysPage = articleDao.selectPage(pageParam, entry);
 		// 分页数据
 		ResultPage<ArticleVo> studysResult = Pages.convert(pageParam, studysPage, ArticleVo.class);
@@ -109,9 +110,9 @@ public class BlogService {
 	private List<LeavingMsgVo> findMsgs(int page, int size) throws Exception {
 		PageParam pageParam = ParamUtils.getDescPageParam(page, size, "update_time");
 		LeavingMsg entry = new LeavingMsg();
-		entry.setStatus(BolgConstant.STATUS_VALID);
+		entry.setStatus(BlogConstant.STATUS_VALID);
 		// 留言类型
-		entry.setType(BolgConstant.MSG_TYPE_BOARD);
+		entry.setType(BlogConstant.MSG_TYPE_BOARD);
 		Page<LeavingMsgVo> msgsVoPage = leavingMsgDao.selectPageForVo(pageParam, entry);
 		ResultPage<LeavingMsgVo> msgsResult = Pages.convert(pageParam, msgsVoPage, LeavingMsgVo.class);
 		return msgsResult.getData();
@@ -129,9 +130,9 @@ public class BlogService {
 	public ResultPage<LeavingMsgVo> findMsgPage(int page, int size) throws Exception {
 		PageParam pageParam = ParamUtils.getDescPageParam(page, size, "update_time");
 		LeavingMsg entry = new LeavingMsg();
-		entry.setStatus(BolgConstant.STATUS_VALID);
+		entry.setStatus(BlogConstant.STATUS_VALID);
 		// 留言类型
-		entry.setType(BolgConstant.MSG_TYPE_BOARD);
+		entry.setType(BlogConstant.MSG_TYPE_BOARD);
 		Page<LeavingMsgVo> msgsVoPage = leavingMsgDao.selectPageForVo(pageParam, entry);
 		return Pages.convert(pageParam, msgsVoPage, LeavingMsgVo.class);
 	}
@@ -149,7 +150,7 @@ public class BlogService {
 		PageParam pageParam = ParamUtils.getAscPageParam(size, "sequence");
 		OuterLink entry = new OuterLink();
 		entry.setType(type);
-		entry.setStatus(BolgConstant.STATUS_VALID);
+		entry.setStatus(BlogConstant.STATUS_VALID);
 		Page<OuterLink> shipLinksPage = outerLinkDao.selectPage(pageParam, entry);
 		ResultPage<OuterLinkVo> shipLinksResult = Pages.convert(pageParam, shipLinksPage, OuterLinkVo.class);
 		return shipLinksResult.getData();
@@ -166,13 +167,13 @@ public class BlogService {
 	public StudyDataVo getStudyData() throws Exception {
 		StudyDataVo studyDataVo = new StudyDataVo();
 		// 获得读书笔记
-		ResultPage<ArticleVo> studyPage = this.findArticlePageByModule(1, 6, BolgConstant.ARTICLE_MODULE_STUDY);
+		ResultPage<ArticleVo> studyPage = this.findArticlePageByModule(1, 6, BlogConstant.ARTICLE_MODULE_STUDY);
 		studyDataVo.setStudyPage(studyPage);
 		// 获取热门文章
-		List<ArticleVo> hots = this.findArticles(PageParam.NO_PAGE, 10, BolgConstant.ARTICLE_MODULE_STUDY, "likes");
+		List<ArticleVo> hots = this.findArticles(PageParam.NO_PAGE, 10, BlogConstant.ARTICLE_MODULE_STUDY, "likes");
 		studyDataVo.setHots(hots);
 		// 获取文章分类
-		List<ArticleKindVo> kinds = this.findArticleKinds(BolgConstant.ARTICLE_MODULE_STUDY);
+		List<ArticleKindVo> kinds = this.findArticleKinds(BlogConstant.ARTICLE_MODULE_STUDY);
 		studyDataVo.setKinds(kinds);
 		return studyDataVo;
 	}
@@ -190,7 +191,8 @@ public class BlogService {
 		Article entry = new Article();
 		entry.setModule(module);
 		// 有效
-		entry.setStatus(BolgConstant.STATUS_VALID);
+		entry.setStatus(BlogConstant.STATUS_VALID);
+		entry.setArtState(BlogConstant.ART_STATE_YFB);
 		Page<Article> studysPage = articleDao.selectPage(pageParam, entry);
 		// 分页数据
 		return Pages.convert(pageParam, studysPage, ArticleVo.class);
@@ -245,13 +247,13 @@ public class BlogService {
 	public EssayDataVo getEssayData() throws Exception {
 		EssayDataVo essayDataVo = new EssayDataVo();
 		// 获得读书笔记
-		ResultPage<ArticleVo> essayPage = this.findArticlePageByModule(1, 5, BolgConstant.ARTICLE_MODULE_ESSAY);
+		ResultPage<ArticleVo> essayPage = this.findArticlePageByModule(1, 5, BlogConstant.ARTICLE_MODULE_ESSAY);
 		essayDataVo.setEssayPage(essayPage);
 		// 获取热门文章
-		List<ArticleVo> hots = this.findArticles(PageParam.NO_PAGE, 6, BolgConstant.ARTICLE_MODULE_ESSAY, "views");
+		List<ArticleVo> hots = this.findArticles(PageParam.NO_PAGE, 6, BlogConstant.ARTICLE_MODULE_ESSAY, "views");
 		essayDataVo.setHots(hots);
 		// 获取文章分类
-		List<ArticleKindVo> kinds = this.findArticleKinds(BolgConstant.ARTICLE_MODULE_ESSAY);
+		List<ArticleKindVo> kinds = this.findArticleKinds(BlogConstant.ARTICLE_MODULE_ESSAY);
 		essayDataVo.setKinds(kinds);
 		return essayDataVo;
 	}
@@ -266,14 +268,18 @@ public class BlogService {
 	public ResultPage<ArticleVo> getPageData(PageQueryVo pageQueryVo) throws Exception {
 		int page = pageQueryVo.getPageNo();
 		int size = 6;
-		if (BolgConstant.ARTICLE_MODULE_ESSAY.equals(pageQueryVo.getModule())) {
+		if (BlogConstant.ARTICLE_MODULE_ESSAY.equals(pageQueryVo.getModule())) {
 			size = 5;
 		}
 		PageParam pageParam = ParamUtils.getDescPageParam(page, size, "update_time");
 		ArticleVo entry = new ArticleVo();
 		entry.setModule(pageQueryVo.getModule());
 		// 有效
-		entry.setStatus(BolgConstant.STATUS_VALID);
+		entry.setStatus(BlogConstant.STATUS_VALID);
+		// 文章状态
+		if(StringUtils.isNotBlank(pageQueryVo.getArtState())) {
+			entry.setArtState(pageQueryVo.getArtState());
+		}
 		// 搜索条件
 		if (StringUtils.isNotBlank(pageQueryVo.getQueryValue())) {
 			// 关键字的模糊匹配
@@ -371,11 +377,11 @@ public class BlogService {
 		String type = msgVo.getType();
 		entity.setType(type);
 		// 文章留言
-		if (BolgConstant.MSG_TYPE_ARTICLE.equals(type)) {
+		if (BlogConstant.MSG_TYPE_ARTICLE.equals(type)) {
 			entity.setArticleId(msgVo.getArticleId());
 		}
 		entity.setInsertTime(new Date());
-		entity.setStatus(BolgConstant.STATUS_VALID);
+		entity.setStatus(BlogConstant.STATUS_VALID);
 		leavingMsgDao.insert(entity);
 	}
 
@@ -413,9 +419,9 @@ public class BlogService {
 	public ResultPage<LeavingMsgVo> findArticleMsgPage(Integer id, int page, int size) throws Exception {
 		PageParam pageParam = ParamUtils.getDescPageParam(page, size, "update_time");
 		LeavingMsg entry = new LeavingMsg();
-		entry.setStatus(BolgConstant.STATUS_VALID);
+		entry.setStatus(BlogConstant.STATUS_VALID);
 		// 留言类型
-		entry.setType(BolgConstant.MSG_TYPE_ARTICLE);
+		entry.setType(BlogConstant.MSG_TYPE_ARTICLE);
 		// 文章id
 		entry.setArticleId(id);
 		Page<LeavingMsgVo> msgsVoPage = leavingMsgDao.selectPageForVo(pageParam, entry);

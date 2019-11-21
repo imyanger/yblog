@@ -47,6 +47,14 @@ axios.interceptors.response.use(
                 }
             });
         }
+        // 后台请求失败
+        else if(response.data.status === 1){
+            MessageBox.alert(response.data.msg, '提示', {
+                confirmButtonText: '确定',
+                callback: action => { }
+            });
+            return Promise.reject(response.data.msg);
+        }
         //有token则更新token
         else if(response.data.token) {
             if(response.config.url.indexOf("/blog/") > -1) {

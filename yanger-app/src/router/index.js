@@ -92,6 +92,11 @@ const router = new Router({
                     component: resolve => require(['@/pages/back/SysConst.vue'], resolve),
                     meta: { title: '文章类型维护' }
                 },
+                {
+                    path: 'art/edit',
+                    component: resolve => require(['@/pages/back/ArtEdit.vue'], resolve),
+                    meta: { title: '文章编辑' }
+                },
             ]
         },
 

@@ -21,5 +21,9 @@
 			and (rux_words like "%"#{queryValue}"%" or title like "%"#{queryValue}"%" or type = #{queryValue} or classify = #{queryValue})
 		</if>
   	</sql>
+
+	<update id="updateState" parameterType="map">
+		UPDATE article SET art_state = #{state} WHERE article_id = #{id}
+	</update>
   
 </mapper>
