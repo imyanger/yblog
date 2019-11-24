@@ -14,7 +14,8 @@
                 </center>
                 <div v-if="sginData.user.userNickName">
                     <div id="info_left">
-                        <img alt="" :src="sginData.user.userImgPath">
+                        <!-- <img alt="" :src="sginData.user.userImgPath"> -->
+                        <img alt="" src="static/img/img.jpg">
                     </div>
                     <div id="info_right">
                         <span id="header_msg">亲爱的{{sginData.user.userNickName}}，欢迎您</span><br/>

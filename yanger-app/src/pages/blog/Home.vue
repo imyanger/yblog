@@ -3,27 +3,29 @@
 		<div class="content_left">
 			<div class="content_study">
 				<h2 class="title-h2">最新学习笔记</h2>
-                <div class="content_study_note" v-for="(study, index) in homeData.studys" :key="study.index">
+                <div class="content_study_note" v-for="(study, index) in homeData.studys" :key="index">
                     <div class="note_left">
                         <img alt="" :src="homeData.serverPath + '/file/thumbImg?wh=150&path=' + study.artImgPath" title="">
                     </div>
                     <div class="note_right">
                         <h4><a :href="'#/view/'+ study.articleId" title="" target="_blank">{{study.title}}</a></h4>
                         <p class="note_c">{{study.summary}}</p>
-                        <autor :createDate='study.updateTime' :likes='study.likes' :commons='study.commons' :views='study.views'></autor>
+                        <autor :createDate='study.updateTime' :likes='study.likes' :commons='study.commons' 
+                            :views='study.views' :id='study.articleId'></autor>
                     </div>
                 </div>
 			</div>
 			<div class="content_journal">			
 				<h2 class="title-h2">随心情更新的日志</h2>
-                <div class="content_journal_note"  v-for="(essay, index) in homeData.essays" :key="essay.index">
+                <div class="content_journal_note"  v-for="(essay, index) in homeData.essays" :key="index">
                     <div class="journal_left">
                         <img alt="" :src="homeData.serverPath + '/file/thumbImg?wh=150&path=' + essay.artImgPath" title="">
                     </div>
                     <div class="journal_right">
                         <h4><a :href="'#/view/'+ essay.articleId" title="" target="_blank">{{essay.title}}</a></h4>
                         <p class="note_c">{{essay.summary}}</p>
-                        <autor :createDate='essay.updateTime' :likes='essay.likes' :commons='essay.commons' :views='essay.views'></autor>
+                        <autor :createDate='essay.updateTime' :likes='essay.likes' :commons='essay.commons' 
+                            :views='essay.views' :id='essay.articleId'></autor>
                     </div>
                 </div>
 			</div>
@@ -35,7 +37,7 @@
 				<h3>最近留言</h3>
 				<div id="con">
                     <ul>
-                        <li v-for="(msg, index) in homeData.msgs" :key="msg.index">
+                        <li v-for="(msg, index) in homeData.msgs" :key="index">
                             <div class="message_left">
                                 <img alt="" src="static/img/img.jpg">
                             </div>
@@ -44,7 +46,7 @@
                                     <a href="javascript:void(0)">{{msg.userNickName}}</a>
                                     &nbsp;&nbsp;&nbsp;{{msg.updateTime | formatDate}}&nbsp;:
                                 </p>
-                                <p>{{msg.content}}</p>
+                                <p v-html="msg.content"></p>
                             </div>
                         </li>
                     </ul>
@@ -52,7 +54,7 @@
 			</div>
 			<div id="content_link">
 				<h3>友情链接 </h3>
-                <div v-for="(shipLink, index) in homeData.shipLinks" :key="shipLink.index">
+                <div v-for="(shipLink, index) in homeData.shipLinks" :key="index">
 				    <p><a :href="shipLink.link" target="_Blank">{{shipLink.depict}}</a></p>
                 </div>
 			</div>
@@ -70,7 +72,9 @@
     export default {
         data() {
             return {
-                homeData: {}
+                homeData: {
+                    msgs: []
+                }
             }
         },
         created() {

@@ -20,10 +20,37 @@
   		<if test="queryValue != null" >
 			and (rux_words like "%"#{queryValue}"%" or title like "%"#{queryValue}"%" or type = #{queryValue} or classify = #{queryValue})
 		</if>
+		<if test="artDate != null" >
+			and DATE_FORMAT(insert_time,"%Y-%m") = #{artDate}
+		</if>
   	</sql>
 
 	<update id="updateState" parameterType="map">
 		UPDATE article SET art_state = #{state} WHERE article_id = #{id}
 	</update>
+
+	<!-- 按对象查询一页记录（多条记录） -->
+	<select id="getHotArts" resultMap="BaseResultMap" parameterType="com.yanger.blog.po.Article">
+		select article_id, title, likes, views from article
+		<where>
+			<include refid="Base_Select_By_Entity_Where" />
+		</where>
+	</select>
+
+	<update id="updateCommons" parameterType="map">
+		UPDATE article SET commons = commons + 1 WHERE article_id = #{id}
+	</update>
+
+	<update id="updateLikes" parameterType="map">
+		UPDATE article SET likes = likes + 1 WHERE article_id = #{id}
+	</update>
+
+	<update id="updateViews" parameterType="map">
+		UPDATE article SET views = views + 1 WHERE article_id = #{id}
+	</update>
+	
+	<select id="getLikes" parameterType="map" resultType="int">
+		SELECT likes FROM article WHERE article_id = #{id}
+	</select>
   
 </mapper>

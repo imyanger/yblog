@@ -2,6 +2,7 @@ package com.yanger.blog.service;
 
 import com.yanger.blog.dao.*;
 import com.yanger.blog.po.*;
+import com.yanger.blog.util.ConstUtils;
 import com.yanger.blog.vo.*;
 import com.yanger.blog.util.BlogConstant;
 import com.yanger.common.util.EncryptUtils;
@@ -42,6 +43,9 @@ public class BlogService {
 	@Autowired
 	private BlogUserDao blogUserDao;
 
+	@Autowired
+	private ConstUtils constUtils;
+
 	/**
 	 * @description 获取博客首页数据
 	 * @author YangHao
@@ -74,16 +78,21 @@ public class BlogService {
 	 * @param module
 	 * @return
 	 */
-	private List<ArticleVo> findArticles(int page, int size, String module, String order) throws Exception {
+	private List<ArticleVo> findArticles(int page, int size, String module, String order, boolean isHot) throws Exception {
 		PageParam pageParam = ParamUtils.getDescPageParam(page, size, order);
 		Article entry = new Article();
 		entry.setModule(module);
 		// 有效
 		entry.setStatus(BlogConstant.STATUS_VALID);
 		entry.setArtState(BlogConstant.ART_STATE_YFB);
-		Page<Article> studysPage = articleDao.selectPage(pageParam, entry);
+		Page<Article> artsPage;
+		if(isHot){
+			artsPage = articleDao.getHotArts(pageParam, entry);
+		} else {
+			artsPage = articleDao.selectPage(pageParam, entry);
+		}
 		// 分页数据
-		ResultPage<ArticleVo> studysResult = Pages.convert(pageParam, studysPage, ArticleVo.class);
+		ResultPage<ArticleVo> studysResult = Pages.convert(pageParam, artsPage, ArticleVo.class);
 		return studysResult.getData();
 	}
 
@@ -96,7 +105,7 @@ public class BlogService {
 	 * @return
 	 */
 	private List<ArticleVo> findArticlesByModule(int size, String module) throws Exception {
-		return this.findArticles(PageParam.NO_PAGE, size, module, "update_time");
+		return this.findArticles(PageParam.NO_PAGE, size, module, "update_time", false);
 	}
 
 	/**
@@ -146,7 +155,7 @@ public class BlogService {
 	 * @return
 	 * @throws Exception
 	 */
-	private List<OuterLinkVo> findShipLinks(int size, String type) throws Exception {
+	public List<OuterLinkVo> findShipLinks(int size, String type) throws Exception {
 		PageParam pageParam = ParamUtils.getAscPageParam(size, "sequence");
 		OuterLink entry = new OuterLink();
 		entry.setType(type);
@@ -168,12 +177,13 @@ public class BlogService {
 		StudyDataVo studyDataVo = new StudyDataVo();
 		// 获得读书笔记
 		ResultPage<ArticleVo> studyPage = this.findArticlePageByModule(1, 6, BlogConstant.ARTICLE_MODULE_STUDY);
+		studyPage.getData().forEach(e -> constUtils.setVal(e));
 		studyDataVo.setStudyPage(studyPage);
 		// 获取热门文章
-		List<ArticleVo> hots = this.findArticles(PageParam.NO_PAGE, 10, BlogConstant.ARTICLE_MODULE_STUDY, "likes");
+		List<ArticleVo> hots = this.findArticles(PageParam.NO_PAGE, 10, BlogConstant.ARTICLE_MODULE_STUDY, "likes", true);
 		studyDataVo.setHots(hots);
 		// 获取文章分类
-		List<ArticleKindVo> kinds = this.findArticleKinds(BlogConstant.ARTICLE_MODULE_STUDY);
+		List<ArticleKindVo> kinds = this.findStudyArticleKinds(BlogConstant.ARTICLE_MODULE_STUDY);
 		studyDataVo.setKinds(kinds);
 		return studyDataVo;
 	}
@@ -202,10 +212,56 @@ public class BlogService {
 	 * @description 获取文章分类数据
 	 * @author YangHao
 	 * @date 2018年9月4日-上午12:21:07
+	 * @return
+	 */
+	private List<ArticleKindVo> findEssayArticleKinds() throws Exception {
+		List<ArticleKindVo> yearKinds = new ArrayList<>(0);
+		// 按年月统计
+		List<DateSum> dateSums = articleKindDao.dateSum(BlogConstant.ARTICLE_MODULE_ESSAY);
+		Map<String, ArticleKindVo> map = new HashedMap<>(0);
+		dateSums.forEach(dateSum -> {
+			String[] split = dateSum.getArtDate().split("-");
+			if(split.length == 2){
+				String year = split[0];
+				String month = split[1];
+				ArticleKindVo yearKind = null;
+				if(map.containsKey(year)){
+					yearKind = map.get(year);
+				} else {
+					yearKind = new ArticleKindVo();
+					yearKind.setDateVal(year);
+					map.put(year, yearKind);
+					yearKinds.add(yearKind);
+				}
+				List<ArticleKindVo> children = yearKind.getChildren();
+				ArticleKindVo monthKind = null;
+				for (ArticleKindVo child : children) {
+					if(month.equals(child.getDateVal())){
+						monthKind = child;
+						break;
+					}
+				}
+				if(monthKind == null){
+					monthKind = new ArticleKindVo();
+					monthKind.setDateVal(month);
+					monthKind.setSum(dateSum.getSum());
+					children.add(monthKind);
+				} else {
+					monthKind.setSum(monthKind.getSum() + dateSum.getSum());
+				}
+			}
+		});
+		return yearKinds;
+	}
+
+	/**
+	 * @description 获取文章分类数据
+	 * @author YangHao
+	 * @date 2018年9月4日-上午12:21:07
 	 * @param module
 	 * @return
 	 */
-	private List<ArticleKindVo> findArticleKinds(String module) throws Exception {
+	private List<ArticleKindVo> findStudyArticleKinds(String module) throws Exception {
 		// 重组新的层级分类
 		List<ArticleKindVo> kinds = new ArrayList<>();
 		List<ArticleKind> ArticleKindsList = articleKindDao.findAll(module);
@@ -229,6 +285,8 @@ public class BlogService {
 				kinds.add(outer);
 				map.put(type, outer);
 			}
+			constUtils.setVal(articleKindsVo);
+			constUtils.setVal(outer);
 			inners.add(articleKindsVo);
 			outer.setChildren(inners);
 		}
@@ -248,12 +306,13 @@ public class BlogService {
 		EssayDataVo essayDataVo = new EssayDataVo();
 		// 获得读书笔记
 		ResultPage<ArticleVo> essayPage = this.findArticlePageByModule(1, 5, BlogConstant.ARTICLE_MODULE_ESSAY);
+		essayPage.getData().forEach(e -> constUtils.setVal(e));
 		essayDataVo.setEssayPage(essayPage);
 		// 获取热门文章
-		List<ArticleVo> hots = this.findArticles(PageParam.NO_PAGE, 6, BlogConstant.ARTICLE_MODULE_ESSAY, "views");
+		List<ArticleVo> hots = this.findArticles(PageParam.NO_PAGE, 6, BlogConstant.ARTICLE_MODULE_ESSAY, "views", true);
 		essayDataVo.setHots(hots);
 		// 获取文章分类
-		List<ArticleKindVo> kinds = this.findArticleKinds(BlogConstant.ARTICLE_MODULE_ESSAY);
+		List<ArticleKindVo> kinds = this.findEssayArticleKinds();
 		essayDataVo.setKinds(kinds);
 		return essayDataVo;
 	}
@@ -290,9 +349,17 @@ public class BlogService {
 			entry.setType(pageQueryVo.getType());
 			entry.setClassify(pageQueryVo.getClassify());
 		}
-		Page<Article> studysPage = articleDao.selectPageByVo(pageParam, entry);
+		// 文章时间
+		if(StringUtils.isNotBlank(pageQueryVo.getArtDate())){
+			entry.setArtDate(pageQueryVo.getArtDate());
+		}
+		Page<Article> studyPage = articleDao.selectPageByVo(pageParam, entry);
 		// 分页数据
-		return Pages.convert(pageParam, studysPage, ArticleVo.class);
+		ResultPage<ArticleVo> articleVoPage = Pages.convert(pageParam, studyPage, ArticleVo.class);
+		articleVoPage.getData().forEach(e -> {
+			constUtils.setVal(e);
+		});
+		return articleVoPage;
 	}
 
 	/**
@@ -379,6 +446,8 @@ public class BlogService {
 		// 文章留言
 		if (BlogConstant.MSG_TYPE_ARTICLE.equals(type)) {
 			entity.setArticleId(msgVo.getArticleId());
+			// 更新文章留言数量
+			articleDao.updateCommons(msgVo.getArticleId());
 		}
 		entity.setInsertTime(new Date());
 		entity.setStatus(BlogConstant.STATUS_VALID);
@@ -392,17 +461,20 @@ public class BlogService {
 	 * @param id
 	 */
 	public ViewDataVo view(Integer id) throws Exception {
+		// 浏览数增加
+		articleDao.updateViews(id);
 		ViewDataVo viewDataVo = new ViewDataVo();
 		// 获取文章
 		Article article = articleDao.selectById(id);
 		ArticleVo articleVo = new ArticleVo();
 		BeanUtils.copyProperties(articleVo, article);
+		constUtils.setVal(articleVo);
 		viewDataVo.setArticle(articleVo);
 		// 文章留言信息
 		ResultPage<LeavingMsgVo> msgPage = findArticleMsgPage(id, PageParam.NO_PAGE, 6);
 		viewDataVo.setMsgPage(msgPage);
 		// 推荐文章
-		List<ArticleVo> hots = this.findArticles(PageParam.NO_PAGE, 8, null, "views");
+		List<ArticleVo> hots = this.findArticles(PageParam.NO_PAGE, 8, null, "views", true);
 		viewDataVo.setHots(hots);
 		return viewDataVo;
 	}
@@ -427,5 +499,13 @@ public class BlogService {
 		Page<LeavingMsgVo> msgsVoPage = leavingMsgDao.selectPageForVo(pageParam, entry);
 		return Pages.convert(pageParam, msgsVoPage, LeavingMsgVo.class);
 	}
-	
+
+	/**
+	 * 更新喜欢数量
+	 * @param id
+     */
+	public int updateLikes(int id) {
+		articleDao.updateLikes(id);
+		return articleDao.getLikes(id);
+	}
 }

@@ -2,24 +2,11 @@ package com.yanger.blog.api;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.yanger.blog.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.yanger.blog.service.BlogService;
-import com.yanger.blog.vo.ArticleVo;
-import com.yanger.blog.vo.BlogUserVo;
-import com.yanger.blog.vo.BoardDataVo;
-import com.yanger.blog.vo.EssayDataVo;
-import com.yanger.blog.vo.HomeDataVo;
-import com.yanger.blog.vo.LeavingMsgVo;
-import com.yanger.blog.vo.PageQueryVo;
-import com.yanger.blog.vo.StudyDataVo;
-import com.yanger.blog.vo.ViewDataVo;
 import com.yanger.common.annotation.Operate;
 import com.yanger.common.annotation.Token;
 import com.yanger.common.config.ServerConfig;
@@ -33,6 +20,8 @@ import com.yanger.mybatis.util.ResultPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 
 @Api
 @RestController
@@ -183,14 +172,14 @@ public class BlogApi {
 	public ApiResponse<BlogUserVo> login(@RequestBody BlogUserVo blogUserVo) {
 		ApiResponse<BlogUserVo> api = new ApiResponse<>();
 		try {
-			BlogUserVo user = blogService.userLogin(blogUserVo, BlogConstant.USER_TYPE_BLOG);
-			if (user != null) {
-				api.setData(user);
+			BlogUserVo viewUser = blogService.userLogin(blogUserVo, BlogConstant.USER_TYPE_BLOG);
+			if (viewUser != null) {
+				api.setData(viewUser);
 				// 添加token
-				String token = JwtUtils.sign(new TokenMsg().setInfo(user));
+				String token = JwtUtils.sign(new TokenMsg().setInfo(viewUser));
 				api.setToken(token);
 			} else {
-				api.error("输入的账号不存在或密码错误");
+				api.error("您输入的账号不存在或密码错误");
 			}
 		} catch (Exception e) {
 			api.error("用户登录失败");
@@ -317,6 +306,46 @@ public class BlogApi {
 			api.setData(viewDataVo);
 		} catch (Exception e) {
 			api.error("文章浏览加载失败");
+			e.printStackTrace();
+		}
+		return api;
+	}
+
+	/**
+	 * @description 获取推荐链接
+	 * @author YangHao
+	 * @date 2018年9月6日-下午11:07:41
+	 * @return
+	 */
+	@ApiOperation(value = "获取推荐链接", notes = "")
+	@GetMapping("/links")
+	public ApiResponse<List<OuterLinkVo>> getLinks() {
+		ApiResponse<List<OuterLinkVo>> api = new ApiResponse<>();
+		try {
+			List<OuterLinkVo> shipLinks = blogService.findShipLinks(13, BlogConstant.LINK_TYPE_TJ);
+			api.setData(shipLinks);
+		} catch (Exception e) {
+			api.error("获取推荐链接失败");
+			e.printStackTrace();
+		}
+		return api;
+	}
+
+	/**
+	 * @description 喜欢文章
+	 * @author YangHao
+	 * @date 2018年9月6日-下午11:07:41
+	 * @return
+	 */
+	@ApiOperation(value = "更新喜欢数量", notes = "")
+	@PutMapping("/likes/{id}")
+	public ApiResponse<Integer> updateLikes(@PathVariable("id") int id) {
+		ApiResponse<Integer> api = new ApiResponse<>();
+		try {
+			int i = blogService.updateLikes(id);
+			api.setData(i);
+		} catch (Exception e) {
+			api.error("更新喜欢数量");
 			e.printStackTrace();
 		}
 		return api;

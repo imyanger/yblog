@@ -3,14 +3,15 @@
 		<div id="content_left">
 			<div id="article">
 				<h2 class="title-h2">生活很精彩&nbsp;&nbsp;&nbsp;每一天都值得被记录</h2>
-                <div class="content_study_note"  v-for="(essay, index) in essayData.essayPage.data" :key="essay.index">
+                <div class="content_study_note"  v-for="(essay, index) in essayData.essayPage.data" :key="index">
                     <div class="note_left">
                         <img alt="" :src="essayData.serverPath + '/file/thumbImg?wh=150&path=' + essay.artImgPath">
                     </div>
                     <div class="note_right">
                         <h4><a :href="'#/view/'+ essay.articleId" title="文章标题" target="_blank">{{essay.title}}</a></h4>
                         <p class="note_c">{{essay.summary}}</p>
-                        <autor :createDate='essay.updateTime' :likes='essay.likes' :commons='essay.commons' :views='essay.views'></autor>
+                        <autor :createDate='essay.updateTime' :likes='essay.likes' :commons='essay.commons' 
+							:views='essay.views' :id='essay.articleId'></autor>
                     </div>
                 </div>
 				<div id="page_bar">
@@ -30,16 +31,16 @@
 					<h5>当前定位：{{essayData.type}}-{{essayData.classify}}</h5>
 				</center>
 				<el-tabs tab-position="left">
-					<el-tab-pane :label="kind.type" v-for="kind in essayData.kinds" :key="kind.index">
+					<el-tab-pane :label="kind.dateVal + '年'" v-for="kind in essayData.kinds" :key="kind.index">
 						<ul v-for="child in kind.children" :key="child.index">
-							<li @click="queryClassify(kind.type, child.classify)">{{child.classify}}（{{child.sum}}）</li>
+							<li @click="queryClassify(kind.dateVal, child.dateVal)">{{child.dateVal + '月'}}（{{child.sum}}）</li>
 						</ul>
 					</el-tab-pane>
 				</el-tabs>
 			</div>
 			<div  id="note_hot">
 				<h3>推荐日志</h3>
-				<ul  v-for="(hot, index) in essayData.hots" :key="hot.index">
+				<ul  v-for="(hot, index) in essayData.hots" :key="index">
 					<li>
 						<a :href="'#/view/'+ hot.articleId" :title="hot.id" target="_blank">{{hot.title}}</a>
 					</li>
@@ -59,7 +60,8 @@
 					essayPage: {
 					},
 					type: '',
-					classify: ''
+					classify: '',
+					kinds: []
 				}
 			};
 		},
@@ -84,13 +86,12 @@
 				this.getPage(1, type, classify);
 			},
 			//获取页码数据
-			getPage(pageNo, type, classify) {
+			getPage(pageNo, year, month) {
 				let _this = this;
 				this.$post("/blog/articlePage", {
-					module: "心情随笔",
+					module: "wzlx02",
 					pageNo: pageNo,
-					classify: classify,
-					type: type
+					artDate: year + '-' + month
 				})
 				.then(function (response) {
 					_this.essayData.essayPage = response.data;

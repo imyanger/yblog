@@ -112,7 +112,7 @@
                 imageUrl:'',
                 uploadInfo: {
                     // 头像选择框默认展示图片
-                    defaultSrc: './static/img/img.jpg',
+                    defaultSrc: 'static/img/blog/img-upload.jpg',
                     // 头像框图片上传接口
                     uploadUrl: '/api/core/file/fileUpload',
                     // 图片上传后的响应信息

@@ -30,5 +30,8 @@ public class PageQueryVo implements Serializable {
 
 	// 文章状态
 	private String artState;
+
+	// 文章时间
+	private String artDate;
 	
 }

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.yanger.blog.po.ArticleKind;
 import com.yanger.generator.dao.MybatisBaseDao;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 表article_kind对应Dao接口<br/>
@@ -49,6 +50,6 @@ public interface ArticleKindDao extends MybatisBaseDao<ArticleKind, Integer> {
 	 * @param
 	 * @return java.util.List<com.yanger.blog.po.DateSum>
 	 */
-	List<DateSum> dateSum();
+	List<DateSum> dateSum(@Param("type") String type);
 
 }

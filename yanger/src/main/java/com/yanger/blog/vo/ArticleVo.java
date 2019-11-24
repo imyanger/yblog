@@ -88,5 +88,8 @@ public class ArticleVo implements Serializable {
 
 	//项目服务路径
 	private String serverPath;
+
+	// 文章时间
+	private String artDate;
 	
 }

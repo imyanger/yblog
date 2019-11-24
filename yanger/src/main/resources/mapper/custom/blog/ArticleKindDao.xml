@@ -29,9 +29,12 @@
 		GROUP BY article.module, article.type, article.classify;
 	</insert>
 
-	<select id="dateSum" resultType="com.yanger.blog.po.DateSum">
-		SELECT DATE_FORMAT(update_time,"%Y-%m") AS artDate ,COUNT(*) as sum FROM article
-		GROUP BY DATE_FORMAT(update_time,"%Y-%m") ORDER BY DATE_FORMAT(update_time,"%Y-%m") DESC ;
+	<select id="dateSum" resultType="com.yanger.blog.po.DateSum" parameterType="string">
+		SELECT DATE_FORMAT(insert_time,"%Y-%m") AS artDate ,COUNT(*) as sum FROM article
+		<if test="type != null">
+		  	WHERE module = #{type}
+		</if>
+		GROUP BY DATE_FORMAT(insert_time,"%Y-%m") ORDER BY DATE_FORMAT(insert_time,"%Y-%m") DESC ;
 	</select>
 
 </mapper>

@@ -19,6 +19,9 @@ public class BlogConstant {
 	/** 外连接类型--友情链接 */
 	public static final String LINK_TYPE_SHIP = "yqlj";
 
+	/** 外连接类型--推荐链接 */
+	public static final String LINK_TYPE_TJ = "tjlj";
+
 	/** 数据有效标志 --有效 */
 	public static final String STATUS_VALID = "1";
 

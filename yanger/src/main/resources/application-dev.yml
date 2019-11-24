@@ -19,6 +19,6 @@ logging:
 #添加服务器ip，供获取图片
 yg-file:
   ip: localhost
-# 本地开发的时候关掉了swagger对于token的验证
+# 本地开发的时候可以关掉了swagger对于token的验证
 swagger:
-  token-check: false
+  token-check: true

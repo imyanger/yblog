@@ -13,7 +13,7 @@
 						<div id="article_describe_left">
 							<span>
 								<i class="el-icon-document"></i>
-								<span>{{viewData.article.type}} - {{viewData.article.classify}}</span>
+								<span>{{viewData.article.typeVal}} - {{viewData.article.classifyVal}}</span>
 							</span>
 							&nbsp;&nbsp;&nbsp;&nbsp;
 							<span>
@@ -39,7 +39,7 @@
 					<el-row>
 						<div id="article_html" v-html="viewData.article.content"></div>
 					</el-row>
-					<div id="Msg">
+					<div id="Msg" ref="msgArea">
 						
 						<div id="Msg_le">
 							<span>想说点什么，留下你的想法吧</span>
@@ -48,7 +48,7 @@
 						<div class="editor-container">
 							<UE :defaultMsg='msg' :config='config' ref="ue"></UE>
 						</div>
-						<div id="Msg_content" v-for="(msg, index) in viewData.msgPage.data" :key="msg.index">
+						<div id="Msg_content" v-for="(msg, index) in viewData.msgPage.data" :key="index">
 							<el-row>
 								<div class="row each_Msg" style="margin: 0 auto;">
 									<div class="row each_Msg_right">
@@ -80,7 +80,7 @@
 					<!-- 推荐文章 -->
 					<div  id="note_hot">
 					<h3>推荐阅读</h3>
-					<ul  v-for="(hot, index) in viewData.hots" :key="hot.index">
+					<ul  v-for="(hot, index) in viewData.hots" :key="index">
 						<li>
 							<a href="" :title="hot.id" target="_blank">{{hot.title}}</a>
 						</li>
@@ -190,6 +190,13 @@
 				_this.viewData.msgPage = response.data.msgPage;
 				_this.viewData.hots = response.data.hots;
 				_this.viewData.article = response.data.article;
+				let type = _this.$route.query.type;
+				if('commons' === type){
+					//_this.$refs.msgArea.focus();
+					_this.$nextTick(() => {
+						document.getElementById("Msg_le").scrollIntoView();
+					})
+				}
             })
             .catch(function (error) {
                 console.log(error);
@@ -247,7 +254,7 @@
 		font-size: 22px;
 	}
 	#article_html {
-		width: 96%;
+		width: 94%;
 		height: auto;
 		margin: 0 auto;
 		font-size: 15px;
@@ -262,12 +269,12 @@
     	border-bottom: #bfab86 1px solid;
 	}
 	#article_describe_left {
-		width: 300px;
+		width: 400px;
 		float: left;
     	margin-left: 20px;
 	}
 	#article_describe_right {
-		width: 300px;
+		width: 250px;
 		float: right;
 		margin-right: 20px;
 	}

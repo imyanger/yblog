@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author yanger
@@ -20,6 +21,6 @@ public class SummaryVo implements Serializable {
 
     private  List<DateSum> dateSums = new ArrayList <>();
 
-    private Map<String, Integer> moduleSumMap;
+    private List<ArticleKindVo> moduleSums = new ArrayList <>(0);
 
 }

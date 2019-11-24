@@ -3,14 +3,15 @@
 		<div id="content_left">
 			<div id="article">
 				<h2 class="title-h2">路漫漫其修远兮&nbsp;&nbsp;&nbsp;吾将上下而求索</h2>
-				<div class="content_study_note" v-for="(study, index) in studyData.studyPage.data" :key="study.index">
+				<div class="content_study_note" v-for="(study, index) in studyData.studyPage.data" :key="index">
 					<div class="note_left">
 						<img alt="" :src="studyData.serverPath + '/file/thumbImg?wh=150&path=' + study.artImgPath">
 					</div>
 					<div class="note_right">
-						<h4><a :href="'#/view/'+ study.articleId" title="文章标题" target="_blank">{{study.title}}</a><span>分类：{{study.classify}}</span></h4>
+						<h4><a :href="'#/view/'+ study.articleId" title="文章标题" target="_blank">{{study.title}}</a><span>分类：{{study.classifyVal}}</span></h4>
 						<p class="note_c">{{study.summary}}</p>
-						<autor :createDate='study.updateTime' :likes='study.likes' :commons='study.commons' :views='study.views'></autor>
+						<autor :createDate='study.updateTime' :likes='study.likes' :commons='study.commons' 
+							:views='study.views' :id='study.articleId'></autor>
 					</div>
 				</div>
 				<!-- 分页组件 -->
@@ -33,16 +34,16 @@
 			<div id="note_clazz">
 				<h3>文章分类</h3>
 				<el-tabs tab-position="left">
-					<el-tab-pane :label="kind.type" v-for="kind in studyData.kinds" :key="kind.index">
+					<el-tab-pane :label="kind.typeVal" v-for="kind in studyData.kinds" :key="kind.index">
 						<ul v-for="child in kind.children" :key="child.index">
-							<li @click="queryClassify(kind.type, child.classify)">{{child.classify}}（{{child.sum}}）</li>
+							<li @click="queryClassify(kind.type, child.classify)">{{child.classifyVal}}（{{child.sum}}）</li>
 						</ul>
 					</el-tab-pane>
 				</el-tabs>
 			</div>
 			<div  id="note_hot">
 				<h3>热门文章 </h3>
-				<ul  v-for="(hot, index) in studyData.hots" :key="hot.index">
+				<ul  v-for="(hot, index) in studyData.hots" :key="index">
 					<li>
 						<a :href="'#/view/'+ hot.articleId" :title="hot.id" target="_blank">{{hot.title}}</a>
 					</li>
@@ -60,7 +61,10 @@
 			return {
 				studyData: {
 					studyPage: {
-					}
+						data: []
+					},
+					hots: [],
+					kinds: []
 				},
 				queryValue: ''
 			};
@@ -98,7 +102,7 @@
 			getPage(pageNo, type, classify) {
 				let _this = this;
 				this.$post("/blog/articlePage", {
-					module: "学习笔记",
+					module: "wzlx01",
 					pageNo: pageNo,
 					queryValue: _this.queryValue,
 					classify: classify,

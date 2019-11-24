@@ -1,6 +1,7 @@
 package com.yanger.blog.vo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class ArticleKindVo implements Serializable {
 	private Date updateTime;
 
 	/** 子级文章分类 */
-	private List<ArticleKindVo> children;
+	private List<ArticleKindVo> children = new ArrayList<>(0);
 
 	/** 模块名称 */
 	private String moduleVal;
@@ -50,5 +51,8 @@ public class ArticleKindVo implements Serializable {
 
 	/** 分类（具体）名称 */
 	private String classifyVal;
+
+	// 文章时间
+	private String DateVal;
 
 }

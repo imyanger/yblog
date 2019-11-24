@@ -68,9 +68,7 @@ public class ArticleService {
 		// 分页数据
 		ResultPage <ArticleVo> resultPage = Pages.convert(pageParam, page, ArticleVo.class);
 		resultPage.getData().forEach(a -> {
-			a.setModuleVal(constUtils.getValByCode(a.getModule()));
-			a.setTypeVal(constUtils.getValByCode(a.getType()));
-			a.setClassifyVal(constUtils.getValByCode(a.getClassify()));
+			constUtils.setVal(a);
 			a.setServerPath(serverConfig.getUrl());
 		});
 		return resultPage;
@@ -136,9 +134,7 @@ public class ArticleService {
 		ArticleVo articleVo = new ArticleVo();
 		Article article = articleDao.selectById(id);
 		BeanUtils.copyProperties(articleVo, article);
-		articleVo.setModuleVal(constUtils.getValByCode(articleVo.getModule()));
-		articleVo.setTypeVal(constUtils.getValByCode(articleVo.getType()));
-		articleVo.setClassifyVal(constUtils.getValByCode(articleVo.getClassify()));
+		constUtils.setVal(articleVo);
 		articleVo.setServerPath(serverConfig.getUrl());
 		return articleVo;
 	}

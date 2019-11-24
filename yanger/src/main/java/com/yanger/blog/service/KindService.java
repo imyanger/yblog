@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author yanger
@@ -62,9 +59,7 @@ public class KindService {
             try {
                 ArticleKindVo articleKindVo = new ArticleKindVo();
                 BeanUtils.copyProperties(articleKindVo, articleKind);
-                articleKindVo.setModuleVal(constUtils.getValByCode(articleKindVo.getModule()));
-                articleKindVo.setTypeVal(constUtils.getValByCode(articleKindVo.getType()));
-                articleKindVo.setClassifyVal(constUtils.getValByCode(articleKindVo.getClassify()));
+                constUtils.setVal(articleKindVo);
                 articleKindVos.add(articleKindVo);
                 // 根据模块计数
                 String moduleVal = articleKindVo.getModuleVal();
@@ -82,9 +77,16 @@ public class KindService {
         });
         summaryVo.setArticleKindVos(articleKindVos);
         // 按年月统计
-        List<DateSum> dateSums = articleKindDao.dateSum();
+        List<DateSum> dateSums = articleKindDao.dateSum(null);
         summaryVo.setDateSums(dateSums);
-        summaryVo.setModuleSumMap(moduleSumMap);
+        List<ArticleKindVo> moduleSums = new ArrayList <>(0);
+        for (Map.Entry<String, Integer> entry : moduleSumMap.entrySet()) {
+            ArticleKindVo moduleSum = new ArticleKindVo();
+            moduleSum.setModule(entry.getKey());
+            moduleSum.setSum(entry.getValue());
+            moduleSums.add(moduleSum);
+        }
+        summaryVo.setModuleSums(moduleSums);
         return summaryVo;
     }
 }

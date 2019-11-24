@@ -6,16 +6,22 @@
 				<table>
 					<tr>
 						<td id="book">
-							<a href="#/back/home" target="_blank">
+							<a href="https://github.com/imyanger/yblog" target="_blank">
 								<span class="resource_table_img">
-									<img alt="" src="static/img/img.jpg">
+									<img alt="" src="static/img/blog/code.jpg">
+								</span>
+								<br>
+								<a>项目源码</a>
+							</a>
+						</td>
+						<td><a href="#/back/home" target="_blank">
+								<span class="resource_table_img">
+									<img alt="" src="static/img/blog/back2.jpg">
 								</span>
 								<br>
 								<a>网站后台</a>
-							</a>
-						</td>
+							</a></td>
 						<td><a>更多敬请期待</a></td>
-						<td></td>
 						<td></td>
 					</tr>
 					<tr>
@@ -37,12 +43,33 @@
 			<!-- 网站登录模块 -->
 			<span id="goodweb">
 				<h3>实用网站推荐</h3>
-				<p><a href="https://smallpdf.com/" target="_Blank">Smallpdf——好用的PDF转换网站</a></p>
-				<p><a href="https://www.processon.com/" target="_Blank">ProcessOn——免费在线作图网站</a></p>
+				<div v-for="(link,index) in links" :key="index">
+					<p><a :href="link.link" target="_Blank">{{link.depict}}</a></p>
+				</div>
 			</span>
 		</div>
 	</el-row>
 </template>
+<script>
+export default {
+	data() {
+		return {
+			links: []
+		}
+	},
+	created(){
+		//上下文的改变
+		let _this = this;
+		this.$get("/blog/links")
+		.then(function (response) {
+			_this.links = response.data;
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+	}
+}
+</script>
 
 <style scoped>
     #content {
