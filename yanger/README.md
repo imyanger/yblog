@@ -42,7 +42,7 @@
 	git clone https://github.com/imyanger/yblog.git    
 	// 进入项目后端目录
 	cd yblog/yanger     
-	// 执行数据库sql，修改数据源，redis连接地址
+	// 执行数据库sql(doc目录下)，修改数据源，redis连接地址
 	// 执行YangerApplication启动类，后端默认地址http://localhost:8888/yanger
 
 ## 使用组件说明 ##
