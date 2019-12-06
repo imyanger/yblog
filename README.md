@@ -51,31 +51,4 @@
     * 账号：admin123
     * 密码：admin123
 
-### 项目截图
-
-##### 博客门户截图
-
-![m-sy.png](./doc/img/m-sy.png)
-
-
-
-![m-ly.png](./doc/img/m-ly.png)
-
-
-
-![m-wz.png](./doc/img/m-wz.png)
-
-
-
-##### 博客管理平台部分截图
-
-![h-sy.png](./doc/img/h-sy.png)
-
-
-
-![h-mk.png](./doc/img/h-mk.png)
-
-
-
-![h-cx.png](./doc/img/h-cx.png)
-
+#### [项目部分截图查看](https://github.com/imyanger/yblog/blob/master/doc/img/README.md)
