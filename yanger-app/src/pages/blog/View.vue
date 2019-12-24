@@ -395,4 +395,7 @@
 	#note_hot ul li a {
 		color: #72afd2;
 	}
+	#article_html img {
+		max-width: 100%;
+	}
 </style>
