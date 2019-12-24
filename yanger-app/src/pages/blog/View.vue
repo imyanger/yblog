@@ -254,7 +254,7 @@
 		font-size: 22px;
 	}
 	#article_html {
-		width: 94%;
+		width: 93%;
 		height: auto;
 		margin: 0 auto;
 		font-size: 15px;
@@ -397,5 +397,10 @@
 	}
 	#article_html img {
 		max-width: 100%;
+	}
+</style>
+<style>
+	#article_html img {
+		max-width: 100% !important;
 	}
 </style>

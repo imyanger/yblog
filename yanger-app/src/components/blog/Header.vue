@@ -6,7 +6,7 @@
                 <div class='navbar-container'>
                     <ul>
                         <li class='navbar-container-home'>
-                            <router-link to="/blog/home">博客首页</router-link>
+                            <router-link to="/blog/home">首页</router-link>
                         </li>
                         <div class='h-sep'></div>
                         <li>
@@ -26,7 +26,7 @@
                         </li>
                         <div class='h-sep'></div>
                         <li>
-                            <router-link to="/blog/about">关于博主</router-link>
+                            <router-link to="/blog/about">关于我</router-link>
                         </li>
                     </ul>
                 </div>
