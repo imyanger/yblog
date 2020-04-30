@@ -14,7 +14,7 @@
     "cssnano": "^4.1.8",
     "cssnano-preset-advanced": "^4.0.6",
     "element-ui": "2.12.0",
-    "jquery": ">=3.4.0",
+    "jquery": ">=3.5.0",
     "lib-flexible": "^0.3.2",
     "mavon-editor": "^2.5.4",
     "vue": "^2.5.16",
