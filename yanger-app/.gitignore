@@ -3,3 +3,7 @@ node_modules/
 dist/
 npm-debug.log
 package-lock.json
+.history
+package
+package-lock.json
+yarn.lock
