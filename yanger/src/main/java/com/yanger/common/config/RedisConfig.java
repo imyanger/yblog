@@ -20,19 +20,19 @@ import com.yanger.common.util.RedisMagger;
  * @author 杨号
  * @date 2018年9月14日
  */
-@Configuration
-@EnableCaching
+//@Configuration
+//@EnableCaching
 public class RedisConfig {
 
-	@Value("${spring.redis.host}")
+	//@Value("${spring.redis.host}")
 	private String redisHost;
 
-	@Value("${spring.redis.port}")
+	//@Value("${spring.redis.port}")
 	private int redisPort;
 
 	// 以下两种redisTemplate自由根据场景选择
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@Bean
+	//@Bean
 	public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
 		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setConnectionFactory(connectionFactory);
@@ -52,14 +52,14 @@ public class RedisConfig {
 		return redisTemplate;
 	}
 
-	@Bean
+	//@Bean
 	public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory factory) {
 		StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
 		stringRedisTemplate.setConnectionFactory(factory);
 		return stringRedisTemplate;
 	}
 
-	@Bean
+	//@Bean
 	public RedisMagger redisMagger(RedisTemplate<String, Object> redisTemplate) {
 		return new RedisMagger(redisTemplate);
 	}

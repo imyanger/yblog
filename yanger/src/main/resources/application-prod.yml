@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://58.87.66.244:3306/yanger?useUnicode=true&amp;characterEncoding=utf-8
+    username: yanger
+    password: yanger_PWD_@2022
+  servlet:
+    multipart:
+      #设置上传文件根路径
+      location: /
+logging:
+  file: /data/blog/log/yanger.log
+#添加服务器ip，供获取图片
+yg-file:
+  ip: 58.87.66.244

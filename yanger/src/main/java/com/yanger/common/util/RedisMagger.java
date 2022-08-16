@@ -17,7 +17,7 @@ import org.springframework.util.CollectionUtils;
  */
 public class RedisMagger {
 
-	@Autowired
+	//@Autowired
 	private RedisTemplate<String, Object> redisTemplate;
 
 	public RedisMagger(RedisTemplate<String, Object> redisTemplate) {

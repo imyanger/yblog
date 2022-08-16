@@ -32,7 +32,7 @@ public class BlogApi {
 	@Autowired
 	private BlogService blogService;
 
-	@Autowired
+	//@Autowired
 	private RedisMagger RedisMagger;
 	
 	@Autowired
